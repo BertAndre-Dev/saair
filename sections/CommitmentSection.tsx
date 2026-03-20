@@ -193,10 +193,10 @@ const CommitmentSection = () => {
   const statSatisfaction = commitmentCopy.stats[1];
 
   return (
-    <section id="commitment" className="bg-[#001F3F] py-16 md:py-24 md:px-8 lg:px-0">
+    <section id="commitment" className="bg-[#001F3F] py-16 md:py-24 md:px-8 xl:px-0">
       <div className="mx-auto w-full max-w-6xl px-4 md:px-0">
         {/* Header */}
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <h2 className="text-[#00804D] text-[30px] md:text-[40px] xl:text-[48px] font-bold uppercase tracking-wide">
             {commitmentCopy.title}
           </h2>

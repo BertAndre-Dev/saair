@@ -5,7 +5,7 @@ import CTASection from "@/sections/CTASection";
 import CommitmentSection from "@/sections/CommitmentSection";
 import FeaturesSection from "@/sections/FeaturesSection";
 import HeroSection from "@/sections/HeroSection";
-import PartnersSection from "@/sections/PartnersSection";
+import ProductsSection from "@/sections/PartnersSection";
 import StatisticsSection from "@/sections/StatisticsSection";
 import TestimonialsSection from "@/sections/TestimonialsSection";
 import Footer from "@/components/layout/Footer";
@@ -19,7 +19,7 @@ const Home = () => {
       <StatisticsSection />
       <AboutSection />
       <TestimonialsSection />
-      <PartnersSection />
+      <ProductsSection />
       <CommitmentSection />
       <CTASection />
       <Footer />

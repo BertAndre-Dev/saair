@@ -180,6 +180,26 @@ export const partnersCopy: {
   names: ["Northline", "GreenGrid", "Atlas Works", "Sunward", "Crescent Labs"],
 };
 
+export const productsCopy = {
+  sectionId: "products",
+  badgeLabel: "SMART METERS",
+  title: "OUR PRODUCTS",
+  paragraphs: [
+    "We're not just another energy company. SAair Energy is Africa's integrated energy powerhouse, bridging conventional and renewable systems with advanced technology that transforms how energy is produced, distributed, and optimized.",
+    "Our expertise spans three critical domains: renewable energy development, comprehensive oil and gas services, and cutting-edge technical solutions. This unique positioning allows us to deliver what others can't: complete, future-ready energy strategies tailored to the complex realities of African markets.",
+  ],
+  images: {
+    left: {
+      src: "/file.svg",
+      alt: "Smart meters product image",
+    },
+    right: {
+      src: "/globe.svg",
+      alt: "Smart meters product image",
+    },
+  },
+} as const;
+
 export const pricingCopy: {
   title: string;
   description: string;
