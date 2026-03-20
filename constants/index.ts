@@ -189,14 +189,24 @@ export const productsCopy = {
     "Our expertise spans three critical domains: renewable energy development, comprehensive oil and gas services, and cutting-edge technical solutions. This unique positioning allows us to deliver what others can't: complete, future-ready energy strategies tailored to the complex realities of African markets.",
   ],
   images: {
-    left: {
-      src: "/file.svg",
-      alt: "Smart meters product image",
+    md: {
+      leftBack: { src: "/meter/meter1.svg", alt: "Smart meters product image 1" },
+      leftFront: {
+        src: "/meter/meter2.svg",
+        alt: "Smart meters product image 2",
+      },
+      rightBack: { src: "/meter/meter3.svg", alt: "Smart meters product image 3" },
+      rightFront: {
+        src: "/meter/meter4.svg",
+        alt: "Smart meters product image 4",
+      },
     },
-    right: {
-      src: "/globe.svg",
-      alt: "Smart meters product image",
-    },
+    sm: [
+      { src: "/meter/meter1.svg", alt: "Smart meters product image 1" },
+      { src: "/meter/meter2.svg", alt: "Smart meters product image 2" },
+      { src: "/meter/meter3.svg", alt: "Smart meters product image 3" },
+      { src: "/meter/meter4.svg", alt: "Smart meters product image 4" },
+    ],
   },
 } as const;
 
