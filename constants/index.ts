@@ -23,7 +23,7 @@ export const appConfig = {
 export const navLinks: NavLink[] = [
   { href: "#features", label: "Features" },
   { href: "#about", label: "About" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "#commitment", label: "Commitment" },
   { href: "#testimonials", label: "Testimonials" },
   { href: "#cta", label: "Contact" },
 ];
@@ -232,11 +232,50 @@ export const pricingCopy: {
 };
 
 export const ctaCopy = {
-  title: "Ready to build your next deployment?",
-  description:
-    "Tell us about your timeline and goals. We will recommend a modular path forward.",
-  buttonLabel: "Request a quote",
+  leftPanel: {
+    title: "PIONEERS OF ENERGY",
+    subtitle: "Commercial, Residential & Industrial Energy Systems!",
+    description:
+      "We offer products, solutions and services across the entire energy value chain. We support our customers on their way to a more sustainable future - no matter how far along the journey to energize society with affordable systems.",
+    callout:
+      "Request from us a free quote to know the solution that best fits your system.",
+    note:
+      "Receive an accurate quote/details within 3-5 days when you fill out this form, or give us a call: +234 123 456 7890",
+  },
+  form: {
+    title: "Request A Quote",
+    description:
+      "We take pride in everything that we do, control over products allows us to ensure our customers receive the best quality service.",
+    serviceAriaLabel: "Select service type",
+    namePlaceholder: "Your Name",
+    emailPlaceholder: "Email Address",
+    servicePlaceholder: "Service Type",
+    messagePlaceholder: "Write your message",
+    serviceOptions: [
+      "Commercial Energy",
+      "Residential Energy",
+      "Industrial Energy",
+      "Technical Solutions",
+    ],
+    submitLabel: "Submit Request",
+  },
 };
+
+export const commitmentCopy = {
+  title: "OUR COMMITMENT",
+  description:
+    "We lead with innovation that challenges boundaries. We think integratively to create synergy across domains. We act with sustainability and responsibility toward people and the planet. We execute with excellence and unwavering reliability. We build customer-centric partnerships that co-create value. We maintain ethical leadership in all dealings. And we invest in people and knowledge to drive lasting competitive advantage.",
+  stats: [
+    {
+      value: "90%",
+      label: "Energy Solutions",
+    },
+    {
+      value: "100+",
+      label: "Satisfied Customers",
+    },
+  ],
+} as const;
 
 export const footerCopy = {
   logoTagline: "Tailored Energy Solutions",

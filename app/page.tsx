@@ -2,10 +2,10 @@ import Navbar from "@/components/layout/Navbar";
 
 import AboutSection from "@/sections/AboutSection";
 import CTASection from "@/sections/CTASection";
+import CommitmentSection from "@/sections/CommitmentSection";
 import FeaturesSection from "@/sections/FeaturesSection";
 import HeroSection from "@/sections/HeroSection";
 import PartnersSection from "@/sections/PartnersSection";
-import PricingSection from "@/sections/PricingSection";
 import StatisticsSection from "@/sections/StatisticsSection";
 import TestimonialsSection from "@/sections/TestimonialsSection";
 import Footer from "@/components/layout/Footer";
@@ -20,7 +20,7 @@ const Home = () => {
       <AboutSection />
       <TestimonialsSection />
       <PartnersSection />
-      <PricingSection />
+      <CommitmentSection />
       <CTASection />
       <Footer />
     </main>
