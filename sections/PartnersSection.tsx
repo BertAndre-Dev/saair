@@ -151,13 +151,13 @@ const ProductsSection = () => {
       id={productsCopy.sectionId}
       className="bg-[#F5F7F7] py-16 md:py-24 md:px-8 xl:px-0"
     >
-      <div className="mx-auto w-full max-w-6xl px-4">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-0">
         <div className="grid gap-12 md:items-start">
           <div className="max-w-4xl">
             <h2 className="text-[#00804D] text-[30px] md:text-[40px] xl:text-[48px] font-bold uppercase tracking-wide">
               {productsCopy.title}
             </h2>
-            <div className="mt-4 inline-flex items-center rounded-md bg-[#001F3F] px-4 py-2 text-[18px] md:text-[20px] xl:text-[24px] font-semibold tracking-wider text-white">
+            <div className="mt-4 inline-flex items-center rounded-md bg-[#4C4C4C] px-4 py-2 text-[18px] md:text-[20px] xl:text-[24px] font-semibold tracking-wider text-white">
               {productsCopy.badgeLabel}
             </div>
 

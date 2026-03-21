@@ -7,7 +7,7 @@ import FeaturesSection from "@/sections/FeaturesSection";
 import HeroSection from "@/sections/HeroSection";
 import ProductsSection from "@/sections/PartnersSection";
 import StatisticsSection from "@/sections/StatisticsSection";
-import TestimonialsSection from "@/sections/TestimonialsSection";
+import ServicesSection from "@/sections/ServicesSection";
 import Footer from "@/components/layout/Footer";
 
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
       <FeaturesSection />
       <StatisticsSection />
       <AboutSection />
-      <TestimonialsSection />
+      <ServicesSection />
       <ProductsSection />
       <CommitmentSection />
       <CTASection />

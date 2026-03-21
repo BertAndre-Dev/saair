@@ -24,7 +24,7 @@ export const navLinks: NavLink[] = [
   { href: "#features", label: "Features" },
   { href: "#about", label: "About" },
   { href: "#commitment", label: "Commitment" },
-  { href: "#testimonials", label: "Testimonials" },
+  { href: "#services", label: "Services" },
   { href: "#cta", label: "Contact" },
 ];
 
@@ -101,15 +101,21 @@ export const featuresCopy: {
 };
 
 export const aboutCopy = {
-  eyebrow: "Why Saair",
-  title: "Modular by design. Reliable in operation.",
-  description:
-    "We combine engineered modularity with practical delivery so teams can move quickly without sacrificing reliability.",
-  bullets: [
-    "Repeatable layouts and components for consistent projects.",
-    "Deployment-ready documentation and clear handoffs.",
-    "A performance-first approach to monitoring and improvements.",
+  sectionId: "about",
+  title: "WHO ARE WE",
+  paragraphs: [
+    "SAAIR Energy is an integrated energy solutions company focused on developing and deploying reliable, efficient and technology-enabled energy systems across emerging markets. The company operates across multiple segments of the energy value chain, including oil and gas, renewable energy, power infrastructure, and digital energy technologies.",
+    "Founded with a goal of addressing energy access, efficiency, and infrastructure challenges. SAair Energy combines engineering expertise, advances technology platforms and strategic partnership to deliver scalable energy solutions for government, utilities, businesses, and communities.",
+    "By bridging traditional energy systems with modern digital technologies, SAair Energy is helping to modernize energy infrastructure while supporting economic growth and energy security.",
   ],
+  button: {
+    label: "Learn More",
+    href: "#cta",
+  },
+  image: {
+    src: "/who.svg",
+    alt: "Who are we image",
+  },
 };
 
 export const statisticsCopy: {
@@ -168,6 +174,42 @@ export const testimonialsCopy: {
     },
   ],
 };
+
+export const servicesCopy = {
+  sectionId: "services",
+  title: "SERVICES",
+  subtitle: "Three Domains. Infinite Possibilities",
+  description:
+    "Our integrated approach means you get more than isolated solutions; you get a strategic partner who understands the full energy ecosystem and how every piece connects.",
+  secondaryDescription:
+    "Our expertise spans three critical domains: renewable energy development, comprehensive oil and gas services, and cutting-edge technical solutions. This unique positioning allows us to deliver what others can't: complete, future-ready energy strategies tailored to the complex realities of African markets.",
+  cards: [
+    {
+      number: "01",
+      title: "Renewable Energy Solutions",
+      description:
+        "Clean, scalable, future-ready. We design and deploy solar systems, wind technologies, EV charging infrastructure, and smart mobility platforms that position your operations at the forefront of sustainable energy.",
+      imageSrc: "/service/service.svg",
+      iconSrc: "/service/ranking.svg",
+    },
+    {
+      number: "02",
+      title: "Non-Renewable Energy",
+      description:
+        "Reliable, comprehensive, performance-driven. Our upstream, midstream, and downstream capabilities cover production logistics, storage, compression, and field optimization that keeps operations running at peak efficiency.",
+      imageSrc: "/service/service1.svg",
+      iconSrc: "/service/search-favorite.svg",
+    },
+    {
+      number: "03",
+      title: "Technical & Technology Solutions",
+      description:
+        "Intelligent, efficient, data-driven. From engineering support and automation systems to analytics and asset monitoring, we deploy technologies that enhance visibility, control, and operational excellence across your energy infrastructure.",
+      imageSrc: "/service/service3.svg",
+      iconSrc: "/service/message-text.svg",
+    },
+  ],
+} as const;
 
 export const partnersCopy: {
   title: string;
