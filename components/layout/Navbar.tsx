@@ -30,20 +30,11 @@ function isNavLinkActive(pathname: string, href: string): boolean {
 const pillBase =
   "rounded-full px-4 py-2 text-sm font-medium transition-colors md:px-4 md:py-2";
 const pillInactive =
-  "bg-emerald-100/50 text-emerald-900/90 hover:bg-emerald-100/70";
+  "bg-[#00814E1A] text-white hover:bg-[#00814E33]";
 const pillActive =
-  "bg-emerald-600/35 text-emerald-950 ring-1 ring-emerald-700/20 backdrop-blur-sm";
+  "bg-[#00814E33] text-white";
 
 const navShellVariants = { rest: {}, hover: {} } as const;
-
-const navUnderlineVariants = {
-  rest: { scaleX: 0, opacity: 0 },
-  hover: {
-    scaleX: 1,
-    opacity: 1,
-    transition: { duration: 0.25, ease: easeNatural },
-  },
-};
 
 function MobileNavDrawer({
   menuOpen,
@@ -244,10 +235,6 @@ const Navbar = () => {
                   variants={navShellVariants}
                 >
                   <span className="relative z-10">{link.label}</span>
-                  <motion.span
-                    variants={navUnderlineVariants}
-                    className="pointer-events-none absolute bottom-2 left-4 right-4 h-0.5 origin-center rounded-full bg-emerald-800/55"
-                  />
                 </MotionLink>
               );
             })}
