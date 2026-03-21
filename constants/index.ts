@@ -19,19 +19,19 @@ export const appConfig = {
 
 export const navLinks: NavLink[] = [
   { href: "/", label: "Home" },
-  { href: "#about", label: "About us" },
-  { href: "#services", label: "Services" },
-  { href: "#products", label: "Products" },
+  { href: "/about", label: "About us" },
+  { href: "/services", label: "Services" },
+  { href: "/products", label: "Products" },
 ];
 
 export const navbarCtas = {
-  primary: { href: "#cta", label: "Contact Us" },
+  primary: { href: "/#cta", label: "Contact Us" },
 };
 
 /** Default props for `<Hero />` — override per page when reusing the component. */
 export const heroCopy: HeroProps = {
-  backgroundImageSrc:
-    "/hero.gif",
+  variant: "default",
+  backgroundImageSrc: "/hero.gif",
   backgroundImageAlt: "",
   title: "ALL ENERGY. ONE VISION",
   subtitle:
@@ -55,6 +55,122 @@ export const heroCopy: HeroProps = {
     },
   ],
 };
+
+/** About Us page — centered hero (reuse `<Hero {...aboutPageHero} />`). */
+export const aboutPageHero: HeroProps = {
+  variant: "pageTitle",
+  backgroundImageSrc: "/hero.gif",
+  backgroundImageAlt: "",
+  title: "ABOUT US",
+};
+
+/** Services page — centered hero title. */
+export const servicesPageHero: HeroProps = {
+  variant: "pageTitle",
+  backgroundImageSrc: "/hero.gif",
+  backgroundImageAlt: "",
+  title: "SERVICES",
+};
+
+/** Products page — centered hero title. */
+export const productsPageHero: HeroProps = {
+  variant: "pageTitle",
+  backgroundImageSrc: "/hero.gif",
+  backgroundImageAlt: "",
+  title: "PRODUCTS",
+};
+
+/** Products page — smart meters overview (Figma). */
+export const productsPageOverview = {
+  badgeLabel: "SMART METERS",
+  title: "PRODUCT OVERVIEW",
+  paragraphs: [
+    "SAAIR Energy delivers advanced smart metering solutions across electricity, gas, and water networks. Engineered for utilities, regulators, and large-scale energy and resource operators, our smart meters provide real-time data, two-way communication, and actionable insights to optimize resource management, reduce losses, and enhance customer engagement.",
+    "Smart metering is no longer a luxury — it's essential for modern utilities. SAAIR Energy's meters capture precise consumption data, enabling efficient operations, accurate billing, and better decision-making across multiple sectors.",
+  ],
+  subheading: "Why Smart Metering Matters",
+  leadIn:
+    "Across Africa, utilities lose millions annually to inefficiency, energy theft, outdated infrastructure, and manual reporting. Smart metering solves these gaps with:",
+  bullets: [
+    "Real-time consumption tracking",
+    "Automated billing & revenue assurance",
+    "Remote monitoring & disconnection",
+    "Tamper detection & system alerts",
+    "Load management insights",
+  ],
+  closing:
+    "Whether you manage thousands of customers or a single industrial estate, reliable data is the foundation of a stable, profitable, future-ready energy ecosystem.",
+} as const;
+
+/** Products page — technical specification copy. */
+export const productsTechnicalCopy = {
+  title: "TECHNICAL SPECIFICATION",
+  items: [
+    {
+      term: "Cost-Effectiveness",
+      description:
+        "Our PLC metering architecture pairs intelligent meters with 4G-enabled Data Concentrator Units (DCUs), reducing communication endpoints and lowering total cost of ownership for large utility rollouts.",
+    },
+    {
+      term: "Enhanced Connectivity",
+      description:
+        "End-to-end communication uses 4G where available, with automatic 3G/2G fallback so meters and DCUs stay reachable across varying network conditions in the field.",
+    },
+    {
+      term: "Efficient Communication Infrastructure",
+      description:
+        "A single SIM-managed DCU can aggregate and relay data for up to 500 meters, simplifying logistics, SIM management, and backhaul for distribution companies.",
+    },
+    {
+      term: "Improved Accessibility and Maintenance",
+      description:
+        "DCUs are deployed at transformer and strategic distribution points, giving DisCo staff local access for commissioning, troubleshooting, and updates without visiting every endpoint.",
+    },
+  ],
+} as const;
+
+export const aboutPageIntroCopy = {
+  intro: [
+    "Headquartered in Nigeria, SAAIR Energy is positioned as a multi-sector energy infrastructure and technology company delivering solutions across both conventional and emerging energy systems.",
+    "The company's operations span key areas of the energy industry including:",
+  ],
+  bullets: [
+    "Oil and gas infrastructure and energy supply solutions",
+    "Gas-powered electricity and energy systems",
+    "Renewable energy development and integration",
+    "Smart metering and digital energy platforms",
+    "Energy monitoring and data technologies",
+    "Electric mobility infrastructure and EV charging systems",
+  ],
+  outro: [
+    "SAAIR Energy integrates technology, infrastructure and energy services to improve how energy is produced, distributed, monitored, and consumed.",
+    "Through innovation and strategic collaboration, the company aims to strengthen energy systems while supporting the transition toward more efficient and sustainable energy solutions.",
+  ],
+} as const;
+
+export const aboutMissionCopy = {
+  title: "Mission",
+  description:
+    "SAAIR Energy delivers integrated energy infrastructure and technology solutions across Nigeria and emerging markets. We combine engineering depth, digital platforms, and strategic partnerships to help clients capture value across the energy value chain—from generation and distribution to monitoring, metering, and mobility.",
+  imageSrc: "/about-us/mission.svg",
+  imageAlt: "SAAIR Energy mission",
+} as const;
+
+export const aboutVisionCopy = {
+  title: "Vision",
+  description:
+    "To be a trusted partner for modern, resilient energy systems—bridging conventional and renewable assets with data-driven operations so businesses, utilities, and communities can scale with confidence.",
+  imageSrc: "/about-us/vission.svg",
+  imageAlt: "SAAIR Energy vision",
+} as const;
+
+export const aboutValuesCopy = {
+  title: "Values",
+  description:
+    "We operate with integrity, technical excellence, and a long-term view of energy security. Our teams prioritize safety, transparency, and collaboration—aligning infrastructure delivery with the realities of African markets and the global energy transition.",
+  imageSrc: "/about-us/value.svg",
+  imageAlt: "SAAIR Energy values",
+} as const;
 
 export const aboutCopy = {
   sectionId: "about",
@@ -109,6 +225,50 @@ export const servicesCopy = {
     },
   ],
 } as const;
+
+/** Full Services page — five cards (Figma). Home still uses `servicesCopy` (3 cards). */
+export const servicesPageCards = [
+  {
+    number: "01",
+    title: "Renewable Energy Systems",
+    description:
+      "The company develops and deploys renewable energy solutions that help improve energy access and support sustainable power generation. These systems are designed to complement existing energy infrastructure while supporting the global transition toward cleaner energy.",
+    imageSrc: "/service/service.svg",
+    iconSrc: "/service/ranking.svg",
+  },
+  {
+    number: "02",
+    title: "Oil & Gas Infrastructure",
+    description:
+      "SAAIR Energy is designed to participate in development and deployment of energy infrastructure supporting oil and gas operations, including gas-powered energy solutions, energy distribution systems, and midstream infrastructure partnerships. These initiatives support reliable energy supply and contribute to the broader development of the energy sector.",
+    imageSrc: "/service/service1.svg",
+    iconSrc: "/service/search-favorite.svg",
+  },
+  {
+    number: "03",
+    title: "Smart Metering & Energy Technology",
+    description:
+      "We design and deploy smart metering, digital platforms, and energy technology that improve billing accuracy, demand visibility, and integration across utilities and commercial operations—so teams can manage assets with clarity and scale.",
+    imageSrc: "/meter/meter2.svg",
+    iconSrc: "/service/message-text.svg",
+  },
+  {
+    number: "04",
+    title: "Electric Mobility Infrastructure",
+    description:
+      "SAAIR Energy is actively supporting the growth of electric mobility through the development of EV charging infrastructure and supporting technologies that enable the adoption of electric transportation systems.",
+    imageSrc: "/service/service3.svg",
+    iconSrc: "/service/message-text.svg",
+  },
+  {
+    number: "05",
+    title: "Electric Monitoring & Digital Infrastructure",
+    description:
+      "Through advanced sensors, monitoring technologies, and digital platforms, SAAIR Energy enables real-time monitoring of energy systems, infrastructure performance, and consumption patterns. These tools support improved system management, predictive maintenance, and operational efficiency.",
+    imageSrc: "/meter/meter3.svg",
+    iconSrc: "/service/ranking.svg",
+  },
+] as const;
 
 export const partnersCopy: {
   title: string;
