@@ -1,26 +1,34 @@
-import type { HTMLAttributes, ReactNode } from "react";
+"use client";
 
+import { motion, useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
+
+import { cardWhileHover } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
-export type CardProps = {
+export type CardProps = Readonly<{
   className?: string;
   children: ReactNode;
-} & HTMLAttributes<HTMLDivElement>;
+  id?: string;
+}>;
 
-const Card = ({ className, children, ...props }: CardProps) => {
+const Card = ({ className, children, id }: CardProps) => {
+  const reduced = useReducedMotion();
+
   return (
-    <div
+    <motion.div
+      id={id}
       className={cn(
         "rounded-2xl border border-black/10 bg-white p-6 shadow-sm",
         "dark:border-white/15 dark:bg-zinc-950",
         className,
       )}
-      {...props}
+      whileHover={reduced ? undefined : cardWhileHover}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
 export default Card;
-

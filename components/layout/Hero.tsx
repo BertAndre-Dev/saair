@@ -1,4 +1,9 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+
+import { cardWhileHover, easeNatural, scaleIn } from "@/lib/animations";
 
 export type HeroCardTone = "light" | "medium" | "dark";
 
@@ -12,11 +17,9 @@ export type HeroProps = {
   backgroundImageSrc: string;
   backgroundImageAlt?: string;
   title: string;
-  /** Used when variant is `default`. */
   subtitle?: string;
   bottomFeatureLabels?: string[];
   cards?: HeroCard[];
-  /** `pageTitle`: centered title only (e.g. About Us). `default`: home marketing layout. */
   variant?: "default" | "pageTitle";
   className?: string;
 };
@@ -62,12 +65,20 @@ const Hero = ({
   variant = "default",
   className = "",
 }: HeroProps) => {
+  const reduced = useReducedMotion();
+
   if (variant === "pageTitle") {
+    const words = title.split(/\s+/).filter(Boolean);
     return (
       <section
         className={`relative isolate flex min-h-[min(75vh,720px)] items-center justify-center overflow-hidden ${className}`}
       >
-        <div className="absolute inset-0">
+        <motion.div
+          className="absolute inset-0"
+          initial={reduced ? false : { opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.55, ease: easeNatural }}
+        >
           <Image
             src={backgroundImageSrc}
             alt={backgroundImageAlt}
@@ -77,21 +88,48 @@ const Hero = ({
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/45" />
-        </div>
+        </motion.div>
         <div className="relative z-10 px-4 py-28 text-center md:py-32">
           <h1 className="text-4xl font-bold uppercase tracking-wide text-white md:text-6xl lg:text-7xl">
-            {title}
+            {reduced ? (
+              title
+            ) : (
+              <>
+                {words.map((word, i) => (
+                  <motion.span
+                    key={`${word}-${i}`}
+                    className="inline-block pr-[0.3em]"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: i * 0.07,
+                      duration: 0.45,
+                      ease: easeNatural,
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </>
+            )}
           </h1>
         </div>
       </section>
     );
   }
 
+  const titleWords = title.split(/\s+/).filter(Boolean);
+
   return (
     <section
       className={`relative isolate min-h-[min(60vh,920px)] overflow-hidden ${className}`}
     >
-      <div className="absolute inset-0">
+      <motion.div
+        className="absolute inset-0"
+        initial={reduced ? false : { opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: easeNatural }}
+      >
         <Image
           src={backgroundImageSrc}
           alt={backgroundImageAlt}
@@ -101,47 +139,124 @@ const Hero = ({
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
-      </div>
+      </motion.div>
 
-      <div className="relative z-10 mx-auto mt-28 flex w-full max-w-6xl flex-col gap-12 px-4 md:px-8 xl:px-0 pb-20 md:pb-0 md:mt-30 md:flex-row md:items-center md:justify-between">
+      <div className="relative z-10 mx-auto mt-28 flex w-full max-w-6xl flex-col gap-12 px-4 pb-20 md:mt-30 md:flex-row md:items-center md:justify-between md:pb-0 md:px-8 xl:px-0">
         <div className="max-w-xl md:w-[58%]">
           <h1 className="text-4xl font-bold uppercase leading-tight tracking-wide text-white md:text-5xl lg:text-[3.25rem]">
-            {title}
+            {reduced ? (
+              title
+            ) : (
+              <>
+                {titleWords.map((word, i) => (
+                  <motion.span
+                    key={`${word}-${i}`}
+                    className="inline-block pr-[0.3em]"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: i * 0.07,
+                      duration: 0.5,
+                      ease: easeNatural,
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </>
+            )}
           </h1>
           {subtitle ? (
-            <p className="mt-6 text-sm font-light leading-7 text-white/95 md:text-xl lg:text-2xl">
+            <motion.p
+              className="mt-6 text-sm font-light leading-7 text-white/95 md:text-xl lg:text-2xl"
+              initial={reduced ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: reduced ? 0 : 0.3,
+                duration: 0.45,
+                ease: easeNatural,
+              }}
+            >
               {subtitle}
-            </p>
+            </motion.p>
           ) : null}
           {bottomFeatureLabels.length > 0 ? (
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <motion.div
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              initial={reduced ? false : "hidden"}
+              animate="visible"
+              variants={
+                reduced
+                  ? { hidden: {}, visible: {} }
+                  : {
+                      hidden: {},
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.1,
+                          delayChildren: 0.45,
+                        },
+                      },
+                    }
+              }
+            >
               {bottomFeatureLabels.map((label, index) => (
-                <div
+                <motion.div
                   key={`${label}-${index}`}
+                  variants={
+                    reduced
+                      ? {}
+                      : {
+                          hidden: { opacity: 0, y: 12 },
+                          visible: {
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.4, ease: easeNatural },
+                          },
+                        }
+                  }
                   className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white"
                 >
                   <EnergyIntelIcon />
                   <span>{label}</span>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           ) : null}
         </div>
 
         {cards.length > 0 ? (
-          <div className="flex w-full flex-col gap-4 md:max-w-sm md:w-[38%]">
+          <motion.div
+            className="flex w-full flex-col gap-4 md:max-w-sm md:w-[38%]"
+            initial={reduced ? false : "hidden"}
+            animate="visible"
+            variants={
+              reduced
+                ? { hidden: {}, visible: {} }
+                : {
+                    hidden: {},
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.1,
+                        delayChildren: 0.5,
+                      },
+                    },
+                  }
+            }
+          >
             {cards.map((card) => (
-              <div
+              <motion.div
                 key={card.label}
+                variants={reduced ? {} : scaleIn}
+                whileHover={reduced ? undefined : cardWhileHover}
                 className={`flex items-center gap-4 rounded-2xl border border-[#00814E24] bg-[#00814E24] px-5 py-4 ${toneClass[card.tone]}`}
               >
                 <CardIcon kind={card.icon} />
-                <span className="text-[14px] md:text-[20px] xl:text-[24px] font-light text-white">
+                <span className="text-[14px] font-light text-white md:text-[20px] xl:text-[24px]">
                   {card.label}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         ) : null}
       </div>
     </section>

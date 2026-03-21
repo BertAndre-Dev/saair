@@ -1,4 +1,10 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import type { ReactNode } from "react";
+
+import { scaleIn, viewportOnce } from "@/lib/animations";
 
 export type MeterGalleryImages = {
   md: {
@@ -28,7 +34,35 @@ type MeterStaggeredGalleryProps = {
   images: MeterGalleryImages;
 };
 
+const tileHover = { y: -6, scale: 1.03, transition: { duration: 0.3 } };
+
+function MeterGalleryTile({
+  className,
+  children,
+  reduced,
+}: Readonly<{
+  className: string;
+  children: ReactNode;
+  reduced: boolean | null;
+}>) {
+  return (
+    <motion.div
+      className={className}
+      initial={reduced ? false : "hidden"}
+      whileInView="visible"
+      viewport={viewportOnce}
+      variants={reduced ? { hidden: {}, visible: {} } : scaleIn}
+      whileHover={reduced ? undefined : tileHover}
+      transition={{ type: "spring", stiffness: 320, damping: 24 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
+  const reduced = useReducedMotion();
+
   return (
     <>
       <div className="relative hidden h-[520px] md:block">
@@ -39,7 +73,10 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
           <DotBlock variant="gold2" />
         </div>
 
-        <div className="absolute left-0 top-16 z-10 h-[260px] w-[240px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
+        <MeterGalleryTile
+          reduced={reduced}
+          className="absolute left-0 top-16 z-10 h-[260px] w-[240px] cursor-pointer overflow-hidden rounded-2xl"
+        >
           <div className="relative h-full w-full">
             <Image
               src={images.md.leftBack.src}
@@ -50,9 +87,12 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
               priority
             />
           </div>
-        </div>
+        </MeterGalleryTile>
 
-        <div className="absolute left-24 top-36 z-20 h-[260px] w-[260px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
+        <MeterGalleryTile
+          reduced={reduced}
+          className="absolute left-24 top-36 z-20 h-[260px] w-[260px] cursor-pointer overflow-hidden rounded-2xl"
+        >
           <div className="relative h-full w-full">
             <Image
               src={images.md.leftFront.src}
@@ -63,9 +103,12 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
               priority
             />
           </div>
-        </div>
+        </MeterGalleryTile>
 
-        <div className="absolute right-0 top-20 z-10 h-[260px] w-[240px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
+        <MeterGalleryTile
+          reduced={reduced}
+          className="absolute right-0 top-20 z-10 h-[260px] w-[240px] cursor-pointer overflow-hidden rounded-2xl"
+        >
           <div className="relative h-full w-full">
             <Image
               src={images.md.rightBack.src}
@@ -75,9 +118,12 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
               sizes="240px"
             />
           </div>
-        </div>
+        </MeterGalleryTile>
 
-        <div className="absolute right-16 top-32 z-20 h-[280px] w-[280px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
+        <MeterGalleryTile
+          reduced={reduced}
+          className="absolute right-16 top-32 z-20 h-[280px] w-[280px] cursor-pointer overflow-hidden rounded-2xl"
+        >
           <div className="relative h-full w-full">
             <Image
               src={images.md.rightFront.src}
@@ -88,14 +134,20 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
               priority
             />
           </div>
-        </div>
+        </MeterGalleryTile>
       </div>
 
       <div className="grid gap-6 md:hidden">
         {images.sm.map((img, idx) => (
-          <div
+          <motion.div
             key={img.alt}
-            className="relative h-72 overflow-hidden rounded-2xl bg-white transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl cursor-pointer"
+            className="relative h-72 cursor-pointer overflow-hidden rounded-2xl bg-white"
+            initial={reduced ? false : "hidden"}
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={reduced ? { hidden: {}, visible: {} } : scaleIn}
+            whileHover={reduced ? undefined : tileHover}
+            transition={{ delay: idx * 0.05 }}
           >
             <Image
               src={img.src}
@@ -105,7 +157,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
               sizes="100vw"
               priority={idx === 0}
             />
-          </div>
+          </motion.div>
         ))}
       </div>
     </>

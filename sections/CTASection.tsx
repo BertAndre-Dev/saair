@@ -1,9 +1,12 @@
-import { ctaCopy } from "@/constants";
 import Image from "next/image";
+
+import MotionSubmitButton from "@/components/motion/MotionSubmitButton";
+import ScrollReveal from "@/components/motion/ScrollReveal";
+import { ctaCopy } from "@/constants";
 
 const CTASection = () => {
   return (
-    <section id="cta" className="bg-zinc-50 py-16">
+    <ScrollReveal id="cta" className="bg-zinc-50 py-16">
       <div className="">
         <div className="overflow-hidden">
           <div className="grid lg:grid-cols-2">
@@ -80,18 +83,15 @@ const CTASection = () => {
                   placeholder={ctaCopy.form.messagePlaceholder}
                   className="w-full resize-none rounded-md border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-800 placeholder:text-zinc-500 focus:border-emerald-500 focus:outline-none"
                 />
-                <button
-                  type="submit"
-                  className="mt-2 h-12 w-full rounded-full bg-[#00804D] text-[14px] md:text-base font-bold text-white transition-colors hover:bg-[#00804D]/80"
-                >
+                <MotionSubmitButton className="mt-2 h-12 w-full cursor-pointer rounded-full bg-[#00804D] text-[14px] font-bold text-white transition-colors hover:bg-[#00804D]/80 md:text-base">
                   {ctaCopy.form.submitLabel}
-                </button>
+                </MotionSubmitButton>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

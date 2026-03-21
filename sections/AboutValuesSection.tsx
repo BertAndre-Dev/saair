@@ -1,10 +1,11 @@
 import Image from "next/image";
 
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import { aboutValuesCopy } from "@/constants";
 
 const AboutValuesSection = () => {
   return (
-    <section className="bg-[#F7F9F7] py-16 md:py-24">
+    <ScrollReveal className="bg-[#F7F9F7] py-16 md:py-24">
       <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
         <h2 className="text-center text-3xl font-bold text-[#1E6B52] md:text-4xl">
           <span className="border-b-4 border-[#1E6B52] pb-2">
@@ -24,7 +25,7 @@ const AboutValuesSection = () => {
           />
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

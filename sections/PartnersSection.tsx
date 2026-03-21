@@ -1,9 +1,10 @@
 import MeterStaggeredGallery from "@/components/products/MeterStaggeredGallery";
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import { productsCopy } from "@/constants";
 
 const ProductsSection = () => {
   return (
-    <section
+    <ScrollReveal
       id={productsCopy.sectionId}
       className="bg-[#F5F7F7] py-16 md:py-24 md:px-8 xl:px-0"
     >
@@ -30,7 +31,7 @@ const ProductsSection = () => {
           <MeterStaggeredGallery images={productsCopy.images} />
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

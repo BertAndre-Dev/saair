@@ -1,9 +1,10 @@
 import MeterStaggeredGallery from "@/components/products/MeterStaggeredGallery";
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import { productsCopy, productsTechnicalCopy } from "@/constants";
 
 const ProductsTechnicalSection = () => {
   return (
-    <section className="bg-[#F5F7F7]">
+    <ScrollReveal className="bg-[#F5F7F7] py-16 md:py-24">
       <div className="mx-auto w-full max-w-4xl px-4 md:px-0">
         <h2 className="text-[30px] md:text-[40px] xl:text-[48px] font-bold uppercase tracking-wide text-[#008148]">
           {productsTechnicalCopy.title}
@@ -23,7 +24,7 @@ const ProductsTechnicalSection = () => {
           <MeterStaggeredGallery images={productsCopy.images} />
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

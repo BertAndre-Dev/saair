@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import PageTransition from "@/components/providers/PageTransition";
 import { appConfig } from "@/constants";
 import "./globals.css";
 
@@ -15,7 +16,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <PageTransition>{children}</PageTransition>
+      </body>
     </html>
   );
 };

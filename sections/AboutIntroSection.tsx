@@ -1,8 +1,9 @@
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import { aboutPageIntroCopy } from "@/constants";
 
 const AboutIntroSection = () => {
   return (
-    <section id="about" className="bg-[#F9FAFA] py-16 md:py-24">
+    <ScrollReveal id="about" className="bg-[#F9FAFA] py-16 md:py-24">
       <div className="mx-auto w-full max-w-4xl px-4 md:px-8">
         {aboutPageIntroCopy.intro.map((p) => (
           <p
@@ -28,7 +29,7 @@ const AboutIntroSection = () => {
           ))}
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

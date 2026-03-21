@@ -1,11 +1,12 @@
 import Image from "next/image";
 
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import Button from "@/components/ui/Button";
 import { aboutCopy } from "@/constants";
 
 const AboutSection = () => {
   return (
-    <section id={aboutCopy.sectionId} className="bg-[#F7F7F7] py-16 md:py-24">
+    <ScrollReveal id={aboutCopy.sectionId} className="bg-[#F7F7F7] py-16 md:py-24">
       <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div className="relative overflow-hidden rounded-lg h-[200px] md:h-[650px] ">
@@ -58,7 +59,7 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

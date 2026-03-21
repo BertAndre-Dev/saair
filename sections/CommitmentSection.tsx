@@ -138,6 +138,8 @@
 // export default CommitmentSection;
 
 import Image from "next/image";
+
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import { commitmentCopy } from "@/constants";
 
 const ImageTile = ({
@@ -193,7 +195,10 @@ const CommitmentSection = () => {
   const statSatisfaction = commitmentCopy.stats[1];
 
   return (
-    <section id="commitment" className="bg-[#001F3F] py-16 md:py-24 md:px-8 xl:px-0">
+    <ScrollReveal
+      id="commitment"
+      className="bg-[#001F3F] py-16 md:py-24 md:px-8 xl:px-0"
+    >
       <div className="mx-auto w-full max-w-6xl px-4 md:px-0">
         {/* Header */}
         <div className="max-w-4xl">
@@ -274,7 +279,7 @@ const CommitmentSection = () => {
           <ImageTile src="/commitment/front (6).svg" className="h-44" />
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 };
 

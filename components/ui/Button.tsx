@@ -1,10 +1,17 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   ReactNode,
 } from "react";
 
+import { buttonWhileHover, buttonWhileTap } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+
+const MotionLink = motion(Link);
 
 export type ButtonVariant = "primary" | "secondary" | "outline";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -16,17 +23,43 @@ type ButtonBaseProps = {
   children: ReactNode;
 };
 
+/** Framer Motion conflicts with React's drag/animation DOM handler names */
+type ConflictingMotionDOM =
+  | "onAnimationStart"
+  | "onAnimationEnd"
+  | "onDrag"
+  | "onDragStart"
+  | "onDragEnd";
+
+type ButtonDOMProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  ConflictingMotionDOM
+>;
+
+type AnchorForMotion = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  ConflictingMotionDOM
+>;
+
 export type ButtonProps =
   | (ButtonBaseProps &
-      ButtonHTMLAttributes<HTMLButtonElement> & {
+      ButtonDOMProps & {
         href?: never;
       })
   | (ButtonBaseProps &
-      AnchorHTMLAttributes<HTMLAnchorElement> & {
+      AnchorForMotion & {
         href: string;
       });
 
 const Button = (props: ButtonProps) => {
+  const reduced = useReducedMotion();
+  const motionProps = reduced
+    ? {}
+    : {
+        whileHover: buttonWhileHover,
+        whileTap: buttonWhileTap,
+      };
+
   const {
     variant = "primary",
     size = "md",
@@ -51,9 +84,14 @@ const Button = (props: ButtonProps) => {
   if ("href" in props && props.href) {
     const { href, ...anchorProps } = props;
     return (
-      <a href={href} className={sharedClassName} {...anchorProps}>
+      <MotionLink
+        href={href}
+        className={sharedClassName}
+        {...motionProps}
+        {...anchorProps}
+      >
         {children}
-      </a>
+      </MotionLink>
     );
   }
 
@@ -62,11 +100,15 @@ const Button = (props: ButtonProps) => {
     ButtonBaseProps & { href: string }
   >;
   return (
-    <button type={type} className={sharedClassName} {...buttonProps}>
+    <motion.button
+      type={type}
+      className={sharedClassName}
+      {...motionProps}
+      {...buttonProps}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 };
 
 export default Button;
-

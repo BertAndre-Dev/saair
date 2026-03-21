@@ -16,6 +16,7 @@ Marketing and product website for **SAAIR Energy**—an integrated energy soluti
 | Framework   | [Next.js](https://nextjs.org) 16 (App Router) |
 | UI          | React 19                        |
 | Styling     | Tailwind CSS 4                  |
+| Motion      | [Framer Motion](https://www.framer.com/motion/) (page transitions, scroll reveals, micro-interactions) |
 | Language    | TypeScript (strict)             |
 | Fonts       | **Aeonik TRIAL** (local files in `public/fonts/`; see `public/fonts/README.md`) |
 
@@ -32,11 +33,14 @@ app/                    # App Router routes & layouts
 
 components/
   layout/               # Navbar, Footer, Hero
+  motion/               # ScrollReveal, StaggerContainer, MotionSubmitButton
+  providers/            # PageTransition (AnimatePresence + route key)
   products/             # MeterStaggeredGallery, etc.
   services/             # ServiceDetailCard
   ui/                   # Shared UI primitives (where applicable)
 
 sections/               # Page sections (composable blocks)
+lib/animations.ts       # Shared Framer Motion variants & easings
 constants/index.ts      # Site config, nav, copy, hero props
 types/index.ts          # Shared TypeScript types
 public/                 # Static assets (logo, hero, meters, menu icons, fonts)
@@ -78,6 +82,7 @@ Primary navigation is defined in `constants/index.ts` (`navLinks`). The **Contac
 ## Design & assets
 
 - **Typography:** `font-sans` uses **Aeonik TRIAL** when files are present in `public/fonts/` (`@font-face` in `app/globals.css`). Otherwise the stack falls back to system UI fonts.
+- **Motion:** Route changes are wrapped by `PageTransition` in `app/layout.tsx` (`AnimatePresence` + `key={pathname}`). Sections use `ScrollReveal` / `StaggerContainer`; `useReducedMotion()` short-circuits heavy motion. Shared variants live in `lib/animations.ts`.
 - Brand greens (e.g. `#008148`) appear in buttons, headings, and icon SVGs.
 - **Hero** backgrounds use `/hero.gif` for page-title variants (About, Services, Products).
 - Product imagery lives under `public/meter/` and `public/service/`; menu icons under `public/hamburger.svg` and `public/close.svg`.

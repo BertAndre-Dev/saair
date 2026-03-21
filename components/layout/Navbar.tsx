@@ -1,11 +1,25 @@
 "use client";
 
+import {
+  motion,
+  useMotionTemplate,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useState } from "react";
 
+import {
+  buttonWhileHover,
+  buttonWhileTap,
+  easeNatural,
+} from "@/lib/animations";
 import { appConfig, navLinks, navbarCtas } from "@/constants";
+
+const MotionLink = motion(Link);
 
 function isNavLinkActive(pathname: string, href: string): boolean {
   if (href.startsWith("/#")) return false;
@@ -20,7 +34,17 @@ const pillInactive =
 const pillActive =
   "bg-emerald-600/35 text-emerald-950 ring-1 ring-emerald-700/20 backdrop-blur-sm";
 
-/** Split open/closed wrappers so `aria-hidden` is a string literal (Edge Tools / a11y linters). */
+const navShellVariants = { rest: {}, hover: {} } as const;
+
+const navUnderlineVariants = {
+  rest: { scaleX: 0, opacity: 0 },
+  hover: {
+    scaleX: 1,
+    opacity: 1,
+    transition: { duration: 0.25, ease: easeNatural },
+  },
+};
+
 function MobileNavDrawer({
   menuOpen,
   panelId,
@@ -95,13 +119,15 @@ function MobileNavDrawer({
           })}
         </nav>
 
-        <Link
+        <MotionLink
           href={navbarCtas.primary.href}
           onClick={closeMenu}
           className="mt-auto flex w-full max-w-[220px] items-center justify-center self-center rounded-full bg-[#008148] px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#008148]/90"
+          whileHover={buttonWhileHover}
+          whileTap={buttonWhileTap}
         >
           {navbarCtas.primary.label}
-        </Link>
+        </MotionLink>
       </div>
     </div>
   );
@@ -109,7 +135,7 @@ function MobileNavDrawer({
   if (menuOpen) {
     return (
       <div
-        className="fixed inset-0 z-50 lg:hidden pointer-events-auto"
+        className="pointer-events-auto fixed inset-0 z-50 lg:hidden"
         aria-hidden="false"
       >
         {overlay}
@@ -120,7 +146,7 @@ function MobileNavDrawer({
 
   return (
     <div
-      className="fixed inset-0 z-50 lg:hidden pointer-events-none"
+      className="pointer-events-none fixed inset-0 z-50 lg:hidden"
       aria-hidden="true"
     >
       {overlay}
@@ -133,6 +159,18 @@ const Navbar = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const panelId = useId();
+  const reduced = useReducedMotion();
+
+  const { scrollY } = useScroll();
+  const headerBg = useTransform(
+    scrollY,
+    [0, 120],
+    ["rgba(255,255,255,0.04)", "rgba(255,255,255,0.88)"],
+  );
+  const shadowOpacity = useTransform(scrollY, [0, 120], [0, 0.1]);
+  const shadowBlur = useTransform(scrollY, [0, 120], [0, 24]);
+  const shadowY = useTransform(scrollY, [0, 120], [0, 10]);
+  const boxShadow = useMotionTemplate`0 ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOpacity})`;
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -154,10 +192,20 @@ const Navbar = () => {
     return () => globalThis.removeEventListener("keydown", onKey);
   }, [menuOpen, closeMenu]);
 
+  const headerMotionStyle = reduced
+    ? undefined
+    : { backgroundColor: headerBg, boxShadow };
+
   return (
     <>
-      <header className="fixed left-0 right-0 top-0 z-60 bg-transparent">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 md:px-8 xl:px-0 py-3 lg:py-4">
+      <motion.header
+        className="fixed left-0 right-0 top-0 z-60"
+        initial={reduced ? false : { y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: easeNatural }}
+        style={headerMotionStyle}
+      >
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-8 xl:px-0 lg:py-4">
           <Link
             href="/"
             className={`flex flex-col items-center gap-0.5${
@@ -166,14 +214,13 @@ const Navbar = () => {
             aria-label={appConfig.siteName}
             onClick={closeMenu}
           >
-            {/* ✅ Fixed: consistent square container, object-contain to avoid distortion */}
-            <span className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
+            <span className="relative h-20 w-32 shrink-0 overflow-hidden rounded-full">
               <Image
                 src={appConfig.logoSrc}
                 alt=""
                 fill
                 className="object-contain"
-                sizes="(min-width: 1024px) 64px, 60px"
+                sizes="(min-width: 1024px) 128px, 120px"
                 priority
               />
             </span>
@@ -186,25 +233,35 @@ const Navbar = () => {
             {navLinks.map((link) => {
               const active = isNavLinkActive(pathname, link.href);
               return (
-                <Link
+                <MotionLink
                   key={link.href + link.label}
                   href={link.href}
-                  className={`${pillBase} ${active ? pillActive : pillInactive}`}
+                  className={`${pillBase} relative inline-flex flex-col items-center justify-center overflow-hidden ${active ? pillActive : pillInactive}`}
                   aria-current={active ? "page" : undefined}
+                  initial="rest"
+                  whileHover="hover"
+                  animate={active ? "hover" : "rest"}
+                  variants={navShellVariants}
                 >
-                  {link.label}
-                </Link>
+                  <span className="relative z-10">{link.label}</span>
+                  <motion.span
+                    variants={navUnderlineVariants}
+                    className="pointer-events-none absolute bottom-2 left-4 right-4 h-0.5 origin-center rounded-full bg-emerald-800/55"
+                  />
+                </MotionLink>
               );
             })}
           </nav>
 
           <div className="hidden lg:block">
-            <Link
+            <MotionLink
               href={navbarCtas.primary.href}
               className="inline-flex items-center justify-center rounded-full bg-[#008148] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#008148]/90"
+              whileHover={reduced ? undefined : buttonWhileHover}
+              whileTap={reduced ? undefined : buttonWhileTap}
             >
               {navbarCtas.primary.label}
-            </Link>
+            </MotionLink>
           </div>
 
           <div className="lg:hidden">
@@ -245,7 +302,7 @@ const Navbar = () => {
             )}
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <MobileNavDrawer
         menuOpen={menuOpen}
