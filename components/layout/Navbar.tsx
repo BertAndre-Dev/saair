@@ -1,32 +1,35 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import Button from "@/components/ui/Button";
-import { navLinks, navbarCtas, appConfig } from "@/constants";
+import { appConfig, navLinks, navbarCtas } from "@/constants";
 
 const Navbar = () => {
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-white/80 backdrop-blur dark:border-white/15 dark:bg-zinc-950/80">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
+    <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/15 bg-white/10 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl flex-col gap-0 px-4 py-3 md:flex-row md:items-center md:justify-between xl:gap-4 md:py-4">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-md font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
+          className=""
           aria-label={appConfig.siteName}
         >
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black">
-            {appConfig.siteName[0]}
-          </span>
-          <span>{appConfig.siteName}</span>
+            <Image
+              src={appConfig.logoSrc}
+              alt=""
+              fill
+              className="object-cover h-11 w-11"
+              priority
+            />
         </Link>
 
         <nav
-          className="hidden items-center gap-6 md:flex"
+          className="hidden flex-1 items-center justify-center gap-2 md:flex lg:gap-3"
           aria-label={appConfig.a11y.navbarPrimary}
         >
           {navLinks.map((link) => (
             <Link
-              key={link.href}
+              key={link.href + link.label}
               href={link.href}
-              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
+              className="rounded-full bg-white/25 px-4 py-2 text-sm font-medium text-emerald-900/90 transition-colors hover:bg-white/40"
             >
               {link.label}
             </Link>
@@ -34,21 +37,37 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden md:block">
-          <Button href={navbarCtas.primary.href}>{navbarCtas.primary.label}</Button>
-        </div>
-
-        <div className="md:hidden">
           <Link
             href={navbarCtas.primary.href}
-            className="text-sm font-medium text-zinc-900 hover:text-zinc-700 dark:text-zinc-50 dark:hover:text-zinc-200"
+            className="inline-flex items-center justify-center rounded-full bg-[#0d5c3d] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0d5c3d]/90"
           >
             {navbarCtas.primary.label}
           </Link>
         </div>
+
+        <nav
+          className="flex flex-wrap items-center gap-2 md:hidden"
+          aria-label={appConfig.a11y.navbarPrimary}
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.href + link.label}
+              href={link.href}
+              className="rounded-full bg-white/25 px-3 py-1.5 text-xs font-medium text-emerald-900/90"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href={navbarCtas.primary.href}
+            className="rounded-full bg-[#0d5c3d] px-3 py-1.5 text-xs font-semibold text-white"
+          >
+            {navbarCtas.primary.label}
+          </Link>
+        </nav>
       </div>
     </header>
   );
 };
 
 export default Navbar;
-

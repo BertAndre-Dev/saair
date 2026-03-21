@@ -1,101 +1,57 @@
-import type {
-  Feature,
-  FeatureIconKey,
-  NavLink,
-  PricingPlan,
-  Statistic,
-  Testimonial,
-} from "@/types";
+import type { NavLink, PricingPlan } from "@/types";
+
+import type { HeroProps } from "@/components/layout/Hero";
 
 export const appConfig = {
-  siteName: "Saair Energy",
+  siteName: "SAAIR Energy",
+  brandWordmark: "SAAIR",
+  logoSrc: "/logo.svg",
   a11y: {
     navbarPrimary: "Primary navigation",
     sectionNavigation: "Section navigation",
   },
   defaultMetadata: {
-    title: "Saair Energy | Modular Solar Solutions",
+    title: "SAAIR Energy | Integrated Energy Solutions",
     description:
-      "Deploy resilient, scalable solar infrastructure with modular design, fast deployment, and transparent performance.",
+      "Shaping Africa's energy future through integrated renewable, non-renewable, and technology solutions.",
   },
 };
 
 export const navLinks: NavLink[] = [
-  { href: "#features", label: "Features" },
-  { href: "#about", label: "About" },
-  { href: "#commitment", label: "Commitment" },
+  { href: "/", label: "Home" },
+  { href: "#about", label: "About us" },
   { href: "#services", label: "Services" },
-  { href: "#cta", label: "Contact" },
+  { href: "#products", label: "Products" },
 ];
 
 export const navbarCtas = {
-  primary: { href: "#cta", label: "Request a demo" },
+  primary: { href: "#cta", label: "Contact Us" },
 };
 
-export const heroCopy = {
-  badge: "Modular solar, engineered to scale",
-  titleLead: "Energy systems",
-  titleEmphasis: "built for speed",
-  titleTail: "and reliability.",
-  description:
-    "From concept to commissioning, Saair Energy delivers modular solar solutions designed for rapid deployment and consistent performance.",
-  primaryCta: { href: "#cta", label: "Get started" },
-  secondaryCta: { href: "#features", label: "Explore features" },
-};
-
-const featureIconKeys: FeatureIconKey[] = [
-  "bolt",
-  "shield",
-  "sparkles",
-  "chart",
-  "globe",
-  "users",
-];
-
-export const featuresCopy: {
-  title: string;
-  description: string;
-  items: Array<Feature>;
-} = {
-  title: "Everything you need to launch",
-  description:
-    "A modular foundation with the details that help teams deploy quickly and operate confidently.",
-  items: [
+/** Default props for `<Hero />` — override per page when reusing the component. */
+export const heroCopy: HeroProps = {
+  backgroundImageSrc:
+    "/hero.gif",
+  backgroundImageAlt: "",
+  title: "ALL ENERGY. ONE VISION",
+  subtitle:
+    "Shaping Africa's energy future through integrated renewable, non-renewable, and technology solutions that power progress and redefine possibility.",
+  bottomFeatureLabels: ["Energy Intelligence", "Energy Intelligence"],
+  cards: [
     {
-      icon: featureIconKeys[0],
-      title: "Fast deployment",
-      description:
-        "Pre-engineered modules reduce installation time and simplify on-site coordination.",
+      label: "Renewable Energy",
+      icon: "renewable",
+      tone: "light",
     },
     {
-      icon: featureIconKeys[1],
-      title: "Built-in resilience",
-      description:
-        "Design patterns that support stable output and easier maintenance over time.",
+      label: "Non-renewable Energy",
+      icon: "nonRenewable",
+      tone: "medium",
     },
     {
-      icon: featureIconKeys[2],
-      title: "Clean design system",
-      description:
-        "Reusable components that keep projects consistent across teams and sites.",
-    },
-    {
-      icon: featureIconKeys[3],
-      title: "Performance visibility",
-      description:
-        "Transparent metrics and reporting that help teams make faster decisions.",
-    },
-    {
-      icon: featureIconKeys[4],
-      title: "Scales across regions",
-      description:
-        "A flexible approach that adapts to local constraints and deployment timelines.",
-    },
-    {
-      icon: featureIconKeys[5],
-      title: "Support that sticks",
-      description:
-        "Guidance for implementation, onboarding, and ongoing optimization.",
+      label: "Technical & Technology Solutions",
+      icon: "technical",
+      tone: "dark",
     },
   ],
 };
@@ -116,63 +72,6 @@ export const aboutCopy = {
     src: "/who.svg",
     alt: "Who are we image",
   },
-};
-
-export const statisticsCopy: {
-  title: string;
-  description: string;
-  items: Statistic[];
-} = {
-  title: "Built to perform",
-  description:
-    "Designed for stable operation, with clear visibility across key outcomes.",
-  items: [
-    {
-      value: "99.9%",
-      label: "Uptime target",
-      description: "Reliability-focused design for continuous operation.",
-    },
-    {
-      value: "6–10",
-      label: "Weeks to launch",
-      description: "Modular planning that shortens timelines to commissioning.",
-    },
-    {
-      value: "30+",
-      label: "Deployment playbooks",
-      description: "Reusable patterns for different project constraints.",
-    },
-  ],
-};
-
-export const testimonialsCopy: {
-  title: string;
-  description: string;
-  items: Testimonial[];
-} = {
-  title: "Teams choose Saair for clarity",
-  description:
-    "See what partners say about speed, reliability, and deployment experience.",
-  items: [
-    {
-      quote:
-        "The modular approach made deployment feel predictable. Our teams moved faster with fewer surprises.",
-      name: "A. Rahman",
-      role: "Operations Lead",
-    },
-    {
-      quote:
-        "Clear documentation and consistent components improved our delivery cadence from the first project.",
-      name: "M. Chen",
-      role: "Program Manager",
-    },
-    {
-      quote:
-        "Performance visibility helped us manage outcomes and quickly iterate on improvements.",
-      name: "S. Alvarez",
-      role: "Technical Director",
-    },
-  ],
 };
 
 export const servicesCopy = {
