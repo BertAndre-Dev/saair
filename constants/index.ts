@@ -6,6 +6,7 @@ export const appConfig = {
   siteName: "SAAIR Energy",
   brandWordmark: "SAAIR",
   logoSrc: "/logo.svg",
+  logoSrc2: "/logo2.svg",
   a11y: {
     navbarPrimary: "Primary navigation",
     sectionNavigation: "Section navigation",
@@ -257,7 +258,7 @@ export const servicesPageCards = [
     title: "Electric Mobility Infrastructure",
     description:
       "SAAIR Energy is actively supporting the growth of electric mobility through the development of EV charging infrastructure and supporting technologies that enable the adoption of electric transportation systems.",
-    imageSrc: "/service/service3.svg",
+    imageSrc: "/meter/meter6.svg",
     iconSrc: "/service/message-text.svg",
   },
   {
@@ -265,7 +266,7 @@ export const servicesPageCards = [
     title: "Electric Monitoring & Digital Infrastructure",
     description:
       "Through advanced sensors, monitoring technologies, and digital platforms, SAAIR Energy enables real-time monitoring of energy systems, infrastructure performance, and consumption patterns. These tools support improved system management, predictive maintenance, and operational efficiency.",
-    imageSrc: "/meter/meter3.svg",
+    imageSrc: "/meter/meter5.svg",
     iconSrc: "/service/ranking.svg",
   },
 ] as const;
@@ -417,32 +418,30 @@ export const footerCopy = {
     {
       title: "Socials",
       links: [
-        { href: "#", label: "info@saairenergy.com" },
-        { href: "#", label: "+234 913 866 7927" },
+        { href: "mailto:info@saairenergy.com", label: "info@saairenergy.com" },
+        { href: "tel:+2349138667927", label: "+234 913 866 7927" },
       ],
     },
     {
       title: "Quick Links",
       links: [
-        { href: "#", label: "Home" },
-        { href: "#", label: "About" },
-        { href: "#", label: "Services" },
-        { href: "#", label: "Products" },
+        { href: "/", label: "Home" },
+        { href: "/about", label: "About" },
+        { href: "/services", label: "Services" },
+        { href: "/products", label: "Products" },
       ],
     },
     {
       title: "Services",
       links: [
-        { href: "#", label: "Renewable Energy" },
-        { href: "#", label: "Non- Renewable Energy" },
-        { href: "#", label: "Technical & Technological Solutions" },
+        { href: "/services", label: "Renewable Energy" },
+        { href: "/services", label: "Non- Renewable Energy" },
+        { href: "/services", label: "Technical & Technological Solutions" },
       ],
     },
     {
       title: "Products",
-      links: [
-        { href: "#", label: "Smart Meters" },
-      ],
+      links: [{ href: "/products", label: "Smart Meters" }],
     },
   ],
   legal: {

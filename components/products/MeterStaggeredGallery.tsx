@@ -13,8 +13,8 @@ export type MeterGalleryImages = {
 const DotBlock = ({ variant }: { variant: "gold" | "gold2" }) => {
   const gradient =
     variant === "gold"
-      ? "bg-[radial-gradient(circle,#E6C14A_2px,transparent_2px)]"
-      : "bg-[radial-gradient(circle,#FDCC0D_3px,transparent_3px)]";
+      ? "bg-[radial-gradient(circle,#FDCC0D,transparent_3px)]"
+      : "bg-[radial-gradient(circle,#FDCC0D,transparent_3px)]";
 
   return (
     <div
@@ -32,14 +32,14 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
   return (
     <>
       <div className="relative hidden h-[520px] md:block">
-        <div className="absolute left-0 top-8">
+        <div className="absolute left-0 top-70">
           <DotBlock variant="gold" />
         </div>
-        <div className="absolute right-0 top-0">
+        <div className="absolute right-0 top-5">
           <DotBlock variant="gold2" />
         </div>
 
-        <div className="absolute left-0 top-16 z-10 h-[260px] w-[240px] overflow-hidden rounded-2xl">
+        <div className="absolute left-0 top-16 z-10 h-[260px] w-[240px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
           <div className="relative h-full w-full">
             <Image
               src={images.md.leftBack.src}
@@ -52,7 +52,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
           </div>
         </div>
 
-        <div className="absolute left-24 top-36 z-20 h-[260px] w-[260px] overflow-hidden rounded-2xl">
+        <div className="absolute left-24 top-36 z-20 h-[260px] w-[260px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
           <div className="relative h-full w-full">
             <Image
               src={images.md.leftFront.src}
@@ -65,7 +65,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
           </div>
         </div>
 
-        <div className="absolute right-0 top-20 z-10 h-[260px] w-[240px] overflow-hidden rounded-2xl">
+        <div className="absolute right-0 top-20 z-10 h-[260px] w-[240px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
           <div className="relative h-full w-full">
             <Image
               src={images.md.rightBack.src}
@@ -77,7 +77,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
           </div>
         </div>
 
-        <div className="absolute right-16 top-32 z-20 h-[280px] w-[280px] overflow-hidden rounded-2xl">
+        <div className="absolute right-16 top-32 z-20 h-[280px] w-[280px] overflow-hidden rounded-2xl transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:z-30 hover:shadow-2xl cursor-pointer">
           <div className="relative h-full w-full">
             <Image
               src={images.md.rightFront.src}
@@ -95,7 +95,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
         {images.sm.map((img, idx) => (
           <div
             key={img.alt}
-            className="relative h-72 overflow-hidden rounded-2xl bg-white"
+            className="relative h-72 overflow-hidden rounded-2xl bg-white transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl cursor-pointer"
           >
             <Image
               src={img.src}

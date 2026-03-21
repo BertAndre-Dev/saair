@@ -1,7 +1,28 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import { footerCopy, appConfig } from "@/constants";
-import Image from "next/image";
+import { appConfig, footerCopy } from "@/constants";
+
+const footerLinkClass =
+  "text-base xl:text-[18px] font-normal text-white hover:text-gray-300 cursor-pointer";
+
+function FooterLink({
+  href,
+  label,
+}: Readonly<{ href: string; label: string }>) {
+  if (href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return (
+      <a href={href} className={footerLinkClass}>
+        {label}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={footerLinkClass}>
+      {label}
+    </Link>
+  );
+}
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -28,13 +49,8 @@ const Footer = () => {
               </div>
               <ul className="space-y-4">
                 {column.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-base xl:text-[18px] font-normal text-white hover:text-gray-300 cursor-pointer"
-                    >
-                      {link.label}
-                    </Link>
+                  <li key={`${link.href}-${link.label}`}>
+                    <FooterLink href={link.href} label={link.label} />
                   </li>
                 ))}
               </ul>

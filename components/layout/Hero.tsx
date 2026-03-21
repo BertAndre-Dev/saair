@@ -22,7 +22,6 @@ export type HeroProps = {
 };
 
 const CardIcon = ({ kind }: { kind: HeroCard["icon"] }) => {
-  const common = "h-8 w-8 shrink-0 text-white";
   if (kind === "renewable") {
     return (
       <Image

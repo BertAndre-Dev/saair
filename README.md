@@ -17,13 +17,13 @@ Marketing and product website for **SAAIR Energy**—an integrated energy soluti
 | UI          | React 19                        |
 | Styling     | Tailwind CSS 4                  |
 | Language    | TypeScript (strict)             |
-| Fonts       | Geist / Geist Mono (via `next/font`) |
+| Fonts       | **Aeonik TRIAL** (local files in `public/fonts/`; see `public/fonts/README.md`) |
 
 ## Project structure
 
 ```text
 app/                    # App Router routes & layouts
-  layout.tsx            # Root layout, metadata, fonts
+  layout.tsx            # Root layout, metadata
   page.tsx              # Home
   globals.css           # Tailwind import & theme tokens
   about/                # About page + layout metadata
@@ -39,7 +39,7 @@ components/
 sections/               # Page sections (composable blocks)
 constants/index.ts      # Site config, nav, copy, hero props
 types/index.ts          # Shared TypeScript types
-public/                 # Static assets (logo, hero, meters, menu icons)
+public/                 # Static assets (logo, hero, meters, menu icons, fonts)
 ```
 
 Path alias: `@/*` maps to the repository root (see `tsconfig.json`).
@@ -77,6 +77,7 @@ Primary navigation is defined in `constants/index.ts` (`navLinks`). The **Contac
 
 ## Design & assets
 
+- **Typography:** `font-sans` uses **Aeonik TRIAL** when files are present in `public/fonts/` (`@font-face` in `app/globals.css`). Otherwise the stack falls back to system UI fonts.
 - Brand greens (e.g. `#008148`) appear in buttons, headings, and icon SVGs.
 - **Hero** backgrounds use `/hero.gif` for page-title variants (About, Services, Products).
 - Product imagery lives under `public/meter/` and `public/service/`; menu icons under `public/hamburger.svg` and `public/close.svg`.
