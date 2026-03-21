@@ -36,7 +36,7 @@ export const heroCopy: HeroProps = {
   title: "ALL ENERGY. ONE VISION",
   subtitle:
     "Shaping Africa's energy future through integrated renewable, non-renewable, and technology solutions that power progress and redefine possibility.",
-  bottomFeatureLabels: ["Energy Intelligence", "Energy Intelligence"],
+  bottomFeatureLabels: ["Sustainability", "Clean Energy"],
   cards: [
     {
       label: "Renewable Energy",

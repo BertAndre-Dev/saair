@@ -47,26 +47,24 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed left-0 right-0 top-0 z-60 border-b border-white/15 bg-white/10 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 lg:py-4">
+      <header className="fixed left-0 right-0 top-0 z-60 bg-transparent">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 md:px-8 xl:px-0 py-3 lg:py-4">
           <Link
             href="/"
             className="flex flex-col items-center gap-0.5"
             aria-label={appConfig.siteName}
             onClick={closeMenu}
           >
-            <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full lg:h-12 lg:w-12">
+            {/* ✅ Fixed: consistent square container, object-contain to avoid distortion */}
+            <span className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
               <Image
                 src={appConfig.logoSrc}
                 alt=""
                 fill
-                className="object-cover"
-                sizes="48px"
+                className="object-contain"
+                sizes="(min-width: 1024px) 64px, 60px"
                 priority
               />
-            </span>
-            <span className="text-[10px] font-semibold tracking-wide text-emerald-950 lg:text-xs">
-              {appConfig.brandWordmark}
             </span>
           </Link>
 
@@ -158,13 +156,14 @@ const Navbar = () => {
               className="mx-auto flex flex-col items-center gap-1"
               onClick={closeMenu}
             >
-              <span className="relative h-14 w-14 overflow-hidden rounded-full">
+              {/* ✅ Fixed: consistent square container, object-contain to avoid distortion */}
+              <span className="relative h-12 w-12 overflow-hidden rounded-full">
                 <Image
                   src={appConfig.logoSrc}
                   alt=""
                   fill
-                  className="object-cover"
-                  sizes="56px"
+                  className="object-contain"
+                  sizes="48px"
                 />
               </span>
               <span className="text-xs font-semibold tracking-wide text-emerald-950">

@@ -25,76 +25,32 @@ const CardIcon = ({ kind }: { kind: HeroCard["icon"] }) => {
   const common = "h-8 w-8 shrink-0 text-white";
   if (kind === "renewable") {
     return (
-      <svg
-        className={common}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        aria-hidden="true"
-      >
-        <path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z" />
-        <path
-          d="M19.5 8.5a7 7 0 1 1-9.9 9.9"
-          strokeLinecap="round"
-        />
-      </svg>
+      <Image
+        src="/renewable-energy.svg"
+        alt="Renewable"
+        width={20}
+        height={20}
+      />
     );
   }
   if (kind === "nonRenewable") {
     return (
-      <svg
-        className={common}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        aria-hidden="true"
-      >
-        <path d="M4 22h16" strokeLinecap="round" />
-        <path d="M6 22V10l4-2v14" />
-        <path d="M14 22V8l4 2v12" />
-        <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      </svg>
+      <Image src="/fuel-tank.svg" alt="Non-Renewable" width={20} height={20} />
     );
   }
   return (
-    <svg
-      className={common}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      aria-hidden="true"
-    >
-      <rect x="4" y="4" width="16" height="16" rx="2" />
-      <path d="M9 9h.01M15 9h.01M9 15h6" strokeLinecap="round" />
-      <path d="M12 12v3" strokeLinecap="round" />
-    </svg>
+    <Image src="/nano-technology.svg" alt="Technical" width={20} height={20} />
   );
 };
 
 const EnergyIntelIcon = () => (
-  <svg
-    className="h-5 w-5 shrink-0 text-white"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    aria-hidden="true"
-  >
-    <path
-      d="M12 3c-4.5 3-7 6.5-7 10a7 7 0 0 0 14 0c0-3.5-2.5-7-7-10Z"
-      strokeLinejoin="round"
-    />
-    <path d="M12 11v6M9 14h6" strokeLinecap="round" />
-  </svg>
+  <Image src="/Group.svg" alt="Energy Intelligence" width={20} height={20} />
 );
 
 const toneClass: Record<HeroCardTone, string> = {
-  light: "border border-white/40 bg-white/20 backdrop-blur-md",
-  medium: "border border-white/35 bg-emerald-900/35 backdrop-blur-md",
-  dark: "border border-white/25 bg-emerald-950/55 backdrop-blur-md",
+  light: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
+  medium: "border border-[#00814E24] bg-[#00814E24]  backdrop-blur-md",
+  dark: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
 };
 
 const Hero = ({
@@ -134,7 +90,7 @@ const Hero = ({
 
   return (
     <section
-      className={`relative isolate min-h-[min(90vh,920px)] overflow-hidden ${className}`}
+      className={`relative isolate min-h-[min(60vh,920px)] overflow-hidden ${className}`}
     >
       <div className="absolute inset-0">
         <Image
@@ -148,7 +104,7 @@ const Hero = ({
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto mt-24 flex w-full max-w-6xl flex-col gap-12 px-4 pb-20 md:mt-28 md:flex-row md:items-center md:justify-between md:pb-24 md:pt-8">
+      <div className="relative z-10 mx-auto mt-28 flex w-full max-w-6xl flex-col gap-12 px-4 md:px-8 xl:px-0 pb-20 md:pb-0 md:mt-30 md:flex-row md:items-center md:justify-between">
         <div className="max-w-xl md:w-[58%]">
           <h1 className="text-4xl font-bold uppercase leading-tight tracking-wide text-white md:text-5xl lg:text-[3.25rem]">
             {title}
@@ -163,7 +119,7 @@ const Hero = ({
               {bottomFeatureLabels.map((label, index) => (
                 <div
                   key={`${label}-${index}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm"
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white"
                 >
                   <EnergyIntelIcon />
                   <span>{label}</span>
@@ -181,7 +137,7 @@ const Hero = ({
                 className={`flex items-center gap-4 rounded-2xl border border-[#00814E24] bg-[#00814E24] px-5 py-4 ${toneClass[card.tone]}`}
               >
                 <CardIcon kind={card.icon} />
-                <span className="text-sm font-light text-white md:text-xl lg:text-2xl">
+                <span className="text-[14px] md:text-[20px] xl:text-[24px] font-light text-white">
                   {card.label}
                 </span>
               </div>
