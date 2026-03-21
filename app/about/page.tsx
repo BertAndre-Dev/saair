@@ -4,8 +4,7 @@ import Footer from "@/components/layout/Footer";
 
 import CTASection from "@/sections/CTASection";
 import AboutIntroSection from "@/sections/AboutIntroSection";
-import AboutMissionSection from "@/sections/AboutMissionSection";
-import AboutVisionSection from "@/sections/AboutVisionSection";
+import AboutMissionVisionApproachSection from "@/sections/AboutMissionVisionApproachSection";
 import AboutValuesSection from "@/sections/AboutValuesSection";
 
 import { aboutPageHero } from "@/constants";
@@ -16,8 +15,7 @@ const AboutPage = () => {
       <Navbar />
       <Hero {...aboutPageHero} />
       <AboutIntroSection />
-      <AboutMissionSection />
-      <AboutVisionSection />
+      <AboutMissionVisionApproachSection />
       <AboutValuesSection />
       <CTASection />
       <Footer />

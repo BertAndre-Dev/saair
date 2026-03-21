@@ -149,20 +149,32 @@ export const aboutPageIntroCopy = {
   ],
 } as const;
 
-export const aboutMissionCopy = {
-  title: "Mission",
-  description:
-    "SAAIR Energy delivers integrated energy infrastructure and technology solutions across Nigeria and emerging markets. We combine engineering depth, digital platforms, and strategic partnerships to help clients capture value across the energy value chain—from generation and distribution to monitoring, metering, and mobility.",
-  imageSrc: "/about-us/mission.svg",
-  imageAlt: "SAAIR Energy mission",
-} as const;
-
-export const aboutVisionCopy = {
-  title: "Vision",
-  description:
-    "To be a trusted partner for modern, resilient energy systems—bridging conventional and renewable assets with data-driven operations so businesses, utilities, and communities can scale with confidence.",
-  imageSrc: "/about-us/vission.svg",
-  imageAlt: "SAAIR Energy vision",
+export const aboutMissionVisionApproachCopy = {
+  iconSrc: "/Group%20(1).svg",
+  iconAlt: "SAAIR Energy leaves mark",
+  mission: {
+    title: "Mission",
+    body:
+      "Our mission is to design, deploy, and manage modern energy infrastructure that combines conventional energy resources, renewable systems, and advanced digital technologies to deliver reliable and efficient energy solutions.",
+  },
+  vision: {
+    title: "Vision",
+    body:
+      "To become a leading integrated energy infrastructure and technology company driving reliable, efficient, and sustainable energy systems across emerging markets.",
+  },
+  approach: {
+    title: "Our Approach",
+    intro: [
+      "SAAIR Energy adopts an integrated approach to energy development by combining infrastructure, technology, and strategic partnerships.",
+      "The company focuses on:",
+    ],
+    bullets: [
+      "Developing scalable energy infrastructure",
+      "Leveraging digital technologies to improve system efficiency",
+      "Integrating renewable and conventional energy systems",
+      "Supporting national and regional energy development initiatives",
+    ],
+  },
 } as const;
 
 export const aboutValuesCopy = {
