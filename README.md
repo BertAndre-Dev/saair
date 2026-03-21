@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SAAIR Energy
 
-## Getting Started
+Marketing and product website for **SAAIR Energy**—an integrated energy solutions company. Built with the Next.js App Router, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Responsive layout** with a fixed header and **mobile/tablet drawer navigation** (screens smaller than `lg`): logo and menu trigger only; full nav links and CTA live in a left slide-out panel with backdrop (`/public/hamburger.svg`, `/public/close.svg`).
+- **Multi-page experience**: Home, About, Services, Products, plus shared **Hero**, **CTA**, and **Footer** components.
+- **Route-aware navigation**: active page highlighting using `usePathname()`.
+- **Content-driven UI**: copy, nav links, and hero defaults centralized in `constants/index.ts`.
+
+## Tech stack
+
+| Area        | Choice                          |
+| ----------- | ------------------------------- |
+| Framework   | [Next.js](https://nextjs.org) 16 (App Router) |
+| UI          | React 19                        |
+| Styling     | Tailwind CSS 4                  |
+| Language    | TypeScript (strict)             |
+| Fonts       | Geist / Geist Mono (via `next/font`) |
+
+## Project structure
+
+```text
+app/                    # App Router routes & layouts
+  layout.tsx            # Root layout, metadata, fonts
+  page.tsx              # Home
+  globals.css           # Tailwind import & theme tokens
+  about/                # About page + layout metadata
+  products/             # Products (smart meters) + layout metadata
+  services/             # Services + layout metadata
+
+components/
+  layout/               # Navbar, Footer, Hero
+  products/             # MeterStaggeredGallery, etc.
+  services/             # ServiceDetailCard
+  ui/                   # Shared UI primitives (where applicable)
+
+sections/               # Page sections (composable blocks)
+constants/index.ts      # Site config, nav, copy, hero props
+types/index.ts          # Shared TypeScript types
+public/                 # Static assets (logo, hero, meters, menu icons)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Path alias: `@/*` maps to the repository root (see `tsconfig.json`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Requirements:** Node.js 20+ recommended (aligned with `@types/node`).
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Command        | Description              |
+| -------------- | ------------------------ |
+| `npm run dev`  | Development server       |
+| `npm run build`| Production build         |
+| `npm run start`| Start production server  |
+| `npm run lint` | ESLint                   |
 
-## Deploy on Vercel
+## Pages & routing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Route        | Purpose |
+| ------------ | ------- |
+| `/`          | Landing: hero, about teaser, services teaser, products teaser, CTA |
+| `/about`     | Company story, mission, vision, values |
+| `/services`  | Full services grid (five cards) |
+| `/products`  | Smart meters overview + technical specification + meter gallery |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Primary navigation is defined in `constants/index.ts` (`navLinks`). The **Contact Us** control targets the homepage CTA section (`/#cta`) unless you add a dedicated contact route.
+
+## Design & assets
+
+- Brand greens (e.g. `#008148`) appear in buttons, headings, and icon SVGs.
+- **Hero** backgrounds use `/hero.gif` for page-title variants (About, Services, Products).
+- Product imagery lives under `public/meter/` and `public/service/`; menu icons under `public/hamburger.svg` and `public/close.svg`.
+
+## Agent / contributor notes
+
+- This repo includes **`AGENTS.md`** with Next.js-specific guidance—check `node_modules/next/dist/docs/` when APIs differ from older Next.js versions.
+- Prefer editing **copy and nav** in `constants/index.ts` before hard-coding strings in components.
+
+## Deployment
+
+Build a production bundle with `npm run build`, then run `npm run start`. Deploy to any platform that supports Next.js (e.g. [Vercel](https://vercel.com)).
+
+## License
+
+Private project (`"private": true` in `package.json`). All rights reserved unless otherwise stated by the repository owner.
