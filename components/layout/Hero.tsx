@@ -76,8 +76,6 @@ const Hero = ({
   const reduced = useReducedMotion();
 
   const slides = useMemo(() => {
-    // Slider images live in `/public/sliders/` in this repo.
-    // If none are available, we fall back to the provided background image.
     return SLIDER_IMAGES.length > 0 ? [...SLIDER_IMAGES] : [backgroundImageSrc];
   }, [backgroundImageSrc]);
 
@@ -111,17 +109,14 @@ const Hero = ({
           transition={{ duration: 0.55, ease: easeNatural }}
         >
           {!canAnimate ? (
-            <>
-              <Image
-                src={slides[0]}
-                alt={backgroundImageAlt}
-                fill
-                className="object-cover"
-                priority
-                sizes="100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
-            </>
+            <Image
+              src={slides[0]}
+              alt={backgroundImageAlt}
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
+            />
           ) : (
             <AnimatePresence initial={false}>
               <motion.div
@@ -140,10 +135,11 @@ const Hero = ({
                   priority={activeIndex === 0}
                   sizes="100vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
               </motion.div>
             </AnimatePresence>
           )}
+
+          <div className="absolute inset-0" />
         </motion.div>
 
         <div className="relative z-10 px-4 py-28 text-center md:py-32">
@@ -184,9 +180,7 @@ const Hero = ({
                   disabled={!canAnimate}
                   aria-label={`Slide ${idx + 1}`}
                   className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                    isActive
-                      ? "bg-white"
-                      : "bg-white/40 hover:bg-white/70"
+                    isActive ? "bg-white" : "bg-white/40 hover:bg-white/70"
                   }`}
                 />
               );
@@ -212,17 +206,14 @@ const Hero = ({
         transition={{ duration: 0.6, ease: easeNatural }}
       >
         {!canAnimate ? (
-          <>
-            <Image
-              src={slides[0]}
-              alt={backgroundImageAlt}
-              fill
-              className="scale-105 object-cover"
-              priority
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
-          </>
+          <Image
+            src={slides[0]}
+            alt={backgroundImageAlt}
+            fill
+            className="scale-105 object-cover"
+            priority
+            sizes="100vw"
+          />
         ) : (
           <AnimatePresence initial={false}>
             <motion.div
@@ -241,10 +232,11 @@ const Hero = ({
                 priority={activeIndex === 0}
                 sizes="100vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
             </motion.div>
           </AnimatePresence>
         )}
+
+        <div className="absolute inset-0" />
       </motion.div>
 
       {slides.length > 1 ? (
@@ -259,9 +251,7 @@ const Hero = ({
                 disabled={!canAnimate}
                 aria-label={`Slide ${idx + 1}`}
                 className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                  isActive
-                    ? "bg-white"
-                    : "bg-white/40 hover:bg-white/70"
+                  isActive ? "bg-white" : "bg-white/40 hover:bg-white/70"
                 }`}
               />
             );
