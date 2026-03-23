@@ -4,7 +4,7 @@ import { productsCopy, productsTechnicalCopy } from "@/constants";
 
 const ProductsTechnicalSection = () => {
   return (
-    <ScrollReveal className="bg-[#F5F7F7] py-16 md:py-24">
+    <ScrollReveal className="bg-[#F5F7F7]">
       <div className="mx-auto w-full max-w-4xl px-4 md:px-0">
         <h2 className="text-[30px] md:text-[40px] xl:text-[48px] font-bold uppercase tracking-wide text-[#008148]">
           {productsTechnicalCopy.title}

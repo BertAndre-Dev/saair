@@ -11,6 +11,7 @@ export const appConfig = {
     navbarPrimary: "Primary navigation",
     sectionNavigation: "Section navigation",
   },
+  fontSans: "Aeonik_TRIAL",
   defaultMetadata: {
     title: "SAAIR Energy | Integrated Energy Solutions",
     description:
@@ -262,7 +263,7 @@ export const servicesPageCards = [
     title: "Smart Metering & Energy Technology",
     description:
       "We design and deploy smart metering, digital platforms, and energy technology that improve billing accuracy, demand visibility, and integration across utilities and commercial operations—so teams can manage assets with clarity and scale.",
-    imageSrc: "/meter/meter2.svg",
+    imageSrc: "/meter/meter4.svg",
     iconSrc: "/service/message-text.svg",
   },
   {
@@ -428,37 +429,38 @@ export const footerCopy = {
   },
   columns: [
     {
-      title: "Socials",
-      links: [
-        { href: "mailto:info@saairenergy.com", label: "info@saairenergy.com" },
-        { href: "tel:+2349138667927", label: "+234 913 866 7927" },
-      ],
-    },
-    {
-      title: "Quick Links",
-      links: [
-        { href: "/", label: "Home" },
-        { href: "/about", label: "About" },
-        { href: "/services", label: "Services" },
-        { href: "/products", label: "Products" },
-      ],
-    },
-    {
-      title: "Services",
+      title: "Explore Segments",
       links: [
         { href: "/services", label: "Renewable Energy" },
         { href: "/services", label: "Non- Renewable Energy" },
         { href: "/services", label: "Technical & Technological Solutions" },
+        { href: "/services", label: "Oil & Gas Infrastructure" },
+        { href: "/services", label: "Electric Mobility Infrastructure" },
       ],
     },
     {
-      title: "Products",
-      links: [{ href: "/products", label: "Smart Meters" }],
+      title: "Company",
+      links: [
+        { href: "/about", label: "About Us" },
+        { href: "/services", label: "Services" },
+        { href: "/products", label: "Products" },
+      ],
     },
+  ],
+  contact: {
+    title: "Contacts",
+    address: "20 Awudu Ekpebeka Blvd, Lekki Phase 1, Lagos Nigeria.",
+    email: "info@saairenergy.com",
+    phone: "+234 913 866 7927",
+  },
+  socials: [
+    { href: "https://www.instagram.com/saairenergy?igsh=b2lwNWJ4dzJ2dHlk", label: "Instagram", icon: "instagram" },
+    { href: "https://www.linkedin.com/company/saair-energy/", label: "LinkedIn", icon: "linkedin" },
+    { href: "https://www.facebook.com/share/1JokzY7gVH/?mibextid=wwXIfr", label: "Facebook", icon: "facebook" }, 
   ],
   legal: {
     prefix: "©",
-    suffix: "All rights reserved.",
+    suffix: "SAAIR Energy Limited. All rights reserved.",
   },
 };
 

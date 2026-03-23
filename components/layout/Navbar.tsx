@@ -62,7 +62,7 @@ function MobileNavDrawer({
   const panel = (
     <div
       id={panelId}
-      className={`absolute left-0 top-0 flex h-full w-[min(88vw,20rem)] flex-col rounded-tr-4xl bg-slate-50 pb-6 pt-24 shadow-xl transition-transform duration-300 ease-out ${
+      className={`absolute left-0 top-0 flex h-full w-[min(88vw,20rem)] flex-col rounded-tr-4xl bg-transparent pb-6 pt-24 shadow-xl transition-transform duration-300 ease-out ${
         menuOpen ? "translate-x-0" : "-translate-x-full"
       }`}
       role="dialog"

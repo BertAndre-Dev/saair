@@ -19,7 +19,7 @@ const ServicesSection = () => {
           <div className="text-[18px] font-semibold text-[#00804D] md:text-[20px] xl:text-[24px]">
             {servicesCopy.subtitle}
           </div>
-          <p className="mx-auto mt-6 max-w-3xl text-[18px] leading-7 text-[#F7F7F7] md:text-[20px] xl:text-[24px]">
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-[#F7F7F7] md:text-[18px]">
             {servicesCopy.description}
           </p>
         </div>

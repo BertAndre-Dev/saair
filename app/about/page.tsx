@@ -5,7 +5,6 @@ import Footer from "@/components/layout/Footer";
 import CTASection from "@/sections/CTASection";
 import AboutIntroSection from "@/sections/AboutIntroSection";
 import AboutMissionVisionApproachSection from "@/sections/AboutMissionVisionApproachSection";
-import AboutValuesSection from "@/sections/AboutValuesSection";
 
 import { aboutPageHero } from "@/constants";
 
@@ -16,7 +15,6 @@ const AboutPage = () => {
       <Hero {...aboutPageHero} />
       <AboutIntroSection />
       <AboutMissionVisionApproachSection />
-      <AboutValuesSection />
       <CTASection />
       <Footer />
     </main>

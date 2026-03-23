@@ -14,7 +14,7 @@ const ProductsSection = () => {
             <h2 className="text-[30px] font-bold uppercase tracking-wide text-[#00804D] md:text-[40px] xl:text-[48px]">
               {productsCopy.title}
             </h2>
-            <div className="mt-4 inline-flex items-center rounded-md bg-[#4C4C4C] px-4 py-2 text-[18px] font-semibold tracking-wider text-white md:text-[20px] xl:text-[24px]">
+            <div className="inline-flex items-center rounded-md bg-[#001F3F] px-4 py-2 text-[18px] font-semibold tracking-wider text-white md:text-[20px]">
               {productsCopy.badgeLabel}
             </div>
 
