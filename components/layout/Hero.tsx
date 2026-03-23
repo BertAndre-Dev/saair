@@ -51,7 +51,7 @@ const EnergyIntelIcon = () => (
 
 const toneClass: Record<HeroCardTone, string> = {
   light: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
-  medium: "border border-[#00814E24] bg-[#00814E24]  backdrop-blur-md",
+  medium: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
   dark: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
 };
 
@@ -71,6 +71,8 @@ const Hero = ({
     const words = title.split(/\s+/).filter(Boolean);
     return (
       <section
+        // className={`relative isolate flex h-[85vh] items-center justify-center overflow-hidden ${className}`}
+      
         className={`relative isolate flex min-h-[min(75vh,720px)] items-center justify-center overflow-hidden ${className}`}
       >
         <motion.div
@@ -122,7 +124,7 @@ const Hero = ({
 
   return (
     <section
-      className={`relative isolate min-h-[min(60vh,920px)] overflow-hidden ${className}`}
+      className={`relative isolate flex min-h-[min(60vh,920px)] flex-col ${className}`}
     >
       <motion.div
         className="absolute inset-0"
@@ -134,14 +136,18 @@ const Hero = ({
           src={backgroundImageSrc}
           alt={backgroundImageAlt}
           fill
-          className="scale-105 object-cover blur-sm"
+          className="scale-105 object-cover"
           priority
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
       </motion.div>
 
-      <div className="relative z-10 mx-auto mt-28 flex w-full max-w-6xl flex-col gap-12 px-4 pb-20 md:mt-30 md:flex-row md:items-center md:justify-between md:pb-0 md:px-8 xl:px-0">
+      {/* mt-auto pushes content to the bottom of the hero */}
+      <div
+        style={{ paddingBottom: "4rem" }}
+        className="relative z-10 mx-auto mt-auto flex w-full max-w-6xl flex-col gap-12 px-4 md:flex-row md:items-end md:justify-between md:px-8 xl:px-0"
+      >
         <div className="max-w-xl md:w-[58%]">
           <h1 className="text-4xl font-bold uppercase leading-tight tracking-wide text-white md:text-5xl lg:text-[3.25rem]">
             {reduced ? (
@@ -251,7 +257,7 @@ const Hero = ({
                 className={`flex items-center gap-4 rounded-2xl border border-[#00814E24] bg-[#00814E24] px-5 py-4 ${toneClass[card.tone]}`}
               >
                 <CardIcon kind={card.icon} />
-                <span className="text-[14px] font-light text-white md:text-[20px] xl:text-[24px]">
+                <span className="text-[14px] font-light text-white md:text-[20px]">
                   {card.label}
                 </span>
               </motion.div>
