@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-
 import PageTransition from "@/components/providers/PageTransition";
 import { appConfig } from "@/constants";
 import "./globals.css";
@@ -7,6 +6,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: appConfig.defaultMetadata.title,
   description: appConfig.defaultMetadata.description,
+  icons: {
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
+  },
 };
 
 const RootLayout = ({
