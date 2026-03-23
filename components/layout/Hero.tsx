@@ -98,7 +98,7 @@ const Hero = ({
     const words = title.split(/\s+/).filter(Boolean);
     return (
       <section
-        className={`relative isolate flex h-[100vh] items-center justify-center overflow-hidden ${className}`}
+        className={`relative isolate flex min-h-[min(70vh,680px)] items-center justify-center overflow-hidden ${className}`}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -108,6 +108,14 @@ const Hero = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.55, ease: easeNatural }}
         >
+          <Image
+            src={backgroundImageSrc}
+            alt={backgroundImageAlt}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
           {!canAnimate ? (
             <Image
               src={slides[0]}
@@ -205,6 +213,14 @@ const Hero = ({
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: easeNatural }}
       >
+        <Image
+          src={backgroundImageSrc}
+          alt={backgroundImageAlt}
+          fill
+          className="scale-105 object-cover"
+          priority
+          sizes="100vw"
+        />
         {!canAnimate ? (
           <Image
             src={slides[0]}

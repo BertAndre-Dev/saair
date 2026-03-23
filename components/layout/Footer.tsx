@@ -5,7 +5,7 @@
   import { appConfig, footerCopy } from "@/constants";
 
   const footerLinkClass =
-    "text-[20px] font-normal leading-8 text-white/90 hover:text-white md:text-[22px]";
+    "text-base font-normal leading-8 text-white/90 hover:text-white";
   const headingClass = "text-[24px] font-semibold text-white md:text-[28px]";
 
   const socialIconByName = {
@@ -44,11 +44,11 @@
     return (
       <footer className="relative overflow-hidden bg-[#00804D]">
 
-      <div className="relative mx-auto w-full max-w-7xl px-6 pb-12 pt-14 md:px-8 md:pb-14 md:py-16">
+      <div className="relative mx-auto w-full max-w-7xl px-6 pb-8 pt-8 md:px-8">
           <Link href="/" className="inline-block pt-4">
             <Image src="/logo.svg" alt={appConfig.siteName} width={160} height={60} />
           </Link>
-          <p className="max-w-sm text-[20px] font-normal leading-8 text-white/90">
+          <p className="max-w-sm text-base text-[18px] font-normal leading-8 text-white/90">
             {footerCopy.logoTagline}
           </p>
 
@@ -71,16 +71,16 @@
 
             <div className="space-y-3">
               <h3 className={headingClass}>{footerCopy.contact.title}</h3>
-              <p className="max-w-md text-[20px] leading-8 text-white/90 md:text-[22px]">
+              <p className="max-w-md text-base leading-8 text-white/90">
                 {footerCopy.contact.address}
               </p>
-              <p className="text-[20px] leading-8 text-white/90 md:text-[22px]">
+              <p className="text-base leading-8 text-white/90">
                 Email:{" "}
                 <a href={`mailto:${footerCopy.contact.email}`} className="hover:text-white">
                   {footerCopy.contact.email}
                 </a>
               </p>
-              <p className="text-[20px] leading-8 text-white/90 md:text-[22px]">
+              <p className="text-base leading-8 text-white/90">
                 Phone:{" "}
                 <a href={`tel:${footerCopy.contact.phone.replaceAll(" ", "")}`} className="hover:text-white">
                   {footerCopy.contact.phone}

@@ -308,10 +308,7 @@
 
 import {
   motion,
-  useMotionTemplate,
   useReducedMotion,
-  useScroll,
-  useTransform,
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -368,7 +365,7 @@ function MobileNavDrawer({
   const panel = (
     <div
       id={panelId}
-      className={`absolute left-0 top-0 flex h-full w-[min(88vw,20rem)] flex-col rounded-tr-4xl bg-slate-50 pb-6 pt-24 shadow-xl transition-transform duration-300 ease-out ${
+      className={`absolute left-0 top-0 flex h-full w-[min(88vw,20rem)] flex-col rounded-tr-4xl bg-transparent pb-6 pt-24 shadow-xl transition-transform duration-300 ease-out ${
         menuOpen ? "translate-x-0" : "-translate-x-full"
       }`}
       role="dialog"
@@ -457,13 +454,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const panelId = useId();
   const reduced = useReducedMotion();
-
-  const { scrollY } = useScroll();
-  const shadowOpacity = useTransform(scrollY, [0, 120], [0, 0.1]);
-  const shadowBlur = useTransform(scrollY, [0, 120], [0, 24]);
-  const shadowY = useTransform(scrollY, [0, 120], [0, 10]);
-  const boxShadow = useMotionTemplate`0 ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOpacity})`;
-
+ 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
@@ -484,17 +475,23 @@ const Navbar = () => {
     return () => globalThis.removeEventListener("keydown", onKey);
   }, [menuOpen, closeMenu]);
 
-  // No scroll-based background since navbar is no longer fixed
-  const headerMotionStyle = reduced ? undefined : { boxShadow };
-
+ 
   return (
     <>
       <motion.header
-        className="relative z-10 w-full bg-transparent"
+        className="fixed left-0 top-0 z-50 w-full bg-transparent transition-all duration-500 ease-in-out"
         initial={reduced ? false : { y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: easeNatural }}
-        style={headerMotionStyle}
+        style={
+          {
+            backgroundColor: "rgba(0, 15, 35, 0.55)",
+            backdropFilter: "blur(18px) saturate(160%)",
+            WebkitBackdropFilter: "blur(18px) saturate(160%)",
+            borderBottom: "1px solid rgba(0, 128, 77, 0.15)",
+            boxShadow: "0 4px 32px rgba(0, 0, 0, 0.18)",
+          }
+        }
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-8 xl:px-0 lg:py-4">
           <Link
@@ -590,6 +587,9 @@ const Navbar = () => {
           </div>
         </div>
       </motion.header>
+
+      {/* Spacer so fixed navbar doesn't overlap page content */}
+      <div aria-hidden className="h-[88px] md:h-[96px] lg:h-[104px]" />
 
       <MobileNavDrawer
         menuOpen={menuOpen}
