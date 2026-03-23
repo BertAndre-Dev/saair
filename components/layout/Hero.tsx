@@ -1,9 +1,17 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 
 import { cardWhileHover, easeNatural, scaleIn } from "@/lib/animations";
+
+const SLIDER_IMAGES = [
+  "/sliders/view-male.svg",
+  "/sliders/electric-vehicle.svg",
+  "/sliders/oil-platform.svg",
+  "/sliders/turbine%201.svg",
+] as const;
 
 export type HeroCardTone = "light" | "medium" | "dark";
 
@@ -67,13 +75,34 @@ const Hero = ({
 }: HeroProps) => {
   const reduced = useReducedMotion();
 
+  const slides = useMemo(() => {
+    // Slider images live in `/public/sliders/` in this repo.
+    // If none are available, we fall back to the provided background image.
+    return SLIDER_IMAGES.length > 0 ? [...SLIDER_IMAGES] : [backgroundImageSrc];
+  }, [backgroundImageSrc]);
+
+  const canAnimate = !reduced && slides.length > 1;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (!canAnimate) return;
+    if (isPaused) return;
+
+    const id = window.setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => window.clearInterval(id);
+  }, [canAnimate, isPaused, slides.length]);
+
   if (variant === "pageTitle") {
     const words = title.split(/\s+/).filter(Boolean);
     return (
       <section
-        // className={`relative isolate flex h-[85vh] items-center justify-center overflow-hidden ${className}`}
-      
-        className={`relative isolate flex min-h-[min(75vh,720px)] items-center justify-center overflow-hidden ${className}`}
+        className={`relative isolate flex h-[100vh] items-center justify-center overflow-hidden ${className}`}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
         <motion.div
           className="absolute inset-0"
@@ -81,16 +110,42 @@ const Hero = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.55, ease: easeNatural }}
         >
-          <Image
-            src={backgroundImageSrc}
-            alt={backgroundImageAlt}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/45" />
+          {!canAnimate ? (
+            <>
+              <Image
+                src={slides[0]}
+                alt={backgroundImageAlt}
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
+            </>
+          ) : (
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={activeIndex}
+                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.55, ease: easeNatural }}
+              >
+                <Image
+                  src={slides[activeIndex]}
+                  alt={backgroundImageAlt}
+                  fill
+                  className="object-cover"
+                  priority={activeIndex === 0}
+                  sizes="100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
+              </motion.div>
+            </AnimatePresence>
+          )}
         </motion.div>
+
         <div className="relative z-10 px-4 py-28 text-center md:py-32">
           <h1 className="text-4xl font-bold uppercase tracking-wide text-white md:text-6xl lg:text-7xl">
             {reduced ? (
@@ -116,6 +171,28 @@ const Hero = ({
             )}
           </h1>
         </div>
+
+        {slides.length > 1 ? (
+          <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+            {slides.map((slideSrc, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={slideSrc}
+                  type="button"
+                  onClick={() => canAnimate && setActiveIndex(idx)}
+                  disabled={!canAnimate}
+                  aria-label={`Slide ${idx + 1}`}
+                  className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                    isActive
+                      ? "bg-white"
+                      : "bg-white/40 hover:bg-white/70"
+                  }`}
+                />
+              );
+            })}
+          </div>
+        ) : null}
       </section>
     );
   }
@@ -125,6 +202,8 @@ const Hero = ({
   return (
     <section
       className={`relative isolate flex min-h-[min(60vh,920px)] flex-col ${className}`}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       <motion.div
         className="absolute inset-0"
@@ -132,16 +211,63 @@ const Hero = ({
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: easeNatural }}
       >
-        <Image
-          src={backgroundImageSrc}
-          alt={backgroundImageAlt}
-          fill
-          className="scale-105 object-cover"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
+        {!canAnimate ? (
+          <>
+            <Image
+              src={slides[0]}
+              alt={backgroundImageAlt}
+              fill
+              className="scale-105 object-cover"
+              priority
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
+          </>
+        ) : (
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={activeIndex}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.55, ease: easeNatural }}
+            >
+              <Image
+                src={slides[activeIndex]}
+                alt={backgroundImageAlt}
+                fill
+                className="scale-105 object-cover"
+                priority={activeIndex === 0}
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-transparent" />
+            </motion.div>
+          </AnimatePresence>
+        )}
       </motion.div>
+
+      {slides.length > 1 ? (
+        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+          {slides.map((slideSrc, idx) => {
+            const isActive = idx === activeIndex;
+            return (
+              <button
+                key={slideSrc}
+                type="button"
+                onClick={() => canAnimate && setActiveIndex(idx)}
+                disabled={!canAnimate}
+                aria-label={`Slide ${idx + 1}`}
+                className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                  isActive
+                    ? "bg-white"
+                    : "bg-white/40 hover:bg-white/70"
+                }`}
+              />
+            );
+          })}
+        </div>
+      ) : null}
 
       {/* mt-auto pushes content to the bottom of the hero */}
       <div
