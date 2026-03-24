@@ -96,8 +96,8 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
         >
           <div className="relative h-full w-full">
             <Image
-              src={images.md.leftFront.src}
-              alt={images.md.leftFront.alt}
+              src={images.md.rightFront.src}
+              alt={images.md.rightFront.alt}
               fill
               className="object-cover"
               sizes="260px"
