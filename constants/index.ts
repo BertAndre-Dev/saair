@@ -191,12 +191,12 @@ export const aboutCopy = {
   title: "WHO ARE WE",
   paragraphs: [
     "SAAIR Energy is an integrated energy solutions company focused on developing and deploying reliable, efficient and technology-enabled energy systems across emerging markets. The company operates across multiple segments of the energy value chain, including oil and gas, renewable energy, power infrastructure, and digital energy technologies.",
-    "Founded with a goal of addressing energy access, efficiency, and infrastructure challenges. SAair Energy combines engineering expertise, advances technology platforms and strategic partnership to deliver scalable energy solutions for government, utilities, businesses, and communities.",
-    "By bridging traditional energy systems with modern digital technologies, SAair Energy is helping to modernize energy infrastructure while supporting economic growth and energy security.",
+    "Founded with a goal of addressing energy access, efficiency, and infrastructure challenges. SAAIR Energy combines engineering expertise, advances technology platforms and strategic partnership to deliver scalable energy solutions for government, utilities, businesses, and communities.",
+    "By bridging traditional energy systems with modern digital technologies, SAAIR Energy is helping to modernize energy infrastructure while supporting economic growth and energy security.",
   ],
   button: {
     label: "Learn More",
-    href: "#cta",
+    href: "/about",
   },
   image: {
     src: "/who.svg",
@@ -300,7 +300,7 @@ export const productsCopy = {
   badgeLabel: "SMART METERS",
   title: "OUR PRODUCTS",
   paragraphs: [
-    "We're not just another energy company. SAair Energy is Africa's integrated energy powerhouse, bridging conventional and renewable systems with advanced technology that transforms how energy is produced, distributed, and optimized.",
+    "We're not just another energy company. SAAIR Energy is Africa's integrated energy powerhouse, bridging conventional and renewable systems with advanced technology that transforms how energy is produced, distributed, and optimized.",
     "Our expertise spans three critical domains: renewable energy development, comprehensive oil and gas services, and cutting-edge technical solutions. This unique positioning allows us to deliver what others can't: complete, future-ready energy strategies tailored to the complex realities of African markets.",
   ],
   images: {
@@ -385,7 +385,7 @@ export const ctaCopy = {
     callout:
       "Request from us a free quote to know the solution that best fits your system.",
     note:
-      "Receive an accurate quote/details within 3-5 days when you fill out this form, or give us a call: +234 123 456 7890",
+      "Receive an accurate quote/details within 3-5 days when you fill out this form, or give us a call: +234 913 866 7927",
   },
   form: {
     title: "Request A Quote",
@@ -444,18 +444,20 @@ export const footerCopy = {
         { href: "/about", label: "About Us" },
         { href: "/services", label: "Services" },
         { href: "/products", label: "Products" },
+        { href: "/cookies", label: "Cookie Policy" },
+        { href: "/privacy", label: "Privacy Notice" },
       ],
     },
   ],
   contact: {
     title: "Contacts",
     address: "20 Awudu Ekpebeka Blvd, Lekki Phase 1, Lagos Nigeria.",
-    email: "info@saairenergy.com",
+    email: "info@SAAIRenergy.com",
     phone: "+234 913 866 7927",
   },
   socials: [
-    { href: "https://www.instagram.com/saairenergy?igsh=b2lwNWJ4dzJ2dHlk", label: "Instagram", icon: "instagram" },
-    { href: "https://www.linkedin.com/company/saair-energy/", label: "LinkedIn", icon: "linkedin" },
+    { href: "https://www.instagram.com/SAAIRenergy?igsh=b2lwNWJ4dzJ2dHlk", label: "Instagram", icon: "instagram" },
+    { href: "https://www.linkedin.com/company/SAAIR-energy/", label: "LinkedIn", icon: "linkedin" },
     { href: "https://www.facebook.com/share/1JokzY7gVH/?mibextid=wwXIfr", label: "Facebook", icon: "facebook" }, 
   ],
   legal: {

@@ -51,7 +51,7 @@ const ServicesHomeCards = ({ cards }: ServicesHomeCardsProps) => {
               />
             </div>
 
-            <div className="flex flex-col items-start gap-4 border border-[#FFFFFF14]">
+            <div className="flex flex-col items-start gap-4 border border-[#FFFFFF14] pb-2">
               <div className="text-[28px] font-bold leading-none text-[#00804D] md:text-[32px] xl:text-[40px]">
                 {card.number}
               </div>
@@ -60,7 +60,7 @@ const ServicesHomeCards = ({ cards }: ServicesHomeCardsProps) => {
               </h3>
             </div>
 
-            <p className="mt-2 text-[14px] leading-6 text-[#4C4C4C] md:text-[16px] xl:text-[18px]">
+            <p className="text-[14px] leading-6 text-[#4C4C4C] md:text-base">
               {card.description}
             </p>
           </div>

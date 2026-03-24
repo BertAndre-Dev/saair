@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CookieBanner from "@/components/legal/CookieBanner";
 import PageTransition from "@/components/providers/PageTransition";
 import { appConfig } from "@/constants";
 import "./globals.css";
@@ -22,6 +23,7 @@ const RootLayout = ({
     <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full flex-col font-sans">
         <PageTransition>{children}</PageTransition>
+        <CookieBanner />
       </body>
     </html>
   );

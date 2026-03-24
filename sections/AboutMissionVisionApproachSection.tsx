@@ -9,7 +9,7 @@ const { iconSrc, iconAlt, mission, vision, approach } =
 function ApproachCard({ className }: { className?: string }) {
   return (
     <article
-      className={`flex h-full flex-col gap-5 rounded-[24px] bg-white p-6  shadow-sm ${className ?? ""}`}
+      className={`flex h-full flex-col gap-2 rounded-[24px] bg-white p-6  shadow-sm ${className ?? ""}`}
     >
       <Image
         src={iconSrc}
@@ -21,7 +21,7 @@ function ApproachCard({ className }: { className?: string }) {
       <h2 className="text-[18px] md:text-[20px] xl:text-[24px] font-bold pt-4 text-black ">
         {approach.title}
       </h2>
-      <div className="flex flex-col gap-4 text-[14px] md:text-[18px] xl:text-[20px] leading-7 text-[#4C4C4C] font-normal md:leading-8">
+      <div className="flex flex-col gap-4 text-[14px] md:text-base leading-7 text-[#4C4C4C] font-normal md:leading-8">
         {approach.intro.map((p) => (
           <p key={p}>{p}</p>
         ))}
@@ -43,7 +43,7 @@ function MissionVisionCard({
   body: string;
 }) {
   return (
-    <article className="flex flex-col gap-5 rounded-[24px] bg-white p-6 shadow-sm">
+    <article className="flex flex-col gap-2 rounded-[24px] bg-white p-6 shadow-sm">
       <Image
         src={iconSrc}
         alt={iconAlt}
@@ -52,7 +52,7 @@ function MissionVisionCard({
         className="shrink-0"
       />
       <h2 className="text-[18px] md:text-[20px] xl:text-[24px] font-bold pt-4 text-black ">{title}</h2>
-      <p className="text-[14px] md:text-[18px] xl:text-[20px] leading-7 text-[#4C4C4C] font-normal md:leading-8">
+      <p className="text-[14px] md:text-base leading-7 text-[#4C4C4C] font-normal md:leading-8">
         {body}
       </p>
     </article>
