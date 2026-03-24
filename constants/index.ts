@@ -385,7 +385,7 @@ export const ctaCopy = {
     callout:
       "Request from us a free quote to know the solution that best fits your system.",
     note:
-      "Receive an accurate quote/details within 3-5 days when you fill out this form, or give us a call: +234 913 866 7927",
+      "Receive an accurate quote/details when you fill out this form, or give us a call: +234 913 866 7927",
   },
   form: {
     title: "Request A Quote",
