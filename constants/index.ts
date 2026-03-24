@@ -451,8 +451,8 @@ export const footerCopy = {
   ],
   contact: {
     title: "Contacts",
-    address: "20 Awudu Ekpebeka Blvd, Lekki Phase 1, Lagos Nigeria.",
-    email: "info@SAAIRenergy.com",
+    address: "20 Awudu Epheka Boulevard, Lekki Phase 1, Lagos Nigeria.",
+    email: "info@saairenergy.com",
     phone: "+234 913 866 7927",
   },
   socials: [

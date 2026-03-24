@@ -493,7 +493,7 @@ const Navbar = () => {
           }
         }
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 md:px-8 xl:px-0">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 md:px-8 xl:px-0 pt-2">
           <Link
             href="/"
             className={`flex flex-col items-center gap-0.5${
@@ -587,9 +587,6 @@ const Navbar = () => {
           </div>
         </div>
       </motion.header>
-
-      {/* Spacer so fixed navbar doesn't overlap page content */}
-      <div aria-hidden className="h-[88px] md:h-[96px] lg:h-[104px]" />
 
       <MobileNavDrawer
         menuOpen={menuOpen}
