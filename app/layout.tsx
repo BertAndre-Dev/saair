@@ -8,9 +8,9 @@ export const metadata: Metadata = {
   title: appConfig.defaultMetadata.title,
   description: appConfig.defaultMetadata.description,
   icons: {
-    icon: "/logo.svg",
-    shortcut: "/logo.svg",
-    apple: "/logo.svg",
+    icon: "/logo3.svg",
+    shortcut: "/logo3.svg",
+    apple: "/logo3.svg",
   },
 };
 

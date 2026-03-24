@@ -5,11 +5,11 @@ import { productsCopy, productsTechnicalCopy } from "@/constants";
 const ProductsTechnicalSection = () => {
   return (
     <ScrollReveal className="bg-[#F5F7F7]">
-      <div className="mx-auto w-full max-w-4xl px-4 md:px-0">
+      <div className="mx-auto w-full max-w-5xl px-4 md:px-0">
         <h2 className="text-[30px] md:text-[40px] font-bold uppercase tracking-wide text-[#008148]">
           {productsTechnicalCopy.title}
         </h2>
-        <div className="mt-4 max-w-4xl space-y-6">
+        <div className="mt-4 max-w-5xl space-y-6">
           {productsTechnicalCopy.items.map(({ term, description }) => (
             <p
               key={term}

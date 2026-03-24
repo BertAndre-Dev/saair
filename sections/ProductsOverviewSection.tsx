@@ -4,7 +4,7 @@ import { productsPageOverview } from "@/constants";
 const ProductsOverviewSection = () => {
   return (
     <ScrollReveal className="bg-[#F9FAF9] py-16 md:py-24">
-      <div className="mx-auto w-full max-w-4xl px-4 md:px-0">
+      <div className="mx-auto w-full max-w-5xl px-4 md:px-0">
         <div className="mb-6 inline-flex items-center rounded-lg bg-[#0F172A] px-5 py-2 text-xs font-bold uppercase tracking-wider text-white md:text-sm">
           {productsPageOverview.badgeLabel}
         </div>

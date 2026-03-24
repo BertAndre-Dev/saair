@@ -65,7 +65,8 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
 
   return (
     <>
-      <div className="relative hidden h-[520px] md:block">
+      {/* Desktop: staggered 4-image layout */}
+      <div className="relative hidden h-[520px] lg:block">
         <div className="absolute left-0 top-70">
           <DotBlock variant="gold" />
         </div>
@@ -75,7 +76,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
 
         <MeterGalleryTile
           reduced={reduced}
-          className="absolute left-0 top-16 z-10 h-[260px] w-[240px] cursor-pointer overflow-hidden rounded-2xl"
+          className="absolute left-0 top-16 z-10 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
         >
           <div className="relative h-full w-full">
             <Image
@@ -91,7 +92,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
 
         <MeterGalleryTile
           reduced={reduced}
-          className="absolute left-24 top-36 z-20 h-[260px] w-[260px] cursor-pointer overflow-hidden rounded-2xl"
+          className="absolute left-24 top-36 z-20 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
         >
           <div className="relative h-full w-full">
             <Image
@@ -107,7 +108,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
 
         <MeterGalleryTile
           reduced={reduced}
-          className="absolute right-0 top-20 z-10 h-[260px] w-[240px] cursor-pointer overflow-hidden rounded-2xl"
+          className="absolute right-0 top-20 z-10 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
         >
           <div className="relative h-full w-full">
             <Image
@@ -122,7 +123,7 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
 
         <MeterGalleryTile
           reduced={reduced}
-          className="absolute right-16 top-32 z-20 h-[280px] w-[280px] cursor-pointer overflow-hidden rounded-2xl"
+          className="absolute right-22 top-32 z-20 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
         >
           <div className="relative h-full w-full">
             <Image
@@ -137,29 +138,25 @@ const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
         </MeterGalleryTile>
       </div>
 
-      <div className="grid gap-6 md:hidden">
-        {images.sm.map((img, idx) => (
-          <motion.div
-            key={img.alt}
-            className="relative h-72 cursor-pointer overflow-hidden rounded-2xl bg-white"
-            initial={reduced ? false : "hidden"}
-            whileInView="visible"
-            viewport={viewportOnce}
-            variants={reduced ? { hidden: {}, visible: {} } : scaleIn}
-            whileHover={reduced ? undefined : tileHover}
-            transition={{ delay: idx * 0.05 }}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority={idx === 0}
-            />
-          </motion.div>
-        ))}
-      </div>
+      {/* Tablet + Mobile: single image */}
+      <motion.div
+        className="relative h-80 w-full cursor-pointer overflow-hidden rounded-2xl lg:hidden"
+        initial={reduced ? false : "hidden"}
+        whileInView="visible"
+        viewport={viewportOnce}
+        variants={reduced ? { hidden: {}, visible: {} } : scaleIn}
+        whileHover={reduced ? undefined : tileHover}
+        transition={{ type: "spring", stiffness: 320, damping: 24 }}
+      >
+        <Image
+          src={images.sm[3].src}
+          alt={images.sm[3].alt}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+        />
+      </motion.div>
     </>
   );
 };
