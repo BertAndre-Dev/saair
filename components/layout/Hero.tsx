@@ -89,7 +89,7 @@ const Hero = ({
 
     const id = window.setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 3000);
 
     return () => window.clearInterval(id);
   }, [canAnimate, isPaused, slides.length]);
