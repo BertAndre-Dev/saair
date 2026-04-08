@@ -3,6 +3,7 @@ import CookieBanner from "@/components/legal/CookieBanner";
 import PageTransition from "@/components/providers/PageTransition";
 import { appConfig } from "@/constants";
 import "./globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: appConfig.defaultMetadata.title,
@@ -24,6 +25,7 @@ const RootLayout = ({
       <body className="flex min-h-full flex-col font-sans">
         <PageTransition>{children}</PageTransition>
         <CookieBanner />
+        <GoogleAnalytics gaId="G-PN7E8CZ7E1" />
       </body>
     </html>
   );
