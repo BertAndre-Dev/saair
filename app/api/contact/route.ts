@@ -1,12 +1,28 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  const { name, email, service, message } = await req.json();
+export async function POST(req: Request) {
+  const body = await req.json().catch(() => null);
+
+  const apiKey = process.env.SENDGRID_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "SENDGRID_API_KEY is not configured on the server environment.",
+      },
+      { status: 500 },
+    );
+  }
+
+  const name = body?.name;
+  const email = body?.email;
+  const service = body?.service;
+  const message = body?.message;
 
   if (!name || !email || !service || !message) {
     return NextResponse.json(
-      { error: "All fields are required." },
-      { status: 400 }
+      { success: false, message: "All fields are required." },
+      { status: 400 },
     );
   }
 
@@ -28,29 +44,34 @@ export async function POST(req: NextRequest) {
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Service Interested In:</strong> ${service}</p>
           <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, "<br/>")}</p>
+          <p>${message.replaceAll("\n", "<br/>")}</p>
         `,
       },
     ],
   };
 
-  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
   });
 
-  if (!response.ok) {
-    const error = await response.text();
-    console.error("SendGrid error:", error);
-    return NextResponse.json(
-      { error: "Failed to send email. Please try again." },
-      { status: 500 }
-    );
+  if (res.ok) {
+    return NextResponse.json({ success: true }, { status: 200 });
   }
 
-  return NextResponse.json({ success: true }, { status: 200 });
+  const errorText = await res.text().catch(() => "");
+  console.error("SendGrid error:", errorText);
+  return NextResponse.json(
+    {
+      success: false,
+      message: "SendGrid request failed.",
+      status: res.status,
+      details: errorText?.slice(0, 2000) || null,
+    },
+    { status: 502 },
+  );
 }
