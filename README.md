@@ -8,6 +8,7 @@ Marketing and product website for **SAAIR Energy**—an integrated energy soluti
 - **Multi-page experience**: Home, About, Services, Products, plus shared **Hero**, **CTA**, and **Footer** components.
 - **Route-aware navigation**: active page highlighting using `usePathname()`.
 - **Content-driven UI**: copy, nav links, and hero defaults centralized in `constants/index.ts`.
+- **MDX blog system**: statically generated blog index and post pages powered by MDX files in `content/`.
 
 ## Tech stack
 
@@ -19,6 +20,7 @@ Marketing and product website for **SAAIR Energy**—an integrated energy soluti
 | Motion      | [Framer Motion](https://www.framer.com/motion/) (page transitions, scroll reveals, micro-interactions) |
 | Language    | TypeScript (strict)             |
 | Fonts       | **Aeonik TRIAL** (local files in `public/fonts/`; see `public/fonts/README.md`) |
+| Content     | MDX (`@mdx-js/mdx` + `@mdx-js/react`, `remark-gfm`) |
 
 ## Project structure
 
@@ -30,9 +32,11 @@ app/                    # App Router routes & layouts
   about/                # About page + layout metadata
   products/             # Products (smart meters) + layout metadata
   services/             # Services + layout metadata
+  blog/                 # Blog routes (index + [slug])
 
 components/
   layout/               # Navbar, Footer, Hero
+  blog/                 # Blog UI + MDX components
   motion/               # ScrollReveal, StaggerContainer, MotionSubmitButton
   providers/            # PageTransition (AnimatePresence + route key)
   products/             # MeterStaggeredGallery, etc.
@@ -41,9 +45,12 @@ components/
 
 sections/               # Page sections (composable blocks)
 lib/animations.ts       # Shared Framer Motion variants & easings
+lib/posts.ts            # Blog indexing + post loading helpers
+lib/mdx-evaluate.tsx    # Server-side MDX evaluation + frontmatter validation
 constants/index.ts      # Site config, nav, copy, hero props
 types/index.ts          # Shared TypeScript types
 public/                 # Static assets (logo, hero, meters, menu icons, fonts)
+content/                # Blog posts (*.mdx)
 ```
 
 Path alias: `@/*` maps to the repository root (see `tsconfig.json`).
@@ -76,8 +83,55 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/about`     | Company story, mission, vision, values |
 | `/services`  | Full services grid (five cards) |
 | `/products`  | Smart meters overview + technical specification + meter gallery |
+| `/blog`      | Blog listing (cards) |
+| `/blog/[slug]` | Blog post (SSG from MDX) |
 
 Primary navigation is defined in `constants/index.ts` (`navLinks`). The **Contact Us** control targets the homepage CTA section (`/#cta`) unless you add a dedicated contact route.
+
+## Blog (MDX)
+
+This project uses a lightweight MDX pipeline that compiles MDX **on the server** and statically generates blog pages where possible.
+
+### Authoring a post
+
+Create a new file in `content/`:
+
+```text
+content/my-post-slug.mdx
+```
+
+Each MDX file must export `metadata`:
+
+```tsx
+export const metadata = {
+  title: "Post title",
+  description: "Short summary for cards + SEO",
+  date: "2026-04-29T00:00:00.000Z",
+  coverImage: "/hero.gif" // or https://images.unsplash.com/...
+};
+```
+
+The post slug is the filename (`my-post-slug.mdx` → `/blog/my-post-slug`).
+
+### MDX components
+
+Reusable components available inside MDX:
+
+- `Callout` (`components/blog/mdx/Callout.tsx`)
+- `CodeBlock` (`components/blog/mdx/CodeBlock.tsx`)
+- `BlogImage` (`components/blog/mdx/BlogImage.tsx`)
+- `Section` (`components/blog/mdx/Section.tsx`)
+
+Element overrides (typography + spacing) live in `components/blog/get-blog-mdx-components.tsx` (e.g. `h1`, `h2`, `p`, lists, inline `code`, etc.).
+
+### Important MDX note (avoid hydration issues)
+
+Because paragraphs are styled via the MDX element override, **avoid writing JSX `<p>` tags inside MDX** (it can create invalid nested paragraphs). Use `<div>`/`<span>` instead for custom layout blocks.
+
+### Images
+
+- Local images: place files under `public/` and reference them by path (e.g. `"/images/foo.jpg"`).
+- Remote images: `next/image` is configured to allow `images.unsplash.com` in `next.config.ts`.
 
 ## Design & assets
 

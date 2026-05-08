@@ -24,6 +24,7 @@ export const navLinks: NavLink[] = [
   { href: "/about", label: "About us" },
   { href: "/services", label: "Services" },
   { href: "/products", label: "Products" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export const navbarCtas = {
@@ -444,6 +445,7 @@ export const footerCopy = {
         { href: "/about", label: "About Us" },
         { href: "/services", label: "Services" },
         { href: "/products", label: "Products" },
+        { href: "/blog", label: "Blog" },
         { href: "/cookies", label: "Cookie Policy" },
         { href: "/privacy", label: "Privacy Notice" },
       ],
