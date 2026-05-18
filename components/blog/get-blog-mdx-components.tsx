@@ -91,6 +91,42 @@ export function getBlogMdxComponents(): MDXComponents {
     hr: (props: ComponentPropsWithoutRef<"hr">) => (
       <hr className="my-14 border-0 border-t border-gray-200" {...props} />
     ),
+    table: ({ children, ...props }: ComponentPropsWithoutRef<"table">) => (
+      <div className="my-8 overflow-x-auto rounded-xl ring-1 ring-gray-200">
+        <table
+          className="w-full min-w-[520px] border-collapse text-left text-sm md:text-[15px]"
+          {...props}
+        >
+          {children}
+        </table>
+      </div>
+    ),
+    thead: ({ children, ...props }: ComponentPropsWithoutRef<"thead">) => (
+      <thead className="bg-gray-50" {...props}>
+        {children}
+      </thead>
+    ),
+    tbody: ({ children, ...props }: ComponentPropsWithoutRef<"tbody">) => (
+      <tbody className="divide-y divide-gray-200" {...props}>
+        {children}
+      </tbody>
+    ),
+    tr: ({ children, ...props }: ComponentPropsWithoutRef<"tr">) => (
+      <tr {...props}>{children}</tr>
+    ),
+    th: ({ children, ...props }: ComponentPropsWithoutRef<"th">) => (
+      <th
+        className="px-4 py-3 font-semibold text-gray-900 md:px-5"
+        {...props}
+      >
+        {children}
+      </th>
+    ),
+    td: ({ children, ...props }: ComponentPropsWithoutRef<"td">) => (
+      <td className="px-4 py-3 text-gray-600 md:px-5" {...props}>
+        {children}
+      </td>
+    ),
     pre: ({ children, ...props }: ComponentPropsWithoutRef<"pre">) => (
       <CodeBlock {...props}>{children}</CodeBlock>
     ),

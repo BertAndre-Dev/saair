@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import Link from "next/link";
+import { isSvgSrc } from "@/lib/blog-image";
 import { formatBlogDate } from "@/lib/format-blog-date";
 import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { appConfig } from "@/constants";
@@ -55,12 +56,14 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
     | {
         seriesTitle?: string;
         seriesSubtitle?: string;
+        briefLine?: string;
         issueLine?: string;
         categoryLine?: string;
         deck?: string;
         byline?: string[];
       };
   const related = (await getAllPosts()).filter((p) => p.slug !== slug).slice(0, 2);
+  const coverSvg = isSvgSrc(metadata.coverImage);
 
   return (
     <main className="flex min-h-screen flex-col bg-[#F4F7F5]">
@@ -68,14 +71,17 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
       <article className="pb-20 pt-10 md:pb-28 md:pt-32">
         <div className="mx-auto w-full max-w-4xl px-4 lg:px-0 md:px-8">
           <header className="mb-10 md:mb-12">
-            <div className="relative mb-8 aspect-3/2 w-full overflow-hidden rounded-2xl bg-gray-200 shadow-sm ring-1 ring-black/6">
+            <div
+              className={`relative mb-8 aspect-3/2 w-full overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/6 ${coverSvg ? "bg-[#F4F7F5]" : "bg-gray-200"}`}
+            >
               <Image
                 src={metadata.coverImage}
                 alt={metadata.title}
                 fill
                 priority
-                className="object-cover"
+                className={coverSvg ? "object-contain p-6" : "object-cover"}
                 sizes="(min-width: 768px) 768px, 100vw"
+                unoptimized={coverSvg}
               />
             </div>
             {powerpulse?.seriesTitle || powerpulse?.seriesSubtitle ? (
@@ -94,11 +100,19 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
             ) : null}
 
             <div className="mt-8 flex items-center justify-center gap-2 text-sm text-gray-500">
-              <span>WEEKLY POWERBRIEF</span>
-              <span className="text-gray-300">|</span>
+              {powerpulse?.briefLine ? (
+                <span>{powerpulse.briefLine}</span>
+              ) : null}
+              {powerpulse?.briefLine ? (
+                <span className="text-gray-300">|</span>
+              ) : null}
               <span suppressHydrationWarning>{formatBlogDate(metadata.date)}</span>
-              <span className="text-gray-300">|</span>
-              <span>Issue No. 001</span>
+              {powerpulse?.issueLine ? (
+                <>
+                  <span className="text-gray-300">|</span>
+                  <span>{powerpulse.issueLine}</span>
+                </>
+              ) : null}
             </div>
 
             {powerpulse?.categoryLine ? (

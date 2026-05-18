@@ -32,7 +32,7 @@ const BlogIndexPage = async () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-10 md:gap-x-8 md:gap-y-12 lg:gap-x-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-x-8 md:gap-y-12 lg:gap-x-10">
               {posts.map((post) => (
                 <BlogCard key={post.slug} {...post} />
               ))}

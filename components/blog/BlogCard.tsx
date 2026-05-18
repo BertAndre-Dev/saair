@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { isSvgSrc } from "@/lib/blog-image";
 import { formatBlogDate } from "@/lib/format-blog-date";
 
 type BlogCardProps = {
@@ -18,6 +19,8 @@ const BlogCard = ({
   date,
   coverImage,
 }: Readonly<BlogCardProps>) => {
+  const coverSvg = isSvgSrc(coverImage);
+
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] ring-1 ring-black/6">
       <Link
@@ -25,13 +28,20 @@ const BlogCard = ({
         className="group flex h-full flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B4F6C]"
       >
         <div className="p-3 pb-0 md:p-4 md:pb-0">
-          <div className="relative aspect-3/2 w-full overflow-hidden rounded-2xl bg-gray-100">
+          <div
+            className={`relative aspect-3/2 w-full overflow-hidden rounded-2xl ${coverSvg ? "bg-[#F4F7F5]" : "bg-gray-100"}`}
+          >
             <Image
               src={coverImage}
               alt={title}
               fill
-              className="object-cover transition duration-300 ease-out group-hover:scale-[1.02]"
+              className={
+                coverSvg
+                  ? "object-contain p-4 transition duration-300 ease-out group-hover:scale-[1.02]"
+                  : "object-cover transition duration-300 ease-out group-hover:scale-[1.02]"
+              }
               sizes="(min-width: 1024px) 45vw, 100vw"
+              unoptimized={coverSvg}
             />
           </div>
         </div>
