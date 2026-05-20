@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,10 +23,8 @@ function isNavLinkActive(pathname: string, href: string): boolean {
 
 const pillBase =
   "rounded-full px-4 py-2 text-sm font-medium transition-colors md:px-4 md:py-2";
-const pillInactive =
-  "bg-[#00814E1A] text-white hover:bg-[#00814E33]";
-const pillActive =
-  "bg-[#00814E33] text-white";
+const pillInactive = "bg-[#00814E1A] text-white hover:bg-[#00814E33]";
+const pillActive = "bg-[#00814E33] text-white";
 
 const navShellVariants = { rest: {}, hover: {} } as const;
 
@@ -47,8 +42,9 @@ function MobileNavDrawer({
   const overlay = (
     <button
       type="button"
-      className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0"
-        }`}
+      className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${
+        menuOpen ? "opacity-100" : "opacity-0"
+      }`}
       onClick={closeMenu}
       aria-label="Close menu"
       tabIndex={menuOpen ? 0 : -1}
@@ -58,13 +54,14 @@ function MobileNavDrawer({
   const panel = (
     <div
       id={panelId}
-      className={`absolute left-0 top-0 flex h-full w-[min(88vw,20rem)] flex-col rounded-tr-4xl bg-green-200 pb-6 pt-24 shadow-xl transition-transform duration-300 ease-out ${menuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+      className={`absolute left-0 top-0 flex h-full w-[min(88vw,20rem)] flex-col rounded-tr-4xl bg-green-200 pb-6 pt-6 md:pt-24 shadow-xl transition-transform duration-300 ease-out ${
+        menuOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
       role="dialog"
       aria-modal="true"
       aria-label="Mobile menu"
     >
-      <div className="flex flex-1 flex-col px-6 pb-4">
+      <div className="flex flex-1 flex-col md:px-6 pb-4">
         <Link
           href="/"
           className="mx-auto flex flex-col items-center gap-1"
@@ -82,7 +79,7 @@ function MobileNavDrawer({
         </Link>
 
         <nav
-          className="mt-10 flex flex-1 flex-col items-center gap-1"
+          className="mt-10 flex flex-1 flex-col items-center gap-6 md:gap-1"
           aria-label={appConfig.a11y.navbarPrimary}
         >
           {navLinks.map((link) => {
@@ -92,10 +89,11 @@ function MobileNavDrawer({
                 key={link.href + link.label}
                 href={link.href}
                 onClick={closeMenu}
-                className={`w-full max-w-[220px] rounded-full px-5 py-3 text-center text-base font-medium transition-colors ${active
+                className={`w-full max-w-[220px] rounded-full px-5 py-3 text-center text-base font-medium transition-colors ${
+                  active
                     ? "text-[#008148]"
                     : "text-neutral-800 hover:bg-white/80"
-                  }`}
+                }`}
                 aria-current={active ? "page" : undefined}
               >
                 {link.label}
@@ -166,7 +164,6 @@ const Navbar = () => {
     return () => globalThis.removeEventListener("keydown", onKey);
   }, [menuOpen, closeMenu]);
 
-
   return (
     <>
       <motion.header
@@ -174,21 +171,20 @@ const Navbar = () => {
         initial={reduced ? false : { y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: easeNatural }}
-        style={
-          {
-            backgroundColor: "rgba(0, 15, 35, 0.55)",
-            backdropFilter: "blur(18px) saturate(160%)",
-            WebkitBackdropFilter: "blur(18px) saturate(160%)",
-            borderBottom: "1px solid rgba(0, 128, 77, 0.15)",
-            boxShadow: "0 4px 32px rgba(0, 0, 0, 0.18)",
-          }
-        }
+        style={{
+          backgroundColor: "rgba(0, 15, 35, 0.55)",
+          backdropFilter: "blur(18px) saturate(160%)",
+          WebkitBackdropFilter: "blur(18px) saturate(160%)",
+          borderBottom: "1px solid rgba(0, 128, 77, 0.15)",
+          boxShadow: "0 4px 32px rgba(0, 0, 0, 0.18)",
+        }}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 md:px-8 xl:px-0 pt-2">
           <Link
             href="/"
-            className={`flex flex-col items-center gap-0.5${menuOpen ? " max-lg:hidden" : ""
-              }`}
+            className={`flex flex-col items-center gap-0.5${
+              menuOpen ? " max-lg:hidden" : ""
+            }`}
             aria-label={appConfig.siteName}
             onClick={closeMenu}
           >
