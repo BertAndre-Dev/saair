@@ -26,14 +26,17 @@ export async function POST(req: Request) {
     );
   }
 
+  const toEmail = process.env.CONTACT_TO_EMAIL ?? "enquiry@saairenergy.com";
+  const fromEmail = process.env.SENDGRID_FROM_EMAIL ?? "enquiry@saairenergy.com";
+
   const payload = {
     personalizations: [
       {
-        to: [{ email: "enquiry@SAAIRenergy.com" }],
+        to: [{ email: toEmail }],
         subject: `New Enquiry from ${name} – ${service}`,
       },
     ],
-    from: { email: "no-reply@SAAIRenergy.com", name: "SAAIR Energy Website" },
+    from: { email: fromEmail, name: "SAAIR Energy Website" },
     reply_to: { email, name },
     content: [
       {
