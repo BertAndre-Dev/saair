@@ -32,9 +32,10 @@ const CTASection = () => {
         body: JSON.stringify(form),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Something went wrong.");
+        throw new Error(data.message || "Something went wrong.");
       }
 
       setStatus("success");

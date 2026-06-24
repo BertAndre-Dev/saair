@@ -1,23 +1,32 @@
+import sgMail from "@sendgrid/mail";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
-  const body = await req.json().catch(() => null);
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
+export async function POST(req: Request) {
   const apiKey = process.env.SENDGRID_API_KEY;
+  const toEmail = process.env.CONTACT_TO_EMAIL ?? "enquiry@saairenergy.com";
+  const fromEmail = process.env.SENDGRID_FROM_EMAIL ?? "enquiry@saairenergy.com";
+
   if (!apiKey) {
     return NextResponse.json(
-      {
-        success: false,
-        message: "SENDGRID_API_KEY is not configured on the server environment.",
-      },
+      { success: false, message: "Email service is not configured." },
       { status: 500 },
     );
   }
 
-  const name = body?.name;
-  const email = body?.email;
-  const service = body?.service;
-  const message = body?.message;
+  const body = await req.json().catch(() => null);
+  const name = String(body?.name ?? "").trim();
+  const email = String(body?.email ?? "").trim();
+  const service = String(body?.service ?? "").trim();
+  const message = String(body?.message ?? "").trim();
 
   if (!name || !email || !service || !message) {
     return NextResponse.json(
@@ -26,55 +35,73 @@ export async function POST(req: Request) {
     );
   }
 
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? "enquiry@saairenergy.com";
-  const fromEmail = process.env.SENDGRID_FROM_EMAIL ?? "enquiry@saairenergy.com";
-
-  const payload = {
-    personalizations: [
-      {
-        to: [{ email: toEmail }],
-        subject: `New Enquiry from ${name} – ${service}`,
-      },
-    ],
-    from: { email: fromEmail, name: "SAAIR Energy Website" },
-    reply_to: { email, name },
-    content: [
-      {
-        type: "text/html",
-        value: `
-          <h2>New Enquiry from SAAIR Energy Website</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Service Interested In:</strong> ${service}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replaceAll("\n", "<br/>")}</p>
-        `,
-      },
-    ],
-  };
-
-  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (res.ok) {
-    return NextResponse.json({ success: true }, { status: 200 });
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json(
+      { success: false, message: "Please enter a valid email address." },
+      { status: 400 },
+    );
   }
 
-  const errorText = await res.text().catch(() => "");
-  console.error("SendGrid error:", errorText);
-  return NextResponse.json(
-    {
-      success: false,
-      message: "SendGrid request failed.",
-      status: res.status,
-      details: errorText?.slice(0, 2000) || null,
-    },
-    { status: 502 },
-  );
+  sgMail.setApiKey(apiKey);
+
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeService = escapeHtml(service);
+  const safeMessage = escapeHtml(message).replaceAll("\n", "<br/>");
+
+  try {
+    await sgMail.send({
+      to: toEmail,
+      from: { email: fromEmail, name: "SAAIR Energy Website" },
+      replyTo: { email, name },
+      subject: `New Enquiry from ${name} – ${service}`,
+      text: [
+        "New Enquiry from SAAIR Energy Website",
+        "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Service Interested In: ${service}`,
+        "",
+        "Message:",
+        message,
+      ].join("\n"),
+      html: `
+        <h2>New Enquiry from SAAIR Energy Website</h2>
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Service Interested In:</strong> ${safeService}</p>
+        <p><strong>Message:</strong></p>
+        <p>${safeMessage}</p>
+      `,
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error: unknown) {
+    console.error("SendGrid error:", error);
+
+    let details: string | null = null;
+    if (
+      error &&
+      typeof error === "object" &&
+      "response" in error &&
+      error.response &&
+      typeof error.response === "object" &&
+      "body" in error.response
+    ) {
+      const responseBody = error.response.body;
+      details =
+        typeof responseBody === "string"
+          ? responseBody
+          : JSON.stringify(responseBody);
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to send your message. Please try again later.",
+        details: details?.slice(0, 2000) ?? null,
+      },
+      { status: 502 },
+    );
+  }
 }
