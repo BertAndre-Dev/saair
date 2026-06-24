@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   const toEmail = process.env.CONTACT_TO_EMAIL ?? "enquiry@saairenergy.com";
   const fromEmail = process.env.SENDGRID_FROM_EMAIL ?? "enquiry@saairenergy.com";
 
-  if (!apiKey) {
+  if (!apiKey || !toEmail || !fromEmail) {
     return NextResponse.json(
       { success: false, message: "Email service is not configured." },
       { status: 500 },
