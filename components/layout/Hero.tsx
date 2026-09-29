@@ -1,16 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import { cardWhileHover, easeNatural, scaleIn } from "@/lib/animations";
 
 const SLIDER_IMAGES = [
-  "/sliders/view-male.svg",
-  "/sliders/electric-vehicle.svg",
-  "/sliders/oil-platform.svg",
-  "/sliders/turbine%201.svg",
+  "/sliders/view-male.jpg",
+  "/sliders/electric-vehicle.jpg",
+  "/sliders/oil-platform.jpg",
+  "/sliders/turbine.jpg",
 ] as const;
 
 export type HeroCardTone = "light" | "medium" | "dark";
@@ -63,6 +63,84 @@ const toneClass: Record<HeroCardTone, string> = {
   dark: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
 };
 
+const HeroSlides = ({
+  slides,
+  activeIndex,
+  reduced,
+  alt,
+  imageClassName,
+}: {
+  slides: readonly string[];
+  activeIndex: number;
+  reduced: boolean;
+  alt: string;
+  imageClassName: string;
+}) => {
+  return (
+    <>
+      {slides.map((src, idx) => (
+        <motion.div
+          key={src}
+          className="absolute inset-0"
+          initial={false}
+          animate={{ opacity: idx === activeIndex ? 1 : 0 }}
+          transition={{ duration: reduced ? 0 : 0.45, ease: easeNatural }}
+          style={{ zIndex: idx === activeIndex ? 1 : 0 }}
+          aria-hidden={idx !== activeIndex}
+        >
+          <Image
+            src={src}
+            alt={idx === activeIndex ? alt : ""}
+            fill
+            sizes="100vw"
+            className={imageClassName}
+            {...(idx === 0 ? { priority: true } : { loading: "eager" as const })}
+          />
+        </motion.div>
+      ))}
+    </>
+  );
+};
+
+const HeroDots = ({
+  slides,
+  activeIndex,
+  canAnimate,
+  onSelect,
+}: {
+  slides: readonly string[];
+  activeIndex: number;
+  canAnimate: boolean;
+  onSelect: (index: number) => void;
+}) => {
+  if (slides.length < 2) return null;
+
+  return (
+    <div className="flex items-center justify-center gap-1">
+      {slides.map((slideSrc, idx) => {
+        const isActive = idx === activeIndex;
+        return (
+          <button
+            key={slideSrc}
+            type="button"
+            onClick={() => canAnimate && onSelect(idx)}
+            disabled={!canAnimate}
+            aria-label={`Slide ${idx + 1}`}
+            aria-current={isActive ? "true" : undefined}
+            className="inline-flex size-8 items-center justify-center"
+          >
+            <span
+              className={`h-2.5 w-2.5 rounded-full transition-transform duration-100 ease-out active:scale-90 ${
+                isActive ? "bg-white" : "bg-white/40"
+              }`}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+};
+
 const Hero = ({
   backgroundImageSrc,
   backgroundImageAlt = "",
@@ -98,7 +176,7 @@ const Hero = ({
     const words = title.split(/\s+/).filter(Boolean);
     return (
       <section
-        className={`relative isolate flex min-h-[min(70vh,680px)] items-center justify-center overflow-hidden ${className}`}
+        className={`relative isolate flex min-h-[clamp(22rem,70svh,42rem)] items-center justify-center overflow-hidden px-4 ${className}`}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -108,50 +186,19 @@ const Hero = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.55, ease: easeNatural }}
         >
-          <Image
-            src={backgroundImageSrc}
+          <HeroSlides
+            slides={slides}
+            activeIndex={activeIndex}
+            reduced={!!reduced}
             alt={backgroundImageAlt}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
+            imageClassName="object-cover"
           />
-          {!canAnimate ? (
-            <Image
-              src={slides[0]}
-              alt={backgroundImageAlt}
-              fill
-              className="object-cover"
-              priority
-              sizes="100vw"
-            />
-          ) : (
-            <AnimatePresence initial={false}>
-              <motion.div
-                key={activeIndex}
-                className="absolute inset-0"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.55, ease: easeNatural }}
-              >
-                <Image
-                  src={slides[activeIndex]}
-                  alt={backgroundImageAlt}
-                  fill
-                  className="object-cover"
-                  priority={activeIndex === 0}
-                  sizes="100vw"
-                />
-              </motion.div>
-            </AnimatePresence>
-          )}
 
           <div className="absolute inset-0" />
         </motion.div>
 
-        <div className="relative z-10 px-4 py-28 text-center md:py-32">
-          <h1 className="text-4xl font-bold uppercase tracking-wide text-white md:text-6xl lg:text-7xl">
+        <div className="relative z-10 w-full max-w-6xl px-2 py-24 text-center sm:py-28">
+          <h1 className="flex flex-wrap justify-center gap-x-[0.28em] gap-y-1 text-balance text-[clamp(2rem,8vw,4.5rem)] font-bold uppercase leading-[1.05] tracking-wide text-white">
             {reduced ? (
               title
             ) : (
@@ -159,7 +206,7 @@ const Hero = ({
                 {words.map((word, i) => (
                   <motion.span
                     key={`${word}-${i}`}
-                    className="inline-block pr-[0.3em]"
+                    className="inline-block"
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
@@ -176,25 +223,14 @@ const Hero = ({
           </h1>
         </div>
 
-        {slides.length > 1 ? (
-          <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-            {slides.map((slideSrc, idx) => {
-              const isActive = idx === activeIndex;
-              return (
-                <button
-                  key={slideSrc}
-                  type="button"
-                  onClick={() => canAnimate && setActiveIndex(idx)}
-                  disabled={!canAnimate}
-                  aria-label={`Slide ${idx + 1}`}
-                  className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                    isActive ? "bg-white" : "bg-white/40 hover:bg-white/70"
-                  }`}
-                />
-              );
-            })}
-          </div>
-        ) : null}
+        <div className="absolute inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-20">
+          <HeroDots
+            slides={slides}
+            activeIndex={activeIndex}
+            canAnimate={canAnimate}
+            onSelect={setActiveIndex}
+          />
+        </div>
       </section>
     );
   }
@@ -203,85 +239,31 @@ const Hero = ({
 
   return (
     <section
-      className={`relative isolate flex min-h-[min(60vh,920px)] flex-col ${className}`}
+      className={`relative isolate flex min-h-svh flex-col overflow-x-clip ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 overflow-hidden"
         initial={reduced ? false : { opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: easeNatural }}
       >
-        <Image
-          src={backgroundImageSrc}
+        <HeroSlides
+          slides={slides}
+          activeIndex={activeIndex}
+          reduced={!!reduced}
           alt={backgroundImageAlt}
-          fill
-          className="scale-105 object-cover"
-          priority
-          sizes="100vw"
+          imageClassName="scale-105 object-cover"
         />
-        {!canAnimate ? (
-          <Image
-            src={slides[0]}
-            alt={backgroundImageAlt}
-            fill
-            className="scale-105 object-cover"
-            priority
-            sizes="100vw"
-          />
-        ) : (
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={activeIndex}
-              className="absolute inset-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.55, ease: easeNatural }}
-            >
-              <Image
-                src={slides[activeIndex]}
-                alt={backgroundImageAlt}
-                fill
-                className="scale-105 object-cover"
-                priority={activeIndex === 0}
-                sizes="100vw"
-              />
-            </motion.div>
-          </AnimatePresence>
-        )}
 
         <div className="absolute inset-0" />
       </motion.div>
 
-      {slides.length > 1 ? (
-        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-          {slides.map((slideSrc, idx) => {
-            const isActive = idx === activeIndex;
-            return (
-              <button
-                key={slideSrc}
-                type="button"
-                onClick={() => canAnimate && setActiveIndex(idx)}
-                disabled={!canAnimate}
-                aria-label={`Slide ${idx + 1}`}
-                className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                  isActive ? "bg-white" : "bg-white/40 hover:bg-white/70"
-                }`}
-              />
-            );
-          })}
-        </div>
-      ) : null}
-
-      {/* mt-auto pushes content to the bottom of the hero */}
-      <div
-        style={{ paddingBottom: "4rem" }}
-        className="relative z-10 mx-auto mt-auto flex w-full max-w-6xl flex-col gap-12 px-4 md:flex-row md:items-end md:justify-between md:px-8 xl:px-0"
-      >
-        <div className="max-w-xl md:w-[58%]">
-          <h1 className="text-4xl font-bold uppercase leading-tight tracking-wide text-white md:text-5xl lg:text-[3.25rem]">
+      <div className="relative z-10 mx-auto mt-auto flex w-full min-w-0 max-w-6xl flex-col px-4 pt-28 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pt-32 lg:px-8 xl:px-0">
+        <div className="flex w-full min-w-0 flex-col gap-8 sm:gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+        <div className="w-full min-w-0 max-w-xl lg:flex-1">
+          <h1 className="flex max-w-[14ch] flex-wrap gap-x-[0.28em] gap-y-1 text-[clamp(1.75rem,4.6vw,3.25rem)] font-bold uppercase leading-[1.05] tracking-wide text-white">
             {reduced ? (
               title
             ) : (
@@ -289,7 +271,7 @@ const Hero = ({
                 {titleWords.map((word, i) => (
                   <motion.span
                     key={`${word}-${i}`}
-                    className="inline-block pr-[0.3em]"
+                    className="inline-block"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
@@ -306,7 +288,7 @@ const Hero = ({
           </h1>
           {subtitle ? (
             <motion.p
-              className="mt-6 text-sm font-light leading-7 text-white/95 md:text-xl lg:text-2xl"
+              className="mt-4 w-full max-w-xl text-[clamp(0.95rem,1.7vw,1.5rem)] font-light leading-relaxed text-white/95 sm:mt-6"
               initial={reduced ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -320,7 +302,7 @@ const Hero = ({
           ) : null}
           {bottomFeatureLabels.length > 0 ? (
             <motion.div
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 sm:mt-8"
               initial={reduced ? false : "hidden"}
               animate="visible"
               variants={
@@ -364,7 +346,7 @@ const Hero = ({
 
         {cards.length > 0 ? (
           <motion.div
-            className="flex w-full flex-col gap-4 md:max-w-sm md:w-[38%]"
+            className="flex w-full flex-col gap-3 sm:gap-4 lg:w-[min(100%,22rem)] lg:shrink-0"
             initial={reduced ? false : "hidden"}
             animate="visible"
             variants={
@@ -389,13 +371,22 @@ const Hero = ({
                 className={`flex items-center gap-4 rounded-2xl border border-[#00814E24] bg-[#00814E24] px-5 py-4 ${toneClass[card.tone]}`}
               >
                 <CardIcon kind={card.icon} />
-                <span className="text-[14px] font-light text-white md:text-[20px]">
+                <span className="min-w-0 text-[clamp(0.875rem,1.5vw,1.25rem)] font-light leading-snug text-white">
                   {card.label}
                 </span>
               </motion.div>
             ))}
           </motion.div>
         ) : null}
+        </div>
+        <div className="mt-6 sm:mt-8">
+          <HeroDots
+            slides={slides}
+            activeIndex={activeIndex}
+            canAnimate={canAnimate}
+            onSelect={setActiveIndex}
+          />
+        </div>
       </div>
     </section>
   );

@@ -205,6 +205,86 @@ export const aboutCopy = {
   },
 };
 
+export type ServiceCard = {
+  number: string;
+  title: string;
+  imageSrc: string;
+  imageAlt: string;
+  iconSrc: string;
+  note?: string;
+  points: string[];
+};
+
+export const serviceCards: ServiceCard[] = [
+  {
+    number: "01",
+    title: "Gas — Primary Business",
+    imageSrc: "/service/gas.png",
+    imageAlt: "Industrial gas piping and processing equipment",
+    iconSrc: "/service/ranking.svg",
+    points: [
+      "Industrial and commercial gas supply — LPG and CNG",
+      "Gas supply for generators",
+      "Gas metering and consumption monitoring",
+      "Supply planning",
+      "Consultation on diesel-to-gas conversion, including advising on whether conversion makes commercial sense for a site",
+    ],
+  },
+  {
+    number: "02",
+    title: "Smart Metering and Revenue Recovery",
+    imageSrc: "/service/smart-meter.png",
+    imageAlt: "A row of installed smart electricity meters",
+    iconSrc: "/service/search-favorite.svg",
+    points: [
+      "Smart prepaid meter supply — single-phase and three-phase",
+      "Meter installation, commissioning and configuration",
+      "STS-compliant prepaid metering and token management",
+      "Vending and payment channel for occupants",
+    ],
+  },
+  {
+    number: "03",
+    title: "Energy Audit and Energy Intelligence",
+    imageSrc: "/service/energ.png",
+    imageAlt: "Glowing light bulb representing energy use",
+    iconSrc: "/service/message-text.svg",
+    points: [
+      "Energy audits for commercial, industrial and residential sites",
+      "True cost per unit delivered, by supply source",
+      "Generator sizing and load performance assessment",
+      "Fuel purchased versus energy produced reconciliation",
+    ],
+  },
+  {
+    number: "04",
+    title: "Energy Management",
+    imageSrc: "/service/energ.png",
+    imageAlt: "Glowing light bulb representing energy use",
+    iconSrc: "/service/ranking.svg",
+    points: [
+      "Prepaid energy management for residential, mixed-use and commercial sites",
+      "Energy revenue management and collection",
+      "Centralised visibility of energy consumption across units and sites",
+      "Energy cost reporting for site owners and operators",
+    ],
+  },
+  {
+    number: "05",
+    title: "Site Specific Infrastructure",
+    imageSrc: "/service/site.png",
+    imageAlt: "Two engineers shaking hands on a project site",
+    iconSrc: "/service/search-favorite.svg",
+    note: "SAAIR coordinates these; the technical work is delivered by our partners.",
+    points: [
+      "Grid connection support and supply upgrades, including priority connection",
+      "Distribution transformer supply",
+      "Power-line and distribution infrastructure requirements",
+      "Backup generation planning and sizing",
+    ],
+  },
+];
+
 export const servicesCopy = {
   sectionId: "services",
   title: "SERVICES",
@@ -212,78 +292,12 @@ export const servicesCopy = {
   description:
     "Our integrated approach means you get more than isolated solutions; you get a strategic partner who understands the full energy ecosystem and how every piece connects.",
   secondaryDescription:
-    "Our expertise spans three critical domains: renewable energy development, comprehensive oil and gas services, and cutting-edge technical solutions. This unique positioning allows us to deliver what others can't: complete, future-ready energy strategies tailored to the complex realities of African markets.",
-  cards: [
-    {
-      number: "01",
-      title: "Renewable Energy Solutions",
-      description:
-        "Clean, scalable, future-ready. We design and deploy solar systems, wind technologies, EV charging infrastructure, and smart mobility platforms that position your operations at the forefront of sustainable energy.",
-      imageSrc: "/service/service.svg",
-      iconSrc: "/service/ranking.svg",
-    },
-    {
-      number: "02",
-      title: "Non-Renewable Energy",
-      description:
-        "Reliable, comprehensive, performance-driven. Our upstream, midstream, and downstream capabilities cover production logistics, storage, compression, and field optimization that keeps operations running at peak efficiency.",
-      imageSrc: "/service/service1.svg",
-      iconSrc: "/service/search-favorite.svg",
-    },
-    {
-      number: "03",
-      title: "Technical & Technology Solutions",
-      description:
-        "Intelligent, efficient, data-driven. From engineering support and automation systems to analytics and asset monitoring, we deploy technologies that enhance visibility, control, and operational excellence across your energy infrastructure.",
-      imageSrc: "/service/service3.svg",
-      iconSrc: "/service/message-text.svg",
-    },
-  ],
+    "Gas supply, smart metering, energy audits, energy management, and site infrastructure — delivered as one connected practice rather than isolated jobs.",
+  cards: serviceCards,
 } as const;
 
-/** Full Services page — five cards (Figma). Home still uses `servicesCopy` (3 cards). */
-export const servicesPageCards = [
-  {
-    number: "01",
-    title: "Renewable Energy Systems",
-    description:
-      "The company develops and deploys renewable energy solutions that help improve energy access and support sustainable power generation. These systems are designed to complement existing energy infrastructure while supporting the global transition toward cleaner energy.",
-    imageSrc: "/service/service.svg",
-    iconSrc: "/service/ranking.svg",
-  },
-  {
-    number: "02",
-    title: "Oil & Gas Infrastructure",
-    description:
-      "SAAIR Energy is designed to participate in development and deployment of energy infrastructure supporting oil and gas operations, including gas-powered energy solutions, energy distribution systems, and midstream infrastructure partnerships. These initiatives support reliable energy supply and contribute to the broader development of the energy sector.",
-    imageSrc: "/service/service1.svg",
-    iconSrc: "/service/search-favorite.svg",
-  },
-  {
-    number: "03",
-    title: "Smart Metering & Energy Technology",
-    description:
-      "We design and deploy smart metering, digital platforms, and energy technology that improve billing accuracy, demand visibility, and integration across utilities and commercial operations—so teams can manage assets with clarity and scale.",
-    imageSrc: "/meter/meter4.svg",
-    iconSrc: "/service/message-text.svg",
-  },
-  {
-    number: "04",
-    title: "Electric Mobility Infrastructure",
-    description:
-      "SAAIR Energy is actively supporting the growth of electric mobility through the development of EV charging infrastructure and supporting technologies that enable the adoption of electric transportation systems.",
-    imageSrc: "/meter/meter6.svg",
-    iconSrc: "/service/message-text.svg",
-  },
-  {
-    number: "05",
-    title: "Electric Monitoring & Digital Infrastructure",
-    description:
-      "Through advanced sensors, monitoring technologies, and digital platforms, SAAIR Energy enables real-time monitoring of energy systems, infrastructure performance, and consumption patterns. These tools support improved system management, predictive maintenance, and operational efficiency.",
-    imageSrc: "/meter/meter5.svg",
-    iconSrc: "/service/ranking.svg",
-  },
-] as const;
+/** Services page uses the same offerings as the home services section. */
+export const servicesPageCards = serviceCards;
 
 export const partnersCopy: {
   title: string;
@@ -432,11 +446,11 @@ export const footerCopy = {
     {
       title: "Explore Segments",
       links: [
-        { href: "/services", label: "Renewable Energy" },
-        { href: "/services", label: "Non- Renewable Energy" },
-        { href: "/services", label: "Technical & Technological Solutions" },
-        { href: "/services", label: "Oil & Gas Infrastructure" },
-        { href: "/services", label: "Electric Mobility Infrastructure" },
+        { href: "/services", label: "Gas" },
+        { href: "/services", label: "Smart Metering" },
+        { href: "/services", label: "Energy Audit" },
+        { href: "/services", label: "Energy Management" },
+        { href: "/services", label: "Site Infrastructure" },
       ],
     },
     {

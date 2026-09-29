@@ -8,17 +8,21 @@ import { cardWhileHover, fadeUp, instantVisible, viewportOnce } from "@/lib/anim
 export type ServiceDetailCardProps = {
   number: string;
   title: string;
-  description: string;
   imageSrc: string;
+  imageAlt: string;
   iconSrc: string;
+  note?: string;
+  points: readonly string[];
 };
 
 const ServiceDetailCard = ({
   number,
   title,
-  description,
   imageSrc,
+  imageAlt,
   iconSrc,
+  note,
+  points,
 }: ServiceDetailCardProps) => {
   const reduced = useReducedMotion();
 
@@ -41,10 +45,10 @@ const ServiceDetailCard = ({
       >
         <Image
           src={imageSrc}
-          alt=""
+          alt={imageAlt}
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 768px) 100vw, 70vw"
         />
       </motion.div>
       <div className="relative rounded-[24px] bg-white px-6 pb-8 pt-4 md:px-8 md:pb-10 ">
@@ -61,9 +65,16 @@ const ServiceDetailCard = ({
           {number}
         </div>
         <h2 className="mt-3 text-lg font-bold text-black md:text-xl">{title}</h2>
-        <p className="mt-3 text-[14px] font-normal leading-7 text-[#4c4c4c] md:text-[18px] xl:text-[20px]">
-          {description}
-        </p>
+        {note ? (
+          <p className="mt-3 text-[14px] font-normal leading-7 text-[#4c4c4c] md:text-[18px] xl:text-[20px]">
+            {note}
+          </p>
+        ) : null}
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-[14px] font-normal leading-7 text-[#4c4c4c] md:text-[18px] xl:text-[20px]">
+          {points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
       </div>
     </motion.article>
   );

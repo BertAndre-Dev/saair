@@ -22,9 +22,11 @@ const ServicesPageGrid = () => {
               <ServiceDetailCard
                 number={card.number}
                 title={card.title}
-                description={card.description}
                 imageSrc={card.imageSrc}
+                imageAlt={card.imageAlt}
                 iconSrc={card.iconSrc}
+                note={card.note}
+                points={card.points}
               />
             </motion.div>
           ))}

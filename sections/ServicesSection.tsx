@@ -7,7 +7,7 @@ const ServicesSection = () => {
   return (
     <ScrollReveal
       id={servicesCopy.sectionId}
-      className="bg-[#001F3F] py-16 md:py-24"
+      className="scroll-mt-28 bg-[#001F3F] py-16 md:py-24"
     >
       <div className="mx-auto w-full max-w-6xl px-8 xl:px-0">
         <div className="text-center">
