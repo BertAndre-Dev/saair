@@ -341,7 +341,7 @@ export const productsCopy = {
       description: "Accurate, reliable and intelligent energy measurement.",
       imageSrc: "/meter/meter3.png",
       imageAlt: "SAAIR prepaid gas meter",
-      href: "/products",
+      href: "/products/smart-gas",
     },
   ],
   images: {
@@ -486,9 +486,8 @@ export const footerCopy = {
         { href: "/services", label: "Services" },
         { href: "/products", label: "Products" },
         { href: "/products/smart-meters", label: "Smart Electricity Meters" },
+        { href: "/products/smart-gas", label: "Smart Gas Meters" },
         { href: "/blog", label: "Blog" },
-        { href: "/cookies", label: "Cookie Policy" },
-        { href: "/privacy", label: "Privacy Notice" },
       ],
     },
   ],
@@ -506,6 +505,10 @@ export const footerCopy = {
   legal: {
     prefix: "©",
     suffix: "SAAIR Energy Limited. All rights reserved.",
+    links: [
+      { href: "/cookies", label: "Cookie Policy" },
+      { href: "/privacy", label: "Privacy Notice" },
+    ],
   },
 };
 

@@ -5,7 +5,7 @@
   import { appConfig, footerCopy } from "@/constants";
 
   const footerLinkClass =
-    "text-base font-normal leading-8 text-white/90 hover:text-white";
+    "relative inline-block text-base font-normal leading-8 text-white/85 transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:outline-none after:absolute after:inset-x-0 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-200 hover:after:scale-x-100 focus-visible:after:scale-x-100";
   const headingClass = "text-[24px] font-semibold text-white md:text-[28px]";
 
   const socialIconByName = {
@@ -45,7 +45,7 @@
       <footer className="relative overflow-hidden bg-[#00804D]">
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pb-8 pt-8 md:px-8">
-          <Link href="/" className="inline-block pt-4">
+          <Link href="/" className="inline-block pt-4 transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:opacity-80">
             <Image src="/logo.svg" alt={appConfig.siteName} width={160} height={60} />
           </Link>
           <p className="max-w-sm text-base text-[18px] font-normal leading-8 text-white/90">
@@ -76,13 +76,13 @@
               </p>
               <p className="text-base leading-8 text-white/90">
                 Email:{" "}
-                <a href={`mailto:${footerCopy.contact.email}`} className="hover:text-white">
+                <a href={`mailto:${footerCopy.contact.email}`} className={footerLinkClass}>
                   {footerCopy.contact.email}
                 </a>
               </p>
               <p className="text-base leading-8 text-white/90">
                 Phone:{" "}
-                <a href={`tel:${footerCopy.contact.phone.replaceAll(" ", "")}`} className="hover:text-white">
+                <a href={`tel:${footerCopy.contact.phone.replaceAll(" ", "")}`} className={footerLinkClass}>
                   {footerCopy.contact.phone}
                 </a>
               </p>
@@ -96,7 +96,7 @@
                       aria-label={social.label}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#001F3F]"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#001F3F] transition-transform duration-200 hover:scale-110 focus-visible:scale-110 focus-visible:outline-none"
                     >
                       <Icon size={18} strokeWidth={2.2} />
                     </a>
@@ -106,8 +106,17 @@
             </div>
           </nav>
 
-            <div className="text-center text-base font-normal text-white/90 pt-6 pb-6">
-              {footerCopy.legal.prefix} {year} {footerCopy.legal.suffix}
+            <div className="pt-6 pb-6 text-center text-base font-normal text-white/90">
+              <p>
+                {footerCopy.legal.prefix} {year} {footerCopy.legal.suffix}
+              </p>
+              <p className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+                {footerCopy.legal.links.map((link) => (
+                  <Link key={link.href} href={link.href} className={footerLinkClass}>
+                    {link.label}
+                  </Link>
+                ))}
+              </p>
           </div>
         </div>
       </footer>
