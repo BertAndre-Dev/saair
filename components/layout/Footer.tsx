@@ -53,7 +53,7 @@
           </p>
 
           <nav
-          className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12 mb-6"
+          className="mt-8 md:mt-16 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12 mb-6"
             aria-label={footerCopy.a11y.footerNav}
           >
             {footerCopy.columns.map((column) => (

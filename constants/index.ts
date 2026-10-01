@@ -322,25 +322,27 @@ export const productsCopy = {
   title: "OUR PRODUCTS",
   headline: "Smarter Energy. Better Control",
   ctaLabel: "Explore our products",
-  cards: [
-    {
-      src: "/meter/meter1.png",
-      alt: "SAAIR three phase energy meter",
-      category: "Electricity",
-      title: "Smart Electricity Meters",
-      detail: "Accurate, reliable and intelligent energy measurement.",
-    },
-    {
-      src: "/meter/meter3.png",
-      alt: "SAAIR prepaid gas meter",
-      category: "Gas",
-      title: "Smart Gas Meters",
-      detail: "Accurate, reliable and intelligent energy measurement.",
-    },
-  ],
+  ctaHref: "/products",
   paragraphs: [
     "SAAIR Energy delivers advanced smart metering solutions across electricity, gas, and water networks. Engineered for utilities, regulators, and large-scale energy and resource operators, our smart meters provide real-time data, two-way communication, and actionable insights to optimize resource management, reduce losses, and enhance customer engagement.",
-    "Smart metering is no longer a luxury — it's essential for modern utilities. SAAIR Energy's meters capture precise consumption data, enabling efficient operations, accurate billing, and better decision-making across multiple sectors.",
+  ],
+  cards: [
+    {
+      category: "Electricity",
+      title: "Smart Electricity Meters",
+      description: "Accurate, reliable and intelligent energy measurement.",
+      imageSrc: "/meter/meter1.png",
+      imageAlt: "SAAIR three phase energy meter",
+      href: "/products/smart-meters",
+    },
+    {
+      category: "Gas",
+      title: "Smart Gas Meters",
+      description: "Accurate, reliable and intelligent energy measurement.",
+      imageSrc: "/meter/meter3.png",
+      imageAlt: "SAAIR prepaid gas meter",
+      href: "/products",
+    },
   ],
   images: {
     md: {
@@ -483,6 +485,7 @@ export const footerCopy = {
         { href: "/about", label: "About Us" },
         { href: "/services", label: "Services" },
         { href: "/products", label: "Products" },
+        { href: "/products/smart-meters", label: "Smart Electricity Meters" },
         { href: "/blog", label: "Blog" },
         { href: "/cookies", label: "Cookie Policy" },
         { href: "/privacy", label: "Privacy Notice" },
