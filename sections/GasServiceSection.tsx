@@ -87,21 +87,20 @@ const GasServiceSection = () => {
           ))}
         </div>
 
-        <div className="mt-8 lg:mt-10">
+        <div className="mx-auto mt-8 w-full lg:mt-10 lg:w-[calc(50%-0.75rem)]">
           <FramedImage
             src={consultation.imageSrc}
             alt={consultation.imageAlt}
-            className="lg:w-[calc(50%-0.75rem)]"
           />
           <div className={`${cardClass} mt-4`}>
             <h2 className={headingClass}>{consultation.title}</h2>
             <p className={bodyClass}>{consultation.body}</p>
           </div>
-          <div className={`${cardClass} mt-6`}>
-            <h2 className={headingClass}>{audience.title}</h2>
-            <p className={bodyClass}>{audience.body}</p>
-            <BulletList items={audience.points} />
-          </div>
+        </div>
+        <div className={`${cardClass} mt-6`}>
+          <h2 className={headingClass}>{audience.title}</h2>
+          <p className={bodyClass}>{audience.body}</p>
+          <BulletList items={audience.points} />
         </div>
       </section>
     </>
