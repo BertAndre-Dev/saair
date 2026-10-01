@@ -206,6 +206,7 @@ export const aboutCopy = {
 };
 
 export type ServiceCard = {
+  slug: string;
   number: string;
   title: string;
   imageSrc: string;
@@ -217,6 +218,7 @@ export type ServiceCard = {
 
 export const serviceCards: ServiceCard[] = [
   {
+    slug: "gas",
     number: "01",
     title: "Gas — Primary Business",
     imageSrc: "/service/gas.png",
@@ -231,6 +233,7 @@ export const serviceCards: ServiceCard[] = [
     ],
   },
   {
+    slug: "smart-metering",
     number: "02",
     title: "Smart Metering and Revenue Recovery",
     imageSrc: "/service/smart-meter.png",
@@ -244,6 +247,7 @@ export const serviceCards: ServiceCard[] = [
     ],
   },
   {
+    slug: "energy-audit",
     number: "03",
     title: "Energy Audit and Energy Intelligence",
     imageSrc: "/service/energ.png",
@@ -257,6 +261,7 @@ export const serviceCards: ServiceCard[] = [
     ],
   },
   {
+    slug: "energy-management",
     number: "04",
     title: "Energy Management",
     imageSrc: "/service/energ.png",
@@ -270,6 +275,7 @@ export const serviceCards: ServiceCard[] = [
     ],
   },
   {
+    slug: "site-infrastructure",
     number: "05",
     title: "Site Specific Infrastructure",
     imageSrc: "/service/site.png",
@@ -314,9 +320,27 @@ export const productsCopy = {
   sectionId: "products",
   badgeLabel: "SMART METERS",
   title: "OUR PRODUCTS",
+  headline: "Smarter Energy. Better Control",
+  ctaLabel: "Explore our products",
+  cards: [
+    {
+      src: "/meter/meter1.png",
+      alt: "SAAIR three phase energy meter",
+      category: "Electricity",
+      title: "Smart Electricity Meters",
+      detail: "Accurate, reliable and intelligent energy measurement.",
+    },
+    {
+      src: "/meter/meter3.png",
+      alt: "SAAIR prepaid gas meter",
+      category: "Gas",
+      title: "Smart Gas Meters",
+      detail: "Accurate, reliable and intelligent energy measurement.",
+    },
+  ],
   paragraphs: [
-    "We're not just another energy company. SAAIR Energy is Africa's integrated energy powerhouse, bridging conventional and renewable systems with advanced technology that transforms how energy is produced, distributed, and optimized.",
-    "Our expertise spans three critical domains: renewable energy development, comprehensive oil and gas services, and cutting-edge technical solutions. This unique positioning allows us to deliver what others can't: complete, future-ready energy strategies tailored to the complex realities of African markets.",
+    "SAAIR Energy delivers advanced smart metering solutions across electricity, gas, and water networks. Engineered for utilities, regulators, and large-scale energy and resource operators, our smart meters provide real-time data, two-way communication, and actionable insights to optimize resource management, reduce losses, and enhance customer engagement.",
+    "Smart metering is no longer a luxury — it's essential for modern utilities. SAAIR Energy's meters capture precise consumption data, enabling efficient operations, accurate billing, and better decision-making across multiple sectors.",
   ],
   images: {
     md: {
@@ -332,10 +356,10 @@ export const productsCopy = {
       },
     },
     sm: [
-      { src: "/meter/meter1.svg", alt: "Smart meters product image 1" },
-      { src: "/meter/meter2.svg", alt: "Smart meters product image 2" },
-      { src: "/meter/meter3.svg", alt: "Smart meters product image 3" },
-      { src: "/meter/meter4.svg", alt: "Smart meters product image 4" },
+      { src: "/meter/meter1.png", alt: "Smart meters product image 1" },
+      { src: "/meter/meter2.png", alt: "Smart meters product image 2" },
+      { src: "/meter/meter3.png", alt: "Smart meters product image 3" },
+      { src: "/meter/meter4.png", alt: "Smart meters product image 4" },
     ],
   },
 } as const;
@@ -446,11 +470,11 @@ export const footerCopy = {
     {
       title: "Explore Segments",
       links: [
-        { href: "/services", label: "Gas" },
-        { href: "/services", label: "Smart Metering" },
-        { href: "/services", label: "Energy Audit" },
-        { href: "/services", label: "Energy Management" },
-        { href: "/services", label: "Site Infrastructure" },
+        { href: "/services/gas", label: "Gas" },
+        { href: "/services/smart-metering", label: "Smart Metering" },
+        { href: "/services/energy-audit", label: "Energy Audit" },
+        { href: "/services/energy-management", label: "Energy Management" },
+        { href: "/services/site-infrastructure", label: "Site Infrastructure" },
       ],
     },
     {

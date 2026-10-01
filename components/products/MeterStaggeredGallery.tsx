@@ -2,9 +2,9 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import Link from "next/link";
 
-import { scaleIn, viewportOnce } from "@/lib/animations";
+import { viewportOnce } from "@/lib/animations";
 
 export type MeterGalleryImages = {
   md: {
@@ -16,148 +16,108 @@ export type MeterGalleryImages = {
   sm: readonly { src: string; alt: string }[];
 };
 
-const DotBlock = ({ variant }: { variant: "gold" | "gold2" }) => {
-  const gradient =
-    variant === "gold"
-      ? "bg-[radial-gradient(circle,#FDCC0D,transparent_3px)]"
-      : "bg-[radial-gradient(circle,#FDCC0D,transparent_3px)]";
-
-  return (
-    <div
-      aria-hidden="true"
-      className={`h-28 w-28 bg-size-[12px_12px] opacity-80 ${gradient}`}
-    />
-  );
-};
+type MeterFrame = { src: string; alt: string };
 
 type MeterStaggeredGalleryProps = {
   images: MeterGalleryImages;
 };
 
-const tileHover = { y: -6, scale: 1.03, transition: { duration: 0.3 } };
+const tileSpring = { type: "spring" as const, stiffness: 420, damping: 34 };
 
-function MeterGalleryTile({
+function MeterFrameLink({
+  frame,
   className,
-  children,
+  sizes,
+  priority = false,
   reduced,
 }: Readonly<{
+  frame: MeterFrame;
   className: string;
-  children: ReactNode;
+  sizes: string;
+  priority?: boolean;
   reduced: boolean | null;
 }>) {
   return (
     <motion.div
       className={className}
-      initial={reduced ? false : "hidden"}
-      whileInView="visible"
+      initial={reduced ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={viewportOnce}
-      variants={reduced ? { hidden: {}, visible: {} } : scaleIn}
-      whileHover={reduced ? undefined : tileHover}
-      transition={{ type: "spring", stiffness: 320, damping: 24 }}
+      whileHover={reduced ? undefined : { y: -4 }}
+      whileTap={{ scale: 0.985 }}
+      transition={reduced ? { duration: 0.2 } : tileSpring}
     >
-      {children}
+      <Link
+        href="/products"
+        className="relative block h-full w-full overflow-hidden rounded-[24px] bg-white shadow-[0_16px_40px_-28px_rgba(0,31,63,0.45)]"
+      >
+        <Image
+          src={frame.src}
+          alt={frame.alt}
+          fill
+          className="object-cover"
+          sizes={sizes}
+          priority={priority}
+        />
+      </Link>
     </motion.div>
   );
 }
 
 const MeterStaggeredGallery = ({ images }: MeterStaggeredGalleryProps) => {
   const reduced = useReducedMotion();
+  const frames: MeterFrame[] = [
+    images.md.rightFront,
+    images.md.leftFront,
+    images.md.rightBack,
+    images.md.leftBack,
+  ];
 
   return (
-    <>
-      {/* Desktop: staggered 4-image layout */}
-      <div className="relative hidden h-[520px] lg:block">
-        <div className="absolute left-0 top-70">
-          <DotBlock variant="gold" />
+    <div>
+      <div className="hidden gap-4 lg:grid lg:min-h-[460px] lg:grid-cols-2 lg:grid-rows-2">
+        <MeterFrameLink
+          frame={frames[0]}
+          reduced={reduced}
+          priority
+          sizes="(min-width: 1024px) 28vw, 80vw"
+          className="row-span-2 h-full min-h-[460px]"
+        />
+        <MeterFrameLink
+          frame={frames[1]}
+          reduced={reduced}
+          sizes="(min-width: 1024px) 22vw, 40vw"
+          className="h-full"
+        />
+        <div className="grid h-full min-h-0 grid-cols-2 gap-4">
+          <MeterFrameLink
+            frame={frames[2]}
+            reduced={reduced}
+            sizes="(min-width: 1024px) 12vw, 40vw"
+            className="h-full"
+          />
+          <MeterFrameLink
+            frame={frames[3]}
+            reduced={reduced}
+            sizes="(min-width: 1024px) 12vw, 40vw"
+            className="h-full"
+          />
         </div>
-        <div className="absolute right-0 top-5">
-          <DotBlock variant="gold2" />
-        </div>
-
-        <MeterGalleryTile
-          reduced={reduced}
-          className="absolute left-0 top-16 z-10 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
-        >
-          <div className="relative h-full w-full">
-            <Image
-              src={images.md.leftBack.src}
-              alt={images.md.leftBack.alt}
-              fill
-              className="object-cover"
-              sizes="240px"
-              priority
-            />
-          </div>
-        </MeterGalleryTile>
-
-        <MeterGalleryTile
-          reduced={reduced}
-          className="absolute left-24 top-36 z-20 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
-        >
-          <div className="relative h-full w-full">
-            <Image
-              src={images.md.rightFront.src}
-              alt={images.md.rightFront.alt}
-              fill
-              className="object-cover"
-              sizes="260px"
-              priority
-            />
-          </div>
-        </MeterGalleryTile>
-
-        <MeterGalleryTile
-          reduced={reduced}
-          className="absolute right-0 top-20 z-10 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
-        >
-          <div className="relative h-full w-full">
-            <Image
-              src={images.md.rightBack.src}
-              alt={images.md.rightBack.alt}
-              fill
-              className="object-cover"
-              sizes="240px"
-            />
-          </div>
-        </MeterGalleryTile>
-
-        <MeterGalleryTile
-          reduced={reduced}
-          className="absolute right-22 top-32 z-20 h-[340px] w-[340px] cursor-pointer overflow-hidden rounded-2xl"
-        >
-          <div className="relative h-full w-full">
-            <Image
-              src={images.md.rightFront.src}
-              alt={images.md.rightFront.alt}
-              fill
-              className="object-cover"
-              sizes="280px"
-              priority
-            />
-          </div>
-        </MeterGalleryTile>
       </div>
 
-      {/* Tablet + Mobile: single image */}
-      <motion.div
-        className="relative h-80 w-full cursor-pointer overflow-hidden rounded-2xl lg:hidden"
-        initial={reduced ? false : "hidden"}
-        whileInView="visible"
-        viewport={viewportOnce}
-        variants={reduced ? { hidden: {}, visible: {} } : scaleIn}
-        whileHover={reduced ? undefined : tileHover}
-        transition={{ type: "spring", stiffness: 320, damping: 24 }}
-      >
-        <Image
-          src={images.sm[3].src}
-          alt={images.sm[3].alt}
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
-      </motion.div>
-    </>
+      <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {frames.map((frame, index) => (
+          <MeterFrameLink
+            key={frame.src}
+            frame={frame}
+            reduced={reduced}
+            priority={index === 0}
+            sizes="78vw"
+            className="aspect-[3/4] w-[78%] max-w-sm shrink-0 snap-start"
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 

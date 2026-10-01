@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 import { cardWhileHover, fadeUp, instantVisible, viewportOnce } from "@/lib/animations";
 
@@ -13,6 +14,7 @@ export type ServiceDetailCardProps = {
   iconSrc: string;
   note?: string;
   points: readonly string[];
+  href: string;
 };
 
 const ServiceDetailCard = ({
@@ -23,6 +25,7 @@ const ServiceDetailCard = ({
   iconSrc,
   note,
   points,
+  href,
 }: ServiceDetailCardProps) => {
   const reduced = useReducedMotion();
 
@@ -75,6 +78,13 @@ const ServiceDetailCard = ({
             <li key={point}>{point}</li>
           ))}
         </ul>
+        <Link
+          href={href}
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#008148] active:opacity-70 md:text-base"
+        >
+          Learn More
+          <span aria-hidden="true">→</span>
+        </Link>
       </div>
     </motion.article>
   );

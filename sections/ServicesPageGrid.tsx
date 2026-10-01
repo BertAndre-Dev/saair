@@ -27,6 +27,7 @@ const ServicesPageGrid = () => {
                 iconSrc={card.iconSrc}
                 note={card.note}
                 points={card.points}
+                href={`/services/${card.slug}`}
               />
             </motion.div>
           ))}
