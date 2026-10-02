@@ -8,6 +8,7 @@ import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
 import { appConfig, serviceCards, servicesPageHero } from "@/constants";
 import CTASection from "@/sections/CTASection";
+import EnergyManagementSection from "@/sections/EnergyManagementSection";
 import GasServiceSection from "@/sections/GasServiceSection";
 
 type ServicePageProps = {
@@ -39,11 +40,11 @@ const ServicePage = async ({ params }: ServicePageProps) => {
   const service = getService(slug);
   if (!service) notFound();
 
-  if (service.slug === "gas") {
+  if (service.slug === "gas" || service.slug === "energy-management") {
     return (
       <main className="flex min-h-screen flex-col bg-[#F1F4F0]">
         <Navbar />
-        <GasServiceSection />
+        {service.slug === "gas" ? <GasServiceSection /> : <EnergyManagementSection />}
         <CTASection />
         <Footer />
       </main>
