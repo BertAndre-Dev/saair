@@ -12,6 +12,7 @@ import EnergyAuditSection from "@/sections/EnergyAuditSection";
 import EnergyManagementSection from "@/sections/EnergyManagementSection";
 import GasServiceSection from "@/sections/GasServiceSection";
 import SiteInfrastructureSection from "@/sections/SiteInfrastructureSection";
+import SmartMeteringSection from "@/sections/SmartMeteringSection";
 
 type ServicePageProps = {
   params: Promise<{ slug: string }>;
@@ -46,7 +47,8 @@ const ServicePage = async ({ params }: ServicePageProps) => {
     service.slug === "gas" ||
     service.slug === "energy-management" ||
     service.slug === "site-infrastructure" ||
-    service.slug === "energy-audit"
+    service.slug === "energy-audit" ||
+    service.slug === "smart-metering"
   ) {
     return (
       <main className="flex min-h-screen flex-col bg-[#F1F4F0]">
@@ -55,6 +57,7 @@ const ServicePage = async ({ params }: ServicePageProps) => {
         {service.slug === "energy-management" ? <EnergyManagementSection /> : null}
         {service.slug === "site-infrastructure" ? <SiteInfrastructureSection /> : null}
         {service.slug === "energy-audit" ? <EnergyAuditSection /> : null}
+        {service.slug === "smart-metering" ? <SmartMeteringSection /> : null}
         <CTASection />
         <Footer />
       </main>
