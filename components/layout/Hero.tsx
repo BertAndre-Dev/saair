@@ -262,7 +262,7 @@ const Hero = ({
         <div className="absolute inset-0" />
       </motion.div>
 
-      <div className="relative z-10 mx-auto mt-auto flex w-full min-w-0 max-w-6xl flex-col px-4 pt-24 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pt-28 lg:px-8 xl:px-0">
+      <div className="relative z-10 mx-auto mt-auto flex w-full min-w-0 max-w-6xl flex-col px-4 pt-8 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pt-10 lg:px-8 xl:px-0">
         <div className="flex w-full min-w-0 flex-col gap-8 sm:gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
         <div className="w-full min-w-0 max-w-xl lg:flex-1">
           <h1 className="flex max-w-[14ch] flex-wrap gap-x-[0.28em] gap-y-1 text-[clamp(1.75rem,4.6vw,3.25rem)] font-bold uppercase leading-[1.05] tracking-wide text-white">

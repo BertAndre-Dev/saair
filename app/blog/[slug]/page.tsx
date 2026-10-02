@@ -68,7 +68,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
   return (
     <main className="flex min-h-screen flex-col bg-[#F4F7F5]">
       <Navbar />
-      <article className="pb-20 pt-10 md:pb-28 md:pt-32">
+      <article className="pb-20 pt-12 md:pb-28 md:pt-16">
         <div className="mx-auto w-full max-w-4xl px-4 lg:px-0 md:px-8">
           <header className="mb-10 md:mb-12">
             <div

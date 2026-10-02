@@ -13,7 +13,7 @@ const LegalPageShell = ({
   return (
     <main className="flex min-h-screen flex-col bg-[#F9FAFA]">
       <Navbar />
-      <article className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-28 md:pt-32">
+      <article className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-12 md:pt-16">
         <h1 className="text-3xl font-bold tracking-tight text-[#001F3F] md:text-4xl">
           {title}
         </h1>

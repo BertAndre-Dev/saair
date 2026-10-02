@@ -36,7 +36,7 @@ const EnergyManagementSection = () => {
 
   return (
     <>
-      <section className="pt-3 sm:pt-4">
+      <section>
         <div className="relative flex min-h-[28rem] items-center justify-center overflow-hidden md:min-h-[38rem]">
           <Image
             src={hero.imageSrc}

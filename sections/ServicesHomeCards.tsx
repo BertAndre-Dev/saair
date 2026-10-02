@@ -28,7 +28,7 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
   return (
     <Link
       href={`/services/${card.slug}`}
-      className="relative flex h-full flex-col overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-[#00804D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#001F3F]"
+      className="relative flex flex-col overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-[#00804D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#001F3F]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
@@ -46,7 +46,7 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
       </div>
 
       <motion.div
-        className="relative z-10 flex flex-1 flex-col rounded-[24px] bg-white p-4 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)]"
+        className="relative z-10 flex flex-col rounded-[24px] bg-white p-4 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)]"
         initial={false}
         animate={{ marginTop: cover ? "-15rem" : "-2rem" }}
         transition={reduced ? { duration: 0.01 } : coverSpring}
@@ -109,12 +109,12 @@ const ServicesHomeCards = ({ cards }: ServicesHomeCardsProps) => {
   const itemVariants = reduced ? instantVisible : staggerChildVariants;
 
   return (
-    <StaggerContainer className="mt-12 grid grid-cols-1 gap-4 lg:grid-cols-6">
+    <StaggerContainer className="mt-12 grid grid-cols-1 items-start gap-4 lg:grid-cols-6">
       {cards.map((card, index) => (
         <motion.div
           key={card.slug}
           variants={itemVariants}
-          className={`h-full min-w-0 lg:col-span-2 ${
+          className={`min-w-0 lg:col-span-2 ${
             cards.length === 5 && index === 3 ? "lg:col-start-2" : ""
           }`}
         >

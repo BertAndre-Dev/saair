@@ -167,17 +167,10 @@ const Navbar = () => {
   return (
     <>
       <motion.header
-        className="fixed left-0 top-0 z-50 w-full bg-transparent transition-all duration-500 ease-in-out"
+        className="sticky top-0 z-50 w-full border-b border-[#00804D]/15 bg-[#001226] shadow-[0_4px_32px_rgba(0,0,0,0.18)] transition-all duration-500 ease-in-out"
         initial={reduced ? false : { y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: easeNatural }}
-        style={{
-          backgroundColor: "rgba(0, 15, 35, 0.55)",
-          backdropFilter: "blur(18px) saturate(160%)",
-          WebkitBackdropFilter: "blur(18px) saturate(160%)",
-          borderBottom: "1px solid rgba(0, 128, 77, 0.15)",
-          boxShadow: "0 4px 32px rgba(0, 0, 0, 0.18)",
-        }}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 md:px-8 xl:px-0 pt-2">
           <Link
