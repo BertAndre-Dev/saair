@@ -8,8 +8,10 @@ import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
 import { appConfig, serviceCards, servicesPageHero } from "@/constants";
 import CTASection from "@/sections/CTASection";
+import EnergyAuditSection from "@/sections/EnergyAuditSection";
 import EnergyManagementSection from "@/sections/EnergyManagementSection";
 import GasServiceSection from "@/sections/GasServiceSection";
+import SiteInfrastructureSection from "@/sections/SiteInfrastructureSection";
 
 type ServicePageProps = {
   params: Promise<{ slug: string }>;
@@ -40,11 +42,19 @@ const ServicePage = async ({ params }: ServicePageProps) => {
   const service = getService(slug);
   if (!service) notFound();
 
-  if (service.slug === "gas" || service.slug === "energy-management") {
+  if (
+    service.slug === "gas" ||
+    service.slug === "energy-management" ||
+    service.slug === "site-infrastructure" ||
+    service.slug === "energy-audit"
+  ) {
     return (
       <main className="flex min-h-screen flex-col bg-[#F1F4F0]">
         <Navbar />
-        {service.slug === "gas" ? <GasServiceSection /> : <EnergyManagementSection />}
+        {service.slug === "gas" ? <GasServiceSection /> : null}
+        {service.slug === "energy-management" ? <EnergyManagementSection /> : null}
+        {service.slug === "site-infrastructure" ? <SiteInfrastructureSection /> : null}
+        {service.slug === "energy-audit" ? <EnergyAuditSection /> : null}
         <CTASection />
         <Footer />
       </main>
