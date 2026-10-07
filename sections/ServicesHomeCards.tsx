@@ -28,7 +28,7 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
   return (
     <Link
       href={`/services/${card.slug}`}
-      className="relative flex flex-col overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-[#00804D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#001F3F]"
+      className="relative flex h-full flex-col overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-[#00804D] focus-visible:ring-offset-2 focus-visible:ring-offset-[#001F3F]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
@@ -46,7 +46,7 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
       </div>
 
       <motion.div
-        className="relative z-10 -mt-8 flex flex-col rounded-[24px] bg-white p-4 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)]"
+        className="relative z-10 -mt-8 flex min-h-0 flex-1 flex-col rounded-[24px] bg-white p-4 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)]"
         initial={false}
         animate={{ y: cover ? "-13rem" : 0 }}
         transition={reduced ? { duration: 0.01 } : coverSpring}
@@ -81,24 +81,26 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
           ))}
         </ul>
 
-        <span
-          className={`mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#008148] md:text-base ${
-            showLink
-              ? "h-auto opacity-100"
-              : "h-0 overflow-hidden opacity-0 max-lg:h-auto max-lg:overflow-visible max-lg:opacity-100"
-          }`}
-        >
-          Learn More
-          <span aria-hidden="true">→</span>
-        </span>
+        <div className="mt-auto pt-4">
+          <span
+            className={`inline-flex items-center gap-1.5 text-sm font-semibold text-[#008148] md:text-base ${
+              showLink
+                ? "h-auto opacity-100"
+                : "h-0 overflow-hidden opacity-0 max-lg:h-auto max-lg:overflow-visible max-lg:opacity-100"
+            }`}
+          >
+            Learn More
+            <span aria-hidden="true">→</span>
+          </span>
 
-        <motion.span
-          aria-hidden="true"
-          className="mt-4 h-1 w-16 origin-left rounded-full bg-[#00804D]"
-          initial={false}
-          animate={{ scaleX: cover ? 1 : 0 }}
-          transition={reduced ? { duration: 0.01 } : coverSpring}
-        />
+          <motion.span
+            aria-hidden="true"
+            className="mt-4 block h-1 w-16 origin-left rounded-full bg-[#00804D]"
+            initial={false}
+            animate={{ scaleX: cover ? 1 : 0 }}
+            transition={reduced ? { duration: 0.01 } : coverSpring}
+          />
+        </div>
       </motion.div>
     </Link>
   );
@@ -110,14 +112,14 @@ const ServicesHomeCards = ({ cards }: ServicesHomeCardsProps) => {
   const isFiveCardLayout = cards.length === 5;
 
   return (
-    <StaggerContainer className="mt-12 grid grid-cols-1 items-start gap-4 lg:grid-cols-6">
+    <StaggerContainer className="mt-12 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-6">
       {cards.map((card, index) => {
         const isBottomRow = isFiveCardLayout && index >= 3;
         return (
           <motion.div
             key={card.slug}
             variants={itemVariants}
-            className={`min-w-0 ${
+            className={`flex min-w-0 h-full ${
               isBottomRow ? "lg:col-span-3" : "lg:col-span-2"
             }`}
           >
