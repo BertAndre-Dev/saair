@@ -37,7 +37,7 @@ const SmartMeteringSection = () => {
   return (
     <>
       <section>
-        <div className="relative flex min-h-[28rem] items-center justify-center overflow-hidden md:min-h-[38rem] xl:min-h-[48rem]">
+        <div className="relative flex min-h-[38rem] items-center justify-center overflow-hidden md:min-h-[48rem] xl:min-h-[58rem]">
           <Image
             src={hero.imageSrc}
             alt={hero.imageAlt}

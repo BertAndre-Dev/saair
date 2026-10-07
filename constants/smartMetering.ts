@@ -10,6 +10,18 @@ export const smartMeteringPage = {
   ],
   offerings: [
     {
+      title: "Smart Prepaid Meter Supply",
+      imageSrc: "/service/smart-meter/meter.png",
+      imageAlt: "Wall-mounted gas meter on yellow pipework",
+      body: "We supply smart prepaid meters in both single-phase and three-phase configurations. Single-phase meters suit apartments, shops and smaller units. Three-phase meters serve larger loads such as commercial tenants, industrial units and bigger facilities. Whatever your site's mix of occupants, we can meter every point with the right equipment.",
+    },
+    {
+      title: "Installation, Commissioning and Configuration,",
+      imageSrc: "/service/smart-meter/saair.png",
+      imageAlt: "Wall-mounted gas meter on yellow pipework",
+      body: "A meter only recovers revenue if it is set up correctly. Our team handles installation, commissioning and configuration, so each meter is properly connected, tested and configured for your tariff and site before it goes live. You get working metering from day one, without stitching together separate suppliers and installers.",
+    },
+    {
       title: "STS-Compliant Prepaid Metering and Token Management",
       imageSrc: "/service/smart-meter/meter2.png",
       imageAlt: "Wall-mounted gas meter on yellow pipework",
