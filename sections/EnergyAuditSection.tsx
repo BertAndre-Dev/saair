@@ -38,7 +38,7 @@ const EnergyAuditSection = () => {
   return (
     <>
       <section>
-        <div className="relative flex min-h-[38rem] items-center justify-center overflow-hidden md:min-h-[48rem] xl:min-h-[58rem]">
+        <div className="relative flex min-h-[38rem] items-center justify-center overflow-hidden md:min-h-[48rem] xl:min-h-[54rem]">
           <Image
             src={hero.imageSrc}
             alt={hero.imageAlt}
