@@ -3,7 +3,7 @@ import Image from "next/image";
 import { gasServicePage } from "@/constants/gasService";
 
 const cardClass =
-  "rounded-[24px] bg-white px-6 py-7 sm:px-8 sm:py-8 md:px-9 md:py-9";
+  "flex-1 rounded-[24px] bg-white px-6 py-7 sm:px-8 sm:py-8 md:px-9 md:py-9";
 
 const headingClass =
   "text-[1.45rem] font-bold leading-tight text-[#3A3A3A] md:text-[1.7rem]";
@@ -30,14 +30,13 @@ const FramedImage = ({
   className?: string;
 }) => (
   <div
-    className={`relative w-full overflow-hidden rounded-[22px] bg-[#E4E8E3] ${className}`}
+    className={`relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-[22px] bg-[#E4E8E3] ${className}`}
   >
     <Image
       src={src}
       alt={alt}
-      width={1200}
-      height={900}
-      className="h-auto w-full object-contain"
+      fill
+      className="object-contain object-center"
       sizes="(max-width: 1024px) 100vw, 50vw"
       priority={priority}
     />
@@ -75,7 +74,7 @@ const GasServiceSection = () => {
 
         <div className="mt-12 grid gap-8 md:mt-16 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-10">
           {offerings.map((offering) => (
-            <article key={offering.title} className="flex flex-col gap-4">
+            <article key={offering.title} className="flex h-full flex-col gap-4">
               <FramedImage src={offering.imageSrc} alt={offering.imageAlt} />
               <div className={cardClass}>
                 <h2 className={headingClass}>{offering.title}</h2>
