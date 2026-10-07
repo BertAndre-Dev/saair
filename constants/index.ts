@@ -83,55 +83,6 @@ export const productsPageHero: HeroProps = {
   title: "PRODUCTS",
 };
 
-/** Products page — smart meters overview (Figma). */
-export const productsPageOverview = {
-  badgeLabel: "SMART ELECTRICITY METERS",
-  title: "PRODUCT OVERVIEW",
-  paragraphs: [
-    "SAAIR Energy delivers advanced smart metering solutions across electricity, gas, and water networks. Engineered for utilities, regulators, and large-scale energy and resource operators, our smart meters provide real-time data, two-way communication, and actionable insights to optimize resource management, reduce losses, and enhance customer engagement.",
-    "Smart metering is no longer a luxury — it's essential for modern utilities. SAAIR Energy's meters capture precise consumption data, enabling efficient operations, accurate billing, and better decision-making across multiple sectors.",
-  ],
-  subheading: "Why Smart Metering Matters",
-  leadIn:
-    "Across Africa, utilities lose millions annually to inefficiency, energy theft, outdated infrastructure, and manual reporting. Smart metering solves these gaps with:",
-  bullets: [
-    "Real-time consumption tracking",
-    "Automated billing & revenue assurance",
-    "Remote monitoring & disconnection",
-    "Tamper detection & system alerts",
-    "Load management insights",
-  ],
-  closing:
-    "Whether you manage thousands of customers or a single industrial estate, reliable data is the foundation of a stable, profitable, future-ready energy ecosystem.",
-} as const;
-
-/** Products page — technical specification copy. */
-export const productsTechnicalCopy = {
-  title: "TECHNICAL SPECIFICATION",
-  items: [
-    {
-      term: "Cost-Effectiveness",
-      description:
-        "The PLC meters with 4G-enabled DCUs offer superior cost efficiency compared to other NMMP-compliant meter specifications.",
-    },
-    {
-      term: "Enhanced Connectivity",
-      description:
-        "The 4G communication capability provides robust connectivity, with the added flexibility of supporting 3G/2G in areas lacking 4G coverage",
-    },
-    {
-      term: "Efficient Communication Infrastructure",
-      description:
-        "A single SIM-managed DCU can aggregate and relay data for up to 500 meters, simplifying logistics, SIM management, and backhaul for distribution companies.",
-    },
-    {
-      term: "Improved Accessibility and Maintenance",
-      description:
-        "DCUs are installed at transformer locations, allowing DisCo staff easier access for maintenance compared to individual meters installed within customer premises.",
-    },
-  ],
-} as const;
-
 export const aboutPageIntroCopy = {
   intro: [
     "Headquartered in Nigeria, SAAIR Energy is positioned as a multi-sector energy infrastructure and technology company delivering solutions across both conventional and emerging energy systems.",
@@ -321,8 +272,8 @@ export const productsCopy = {
   badgeLabel: "SMART METERS",
   title: "OUR PRODUCTS",
   headline: "Smarter Energy. Better Control",
-  ctaLabel: "Explore our products",
-  ctaHref: "/products",
+  ctaLabel: "Explore smart meters",
+  ctaHref: "/products/smart-meters",
   paragraphs: [
     "SAAIR Energy delivers advanced smart metering solutions across electricity, gas, and water networks. Engineered for utilities, regulators, and large-scale energy and resource operators, our smart meters provide real-time data, two-way communication, and actionable insights to optimize resource management, reduce losses, and enhance customer engagement.",
   ],
@@ -344,26 +295,6 @@ export const productsCopy = {
       href: "/products/smart-gas",
     },
   ],
-  images: {
-    md: {
-      leftBack: { src: "/meter/meter1.svg", alt: "Smart meters product image 1" },
-      leftFront: {
-        src: "/meter/meter2.svg",
-        alt: "Smart meters product image 2",
-      },
-      rightBack: { src: "/meter/meter3.svg", alt: "Smart meters product image 3" },
-      rightFront: {
-        src: "/meter/meter4.svg",
-        alt: "Smart meters product image 4",
-      },
-    },
-    sm: [
-      { src: "/meter/meter1.png", alt: "Smart meters product image 1" },
-      { src: "/meter/meter2.png", alt: "Smart meters product image 2" },
-      { src: "/meter/meter3.png", alt: "Smart meters product image 3" },
-      { src: "/meter/meter4.png", alt: "Smart meters product image 4" },
-    ],
-  },
 } as const;
 
 export const pricingCopy: {
@@ -490,7 +421,6 @@ export const footerCopy = {
       links: [
         { href: "/about", label: "About Us" },
         { href: "/services", label: "Services" },
-        { href: "/products", label: "Products" },
         { href: "/products/smart-meters", label: "Smart Electricity Meters" },
         { href: "/products/smart-gas", label: "Smart Gas Meters" },
         { href: "/blog", label: "Blog" },

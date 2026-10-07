@@ -12,20 +12,20 @@ export const energyManagementPage = {
     {
       title:
         "Prepaid Energy Management for Residential, Mixed-Use and Commercial Sites",
-      imageSrc: "/service/energy/cylinders.png",
-      imageAlt: "Rows of blue LPG cylinders",
+      imageSrc: "/service/smart-meter/meterin.png",
+      imageAlt: "Smart prepaid meter installation",
       body: "We manage prepaid energy for residential, mixed-use and commercial properties, from apartment estates to office complexes to developments that combine both. Occupants pay for energy in advance, so consumption is funded before it is used. For owners and operators, that means steadier cash flow, fewer arrears and no more disputes over estimated bills. The approach adapts to the mix of residents, tenants and businesses on your site.",
     },
     {
       title: "Energy Revenue Management and Collection",
-      imageSrc: "/service/energy/generator.png",
+      imageSrc: "/service/smart-meter/remote.png",
       imageAlt: "Portable generator beside a gas cylinder",
       body: "Money owed for energy is often the hardest money to collect. We manage energy revenue and collection on your behalf, tracking what has been paid and what is due across every unit, and keeping the collection process running consistently. You get reliable recovery of energy costs without dedicating your own staff to billing follow-up.",
     },
     {
       title:
         "Centralised Visibility of Energy Consumption across Units and Sites",
-      imageSrc: "/service/gas/gas-metering.png",
+      imageSrc: "/service/energy/centralised.png",
       imageAlt: "Wall-mounted gas meter on yellow pipework",
       body: "You shouldn’t have to visit each unit, or log into a separate system for each site, to know what is happening. We give you one central view of energy consumption across all your units and all your sites. From a single place, you can see:",
       points: [
@@ -39,7 +39,7 @@ export const energyManagementPage = {
     },
     {
       title: "Energy Cost Reporting for Site Owners and Operators",
-      imageSrc: "/service/gas/supply.png",
+      imageSrc: "/service/energy-audit/fix.png",
       imageAlt: "Operator monitoring a warehouse distribution line",
       body: "Owners and operators need to know what energy is costing them and how that compares with what is being recovered. We provide energy cost reporting that sets out costs, consumption and collection in a form you can use for budgeting, review and decision-making. Regular reporting removes guesswork from energy costs and gives you evidence to work from when planning ahead.",
     },

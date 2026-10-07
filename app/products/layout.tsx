@@ -6,7 +6,7 @@ import { appConfig } from "@/constants";
 export const metadata: Metadata = {
   title: `Products | ${appConfig.siteName}`,
   description:
-    "SAAIR Energy smart metering solutions: product overview, technical specifications, and utility-grade metering for electricity, gas, and water networks.",
+    "SAAIR Energy smart metering solutions for electricity and gas networks.",
 };
 
 const ProductsLayout = ({

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { smartGasPage } from "@/constants/smartGas";
 
@@ -159,13 +158,6 @@ const SmartGasSection = () => {
           </div>
         </div>
 
-        <Link
-          href="/products"
-          className="mt-12 inline-flex items-center gap-2 text-sm font-semibold text-[#008148] outline-none focus-visible:ring-2 focus-visible:ring-[#00804D] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F4F6F3] active:opacity-70 md:text-base"
-        >
-          <span aria-hidden="true">←</span>
-          <span>All products</span>
-        </Link>
       </div>
     </section>
   );

@@ -30,13 +30,14 @@ const FramedImage = ({
   className?: string;
 }) => (
   <div
-    className={`relative aspect-[16/10] overflow-hidden rounded-[22px] bg-[#E4E8E3] ${className}`}
+    className={`relative w-full overflow-hidden rounded-[22px] bg-[#E4E8E3] ${className}`}
   >
     <Image
       src={src}
       alt={alt}
-      fill
-      className="object-cover"
+      width={1200}
+      height={900}
+      className="h-auto w-full object-contain"
       sizes="(max-width: 1024px) 100vw, 50vw"
       priority={priority}
     />
@@ -49,7 +50,7 @@ const GasServiceSection = () => {
   return (
     <>
       <section>
-        <div className="relative flex min-h-[28rem] items-center justify-center overflow-hidden md:min-h-[38rem] xl:min-h-[48rem]">
+        <div className="relative flex min-h-[38rem] items-center justify-center overflow-hidden md:min-h-[48rem] xl:min-h-[58rem]">
           <Image
             src={hero.imageSrc}
             alt={hero.imageAlt}

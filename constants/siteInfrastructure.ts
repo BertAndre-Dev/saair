@@ -20,19 +20,19 @@ export const siteInfrastructurePage = {
   offerings: [
     {
       title: "Grid Connection Support and Supply Upgrades",
-      imageSrc: "/service/energy/cylinders.png",
+      imageSrc: "/service/site/grid.png",
       imageAlt: "Rows of blue LPG cylinders",
       body: "Getting a reliable grid supply, or increasing the capacity of an existing one, can be slow and complicated. We can arrange support for new grid connections and supply upgrades, including priority connection routes where they are available. Our partners handle the technical work and engage the relevant parties on your behalf. The aim is to get your site connected, or upgraded, with less delay and less effort on your side.",
     },
     {
       title: "Distribution Transformer Supply",
-      imageSrc: "/service/energy/generator.png",
+      imageSrc: "/service/site/transformer.png",
       imageAlt: "Portable generator beside a gas cylinder",
       body: "Larger sites often need their own transformer to receive and step down power safely. We can arrange the supply of distribution transformers through our partners, matched to the load your site requires. This spares you from sourcing, specifying and procuring the equipment on your own.",
     },
     {
       title: "Power-Line and Distribution Infrastructure Requirements",
-      imageSrc: "/service/gas/gas-metering.png",
+      imageSrc: "/service/site/powerline.png",
       imageAlt: "Wall-mounted gas meter on yellow pipework",
       body: "Getting power to and around a site depends on the right lines and distribution infrastructure. We can help you understand the power-line and distribution infrastructure your project requires, and arrange for the work to be delivered through our technical partners. This is especially useful for developers and estates where the infrastructure needs are not yet clear.",
     },

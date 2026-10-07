@@ -20,12 +20,13 @@ const BulletList = ({ items }: { items: readonly string[] }) => (
 );
 
 const FramedImage = ({ src, alt }: { src: string; alt: string }) => (
-  <div className="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-[#E4E8E3]">
+  <div className="relative w-full overflow-hidden rounded-[22px] bg-[#E4E8E3]">
     <Image
       src={src}
       alt={alt}
-      fill
-      className="object-cover"
+      width={1200}
+      height={900}
+      className="h-auto w-full object-contain"
       sizes="(max-width: 1024px) 100vw, 50vw"
     />
   </div>
@@ -43,7 +44,7 @@ const SmartMeteringSection = () => {
             alt={hero.imageAlt}
             fill
             priority
-            className="object-contain object-center"
+            className="object-cover object-center"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/40" />

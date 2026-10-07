@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { smartMetersPage } from "@/constants/smartMeters";
 
@@ -97,13 +96,6 @@ const SmartMetersSection = () => {
           </div>
         </div>
 
-        <Link
-          href="/products"
-          className="mt-12 inline-flex items-center gap-2 text-sm font-semibold text-[#008148] active:opacity-70 md:text-base"
-        >
-          <span aria-hidden="true">←</span>
-          All products
-        </Link>
       </div>
     </section>
   );

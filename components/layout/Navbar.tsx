@@ -37,7 +37,7 @@ type NavMenuItem = {
 type NavDropdownConfig = {
   label: string;
   rootHref: string;
-  viewAllLabel: string;
+  viewAllLabel?: string;
   items: readonly NavMenuItem[];
 };
 
@@ -72,7 +72,6 @@ const serviceMenu: NavDropdownConfig = {
 const productMenu: NavDropdownConfig = {
   label: "Products",
   rootHref: "/products",
-  viewAllLabel: "View all products",
   items: productsCopy.cards.map((card, index) => ({
     href: card.href,
     label: card.title,
@@ -241,20 +240,22 @@ function NavDropdown({
                 );
               })}
             </div>
-            <div className="mt-1 border-t border-white/10 pt-1">
-              <Link
-                href={menu.rootHref}
-                role="menuitem"
-                onClick={closeMenu}
-                className={`block rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
-                  pathname === menu.rootHref
-                    ? "bg-[#008148]/25 text-white"
-                    : "text-[#4ADE80] hover:bg-white/8"
-                }`}
-              >
-                {menu.viewAllLabel}
-              </Link>
-            </div>
+            {menu.viewAllLabel ? (
+              <div className="mt-1 border-t border-white/10 pt-1">
+                <Link
+                  href={menu.rootHref}
+                  role="menuitem"
+                  onClick={closeMenu}
+                  className={`block rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
+                    pathname === menu.rootHref
+                      ? "bg-[#008148]/25 text-white"
+                      : "text-[#4ADE80] hover:bg-white/8"
+                  }`}
+                >
+                  {menu.viewAllLabel}
+                </Link>
+              </div>
+            ) : null}
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -319,17 +320,19 @@ function MobileNavMenuBlock({
                   </Link>
                 );
               })}
-              <Link
-                href={menu.rootHref}
-                onClick={closeMenu}
-                className={`rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
-                  pathname === menu.rootHref
-                    ? "bg-[#008148]/15 text-[#008148]"
-                    : "text-[#008148] hover:bg-white"
-                }`}
-              >
-                {menu.viewAllLabel}
-              </Link>
+              {menu.viewAllLabel ? (
+                <Link
+                  href={menu.rootHref}
+                  onClick={closeMenu}
+                  className={`rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
+                    pathname === menu.rootHref
+                      ? "bg-[#008148]/15 text-[#008148]"
+                      : "text-[#008148] hover:bg-white"
+                  }`}
+                >
+                  {menu.viewAllLabel}
+                </Link>
+              ) : null}
             </div>
           </motion.div>
         ) : null}
