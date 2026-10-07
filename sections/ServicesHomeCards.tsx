@@ -39,16 +39,16 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
           src={card.imageSrc}
           alt={card.imageAlt}
           fill
-          sizes="(max-width: 1024px) 100vw, 33vw"
+          sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover object-center"
           priority={card.number === "01"}
         />
       </div>
 
       <motion.div
-        className="relative z-10 flex flex-col rounded-[24px] bg-white p-4 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)]"
+        className="relative z-10 -mt-8 flex flex-col rounded-[24px] bg-white p-4 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)]"
         initial={false}
-        animate={{ marginTop: cover ? "-15rem" : "-2rem" }}
+        animate={{ y: cover ? "-13rem" : 0 }}
         transition={reduced ? { duration: 0.01 } : coverSpring}
       >
         <div className="pointer-events-none absolute top-1 right-3 sm:right-4">
@@ -107,20 +107,24 @@ const ServiceHomeCard = ({ card }: { card: Card }) => {
 const ServicesHomeCards = ({ cards }: ServicesHomeCardsProps) => {
   const reduced = useReducedMotion();
   const itemVariants = reduced ? instantVisible : staggerChildVariants;
+  const isFiveCardLayout = cards.length === 5;
 
   return (
     <StaggerContainer className="mt-12 grid grid-cols-1 items-start gap-4 lg:grid-cols-6">
-      {cards.map((card, index) => (
-        <motion.div
-          key={card.slug}
-          variants={itemVariants}
-          className={`min-w-0 lg:col-span-2 ${
-            cards.length === 5 && index === 3 ? "lg:col-start-2" : ""
-          }`}
-        >
-          <ServiceHomeCard card={card} />
-        </motion.div>
-      ))}
+      {cards.map((card, index) => {
+        const isBottomRow = isFiveCardLayout && index >= 3;
+        return (
+          <motion.div
+            key={card.slug}
+            variants={itemVariants}
+            className={`min-w-0 ${
+              isBottomRow ? "lg:col-span-3" : "lg:col-span-2"
+            }`}
+          >
+            <ServiceHomeCard card={card} />
+          </motion.div>
+        );
+      })}
     </StaggerContainer>
   );
 };
