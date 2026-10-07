@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 
-import { appConfig } from "@/constants";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: `Services | ${appConfig.siteName}`,
+export const metadata: Metadata = buildPageMetadata({
+  title: "Services",
   description:
-    "Explore SAAIR Energy services: gas supply, smart metering, energy audits, energy management, and site infrastructure.",
-};
+    "Explore SAAIR Energy services: industrial and commercial gas supply, smart metering and revenue recovery, energy audits, energy management, and site infrastructure.",
+  path: "/services",
+  image: "/service/gas.png",
+  imageAlt: "SAAIR Energy services",
+  keywords: [
+    "energy services Nigeria",
+    "gas supply",
+    "smart metering",
+    "energy audit",
+    "energy management",
+  ],
+});
 
 const ServicesLayout = ({
   children,
 }: Readonly<{
-  children: ReactNode;
+  children: React.ReactNode;
 }>) => {
   return children;
 };

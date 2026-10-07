@@ -13,9 +13,23 @@ export const appConfig = {
   },
   fontSans: "Aeonik_TRIAL",
   defaultMetadata: {
-    title: "SAAIR Energy | Integrated Energy Solutions",
+    title: {
+      default: "SAAIR Energy | Integrated Energy Solutions for Africa",
+      template: "%s | SAAIR Energy",
+    },
     description:
-      "Shaping Africa's energy future through integrated renewable, non-renewable, and technology solutions.",
+      "SAAIR Energy delivers gas supply, smart metering, energy audits, energy management, and site infrastructure across Nigeria and emerging African markets.",
+    keywords: [
+      "SAAIR Energy",
+      "energy solutions Nigeria",
+      "smart metering Africa",
+      "gas supply LPG CNG",
+      "energy audit",
+      "prepaid meters",
+      "energy management",
+      "site infrastructure",
+      "renewable energy Africa",
+    ],
   },
 };
 
@@ -35,7 +49,8 @@ export const navbarCtas = {
 export const heroCopy: HeroProps = {
   variant: "default",
   backgroundImageSrc: "/hero.gif",
-  backgroundImageAlt: "",
+  backgroundImageAlt:
+    "Energy infrastructure and industrial operations across Africa",
   title: "ALL ENERGY. ONE VISION",
   subtitle:
     "Shaping Africa's energy future through integrated renewable, non-renewable, and technology solutions that power progress and redefine possibility.",
@@ -63,7 +78,7 @@ export const heroCopy: HeroProps = {
 export const aboutPageHero: HeroProps = {
   variant: "pageTitle",
   backgroundImageSrc: "/hero.gif",
-  backgroundImageAlt: "",
+  backgroundImageAlt: "SAAIR Energy about us hero",
   title: "ABOUT US",
 };
 
@@ -71,7 +86,7 @@ export const aboutPageHero: HeroProps = {
 export const servicesPageHero: HeroProps = {
   variant: "pageTitle",
   backgroundImageSrc: "/hero.gif",
-  backgroundImageAlt: "",
+  backgroundImageAlt: "SAAIR Energy services hero",
   title: "SERVICES",
 };
 
@@ -79,7 +94,7 @@ export const servicesPageHero: HeroProps = {
 export const productsPageHero: HeroProps = {
   variant: "pageTitle",
   backgroundImageSrc: "/hero.gif",
-  backgroundImageAlt: "",
+  backgroundImageAlt: "SAAIR Energy products hero",
   title: "PRODUCTS",
 };
 

@@ -6,7 +6,13 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
-import { appConfig, serviceCards, servicesPageHero } from "@/constants";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceCards, servicesPageHero } from "@/constants";
+import {
+  breadcrumbJsonLd,
+  buildPageMetadata,
+  serviceJsonLd,
+} from "@/lib/seo";
 import CTASection from "@/sections/CTASection";
 import EnergyAuditSection from "@/sections/EnergyAuditSection";
 import EnergyManagementSection from "@/sections/EnergyManagementSection";
@@ -21,6 +27,11 @@ type ServicePageProps = {
 const getService = (slug: string) =>
   serviceCards.find((card) => card.slug === slug);
 
+const serviceDescription = (service: (typeof serviceCards)[number]) => {
+  if (service.note) return `${service.note} ${service.points.slice(0, 2).join(". ")}.`;
+  return `${service.title} from SAAIR Energy: ${service.points.slice(0, 3).join("; ")}.`;
+};
+
 export const generateStaticParams = () =>
   serviceCards.map((card) => ({ slug: card.slug }));
 
@@ -29,19 +40,36 @@ export const generateMetadata = async ({
 }: ServicePageProps): Promise<Metadata> => {
   const { slug } = await params;
   const service = getService(slug);
-  if (!service) return { title: "Not found" };
+  if (!service) return { title: "Not found", robots: { index: false } };
 
-  const description = service.note ?? service.points[0];
-  return {
-    title: `${service.title} | ${appConfig.siteName}`,
-    description,
-  };
+  return buildPageMetadata({
+    title: service.title,
+    description: serviceDescription(service),
+    path: `/services/${service.slug}`,
+    image: service.imageSrc,
+    imageAlt: service.imageAlt,
+    keywords: [service.title, "SAAIR Energy", "energy services Nigeria"],
+  });
 };
 
 const ServicePage = async ({ params }: ServicePageProps) => {
   const { slug } = await params;
   const service = getService(slug);
   if (!service) notFound();
+
+  const structuredData = [
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: service.title, path: `/services/${service.slug}` },
+    ]),
+    serviceJsonLd({
+      name: service.title,
+      description: serviceDescription(service),
+      path: `/services/${service.slug}`,
+      image: service.imageSrc,
+    }),
+  ];
 
   if (
     service.slug === "gas" ||
@@ -52,6 +80,7 @@ const ServicePage = async ({ params }: ServicePageProps) => {
   ) {
     return (
       <main className="flex min-h-screen flex-col bg-[#F1F4F0]">
+        <JsonLd data={structuredData} />
         <Navbar />
         {service.slug === "gas" ? <GasServiceSection /> : null}
         {service.slug === "energy-management" ? <EnergyManagementSection /> : null}
@@ -66,6 +95,7 @@ const ServicePage = async ({ params }: ServicePageProps) => {
 
   return (
     <main className="flex min-h-screen flex-col">
+      <JsonLd data={structuredData} />
       <Navbar />
       <Hero {...servicesPageHero} title={service.title} />
       <section className="bg-[#F5F7F7] py-16 md:py-24">

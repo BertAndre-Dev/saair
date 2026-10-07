@@ -421,7 +421,7 @@ const HeroDots = ({
 
 const Hero = ({
   backgroundImageSrc,
-  backgroundImageAlt = "",
+  backgroundImageAlt = "SAAIR Energy operations and energy infrastructure",
   title,
   subtitle = "",
   bottomFeatureLabels = [],

@@ -4,11 +4,16 @@ import { notFound } from "next/navigation";
 
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import JsonLd from "@/components/seo/JsonLd";
 import Link from "next/link";
 import { isSvgSrc } from "@/lib/blog-image";
 import { formatBlogDate } from "@/lib/format-blog-date";
 import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/posts";
-import { appConfig } from "@/constants";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  buildPageMetadata,
+} from "@/lib/seo";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -25,22 +30,19 @@ export const generateMetadata = async ({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) {
-    return { title: "Not found" };
+    return { title: "Not found", robots: { index: false } };
   }
   const { metadata } = post;
-  return {
-    title: `${metadata.title} | ${appConfig.siteName}`,
+  return buildPageMetadata({
+    title: metadata.title,
     description: metadata.description,
-    openGraph: {
-      title: metadata.title,
-      description: metadata.description,
-      type: "article",
-      publishedTime: metadata.date,
-      images: metadata.coverImage
-        ? [{ url: metadata.coverImage, width: 1200, height: 800, alt: metadata.title }]
-        : undefined,
-    },
-  };
+    path: `/blog/${slug}`,
+    image: metadata.coverImage,
+    imageAlt: metadata.title,
+    type: "article",
+    publishedTime: metadata.date,
+    keywords: ["SAAIR Energy blog", "energy insights", metadata.title],
+  });
 };
 
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
@@ -67,6 +69,22 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
 
   return (
     <main className="flex min-h-screen flex-col bg-[#F4F7F5]">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: metadata.title, path: `/blog/${slug}` },
+          ]),
+          articleJsonLd({
+            title: metadata.title,
+            description: metadata.description,
+            path: `/blog/${slug}`,
+            image: metadata.coverImage,
+            datePublished: metadata.date,
+          }),
+        ]}
+      />
       <Navbar />
       <article className="pb-20 pt-12 md:pb-28 md:pt-16">
         <div className="mx-auto w-full max-w-4xl px-4 lg:px-0 md:px-8">

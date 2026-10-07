@@ -5,19 +5,52 @@ import BlogHero from "@/components/blog/BlogHero";
 import CTASection from "@/sections/CTASection";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import JsonLd from "@/components/seo/JsonLd";
 import { getAllPosts } from "@/lib/posts";
+import { absoluteUrl, breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Blog | SAAIR Energy",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Blog",
   description:
-    "Insights on energy markets, policy, and delivery — from the SAAIR Energy team.",
-};
+    "Insights on energy markets, policy, smart metering, and delivery from the SAAIR Energy team across Nigeria and emerging markets.",
+  path: "/blog",
+  keywords: [
+    "energy blog",
+    "Africa energy insights",
+    "smart metering news",
+    "SAAIR Energy blog",
+  ],
+});
 
 const BlogIndexPage = async () => {
   const posts = await getAllPosts();
 
+  const itemList = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "SAAIR Energy Blog",
+    url: absoluteUrl("/blog"),
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.description,
+      datePublished: post.date,
+      url: absoluteUrl(`/blog/${post.slug}`),
+      image: absoluteUrl(post.coverImage),
+    })),
+  };
+
   return (
     <main className="flex min-h-screen flex-col bg-[#F4F7F5]">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+          ]),
+          itemList,
+        ]}
+      />
       <Navbar />
       <BlogHero />
       <section className="pb-24 pt-20 md:pb-28 md:pt-24">

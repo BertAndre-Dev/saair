@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 
 import LegalPageShell from "@/components/legal/LegalPageShell";
-import { appConfig } from "@/constants";
 import PrivacyNoticeContent from "@/sections/PrivacyNoticeContent";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: `Privacy Notice | ${appConfig.siteName}`,
+export const metadata: Metadata = buildPageMetadata({
+  title: "Privacy Notice",
   description:
     "Privacy Notice for SAAIR Energy Limited — how we collect, use, and protect personal data in line with the NDPA.",
-};
+  path: "/privacy",
+});
 
 const PrivacyPage = () => {
   return (
