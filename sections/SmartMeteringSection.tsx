@@ -43,7 +43,7 @@ const SmartMeteringSection = () => {
             alt={hero.imageAlt}
             fill
             priority
-            className="object-cover object-center"
+            className="object-contain object-center"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/40" />

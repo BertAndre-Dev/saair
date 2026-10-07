@@ -18,9 +18,28 @@ import {
   buttonWhileTap,
   easeNatural,
 } from "@/lib/animations";
-import { appConfig, navLinks, navbarCtas, serviceCards } from "@/constants";
+import {
+  appConfig,
+  navLinks,
+  navbarCtas,
+  productsCopy,
+  serviceCards,
+} from "@/constants";
 
 const MotionLink = motion(Link);
+
+type NavMenuItem = {
+  href: string;
+  label: string;
+  number?: string;
+};
+
+type NavDropdownConfig = {
+  label: string;
+  rootHref: string;
+  viewAllLabel: string;
+  items: readonly NavMenuItem[];
+};
 
 function isNavLinkActive(pathname: string, href: string): boolean {
   if (href.startsWith("/#")) return false;
@@ -28,8 +47,8 @@ function isNavLinkActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function isServicesActive(pathname: string): boolean {
-  return pathname === "/services" || pathname.startsWith("/services/");
+function isSectionActive(pathname: string, rootHref: string): boolean {
+  return pathname === rootHref || pathname.startsWith(`${rootHref}/`);
 }
 
 const pillBase =
@@ -39,11 +58,32 @@ const pillActive = "bg-[#00814E33] text-white";
 
 const navShellVariants = { rest: {}, hover: {} } as const;
 
-const serviceLinks = serviceCards.map((card) => ({
-  href: `/services/${card.slug}`,
-  label: card.title,
-  number: card.number,
-}));
+const serviceMenu: NavDropdownConfig = {
+  label: "Services",
+  rootHref: "/services",
+  viewAllLabel: "View all services",
+  items: serviceCards.map((card) => ({
+    href: `/services/${card.slug}`,
+    label: card.title,
+    number: card.number,
+  })),
+};
+
+const productMenu: NavDropdownConfig = {
+  label: "Products",
+  rootHref: "/products",
+  viewAllLabel: "View all products",
+  items: productsCopy.cards.map((card, index) => ({
+    href: card.href,
+    label: card.title,
+    number: String(index + 1).padStart(2, "0"),
+  })),
+};
+
+const navMenusByHref: Record<string, NavDropdownConfig> = {
+  "/services": serviceMenu,
+  "/products": productMenu,
+};
 
 function Chevron({ open }: Readonly<{ open: boolean }>) {
   return (
@@ -66,10 +106,12 @@ function Chevron({ open }: Readonly<{ open: boolean }>) {
   );
 }
 
-function ServicesDropdown({
+function NavDropdown({
+  menu,
   pathname,
   reduced,
 }: Readonly<{
+  menu: NavDropdownConfig;
   pathname: string;
   reduced: boolean | null;
 }>) {
@@ -77,7 +119,7 @@ function ServicesDropdown({
   const wrapRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number | null>(null);
   const menuId = useId();
-  const active = isServicesActive(pathname);
+  const active = isSectionActive(pathname, menu.rootHref);
 
   const clearClose = useCallback(() => {
     if (closeTimer.current !== null) {
@@ -149,7 +191,7 @@ function ServicesDropdown({
         onFocus={openMenu}
         onKeyDown={onTriggerKeyDown}
       >
-        <span className="relative z-10">Services</span>
+        <span className="relative z-10">{menu.label}</span>
         <Chevron open={open} />
       </button>
 
@@ -158,7 +200,7 @@ function ServicesDropdown({
           <motion.div
             id={menuId}
             role="menu"
-            aria-label="Services"
+            aria-label={menu.label}
             className="absolute left-1/2 top-[calc(100%+0.65rem)] z-50 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden rounded-2xl border border-white/10 bg-[#001A2E] p-2 shadow-[0_24px_48px_-20px_rgba(0,0,0,0.55)]"
             initial={reduced ? false : { opacity: 0, y: 8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -172,7 +214,7 @@ function ServicesDropdown({
             onMouseLeave={scheduleClose}
           >
             <div className="flex flex-col gap-0.5">
-              {serviceLinks.map((item) => {
+              {menu.items.map((item) => {
                 const itemActive = pathname === item.href;
                 return (
                   <Link
@@ -187,9 +229,11 @@ function ServicesDropdown({
                     }`}
                     aria-current={itemActive ? "page" : undefined}
                   >
-                    <span className="mt-0.5 text-xs font-semibold tracking-wide text-[#4ADE80]">
-                      {item.number}
-                    </span>
+                    {item.number ? (
+                      <span className="mt-0.5 text-xs font-semibold tracking-wide text-[#4ADE80]">
+                        {item.number}
+                      </span>
+                    ) : null}
                     <span className="text-sm font-medium leading-snug">
                       {item.label}
                     </span>
@@ -199,16 +243,16 @@ function ServicesDropdown({
             </div>
             <div className="mt-1 border-t border-white/10 pt-1">
               <Link
-                href="/services"
+                href={menu.rootHref}
                 role="menuitem"
                 onClick={closeMenu}
                 className={`block rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
-                  pathname === "/services"
+                  pathname === menu.rootHref
                     ? "bg-[#008148]/25 text-white"
                     : "text-[#4ADE80] hover:bg-white/8"
                 }`}
               >
-                View all services
+                {menu.viewAllLabel}
               </Link>
             </div>
           </motion.div>
@@ -218,16 +262,18 @@ function ServicesDropdown({
   );
 }
 
-function MobileServicesBlock({
+function MobileNavMenuBlock({
+  menu,
   pathname,
   closeMenu,
 }: Readonly<{
+  menu: NavDropdownConfig;
   pathname: string;
   closeMenu: () => void;
 }>) {
-  const [open, setOpen] = useState(isServicesActive(pathname));
+  const [open, setOpen] = useState(isSectionActive(pathname, menu.rootHref));
   const panelId = useId();
-  const active = isServicesActive(pathname);
+  const active = isSectionActive(pathname, menu.rootHref);
 
   return (
     <div className="w-full max-w-[220px]">
@@ -240,7 +286,7 @@ function MobileServicesBlock({
         aria-controls={panelId}
         onClick={() => setOpen((prev) => !prev)}
       >
-        Services
+        {menu.label}
         <Chevron open={open} />
       </button>
 
@@ -255,7 +301,7 @@ function MobileServicesBlock({
             transition={{ type: "spring", bounce: 0, duration: 0.28 }}
           >
             <div className="mt-1 flex flex-col gap-1 rounded-2xl bg-white/55 p-2">
-              {serviceLinks.map((item) => {
+              {menu.items.map((item) => {
                 const itemActive = pathname === item.href;
                 return (
                   <Link
@@ -274,15 +320,15 @@ function MobileServicesBlock({
                 );
               })}
               <Link
-                href="/services"
+                href={menu.rootHref}
                 onClick={closeMenu}
                 className={`rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
-                  pathname === "/services"
+                  pathname === menu.rootHref
                     ? "bg-[#008148]/15 text-[#008148]"
                     : "text-[#008148] hover:bg-white"
                 }`}
               >
-                View all services
+                {menu.viewAllLabel}
               </Link>
             </div>
           </motion.div>
@@ -347,10 +393,12 @@ function MobileNavDrawer({
           aria-label={appConfig.a11y.navbarPrimary}
         >
           {navLinks.map((link) => {
-            if (link.href === "/services") {
+            const menu = navMenusByHref[link.href];
+            if (menu) {
               return (
-                <MobileServicesBlock
+                <MobileNavMenuBlock
                   key={link.href + link.label}
+                  menu={menu}
                   pathname={pathname}
                   closeMenu={closeMenu}
                 />
@@ -472,10 +520,12 @@ const Navbar = () => {
             aria-label={appConfig.a11y.navbarPrimary}
           >
             {navLinks.map((link) => {
-              if (link.href === "/services") {
+              const menu = navMenusByHref[link.href];
+              if (menu) {
                 return (
-                  <ServicesDropdown
+                  <NavDropdown
                     key={link.href + link.label}
+                    menu={menu}
                     pathname={pathname}
                     reduced={reduced}
                   />
