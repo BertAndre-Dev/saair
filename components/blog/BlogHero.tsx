@@ -12,7 +12,7 @@ const BlogHero = ({
   backgroundAlt = "Energy landscape",
 }: Readonly<BlogHeroProps>) => {
   return (
-    <section className="relative isolate flex h-[38rem] items-center justify-center overflow-hidden">
+    <section className="relative isolate flex h-[38rem] items-center justify-center overflow-hidden xl:h-[48rem]">
       <div className="absolute inset-0">
         <Image
           src={backgroundSrc}

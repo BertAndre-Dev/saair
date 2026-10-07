@@ -124,7 +124,7 @@ const HeroSlides = ({
   );
 };
 
-const heroHeight = "h-[38rem]";
+const heroHeight = "h-[38rem] xl:h-[48rem]";
 const SLIDE_MS = 6500;
 
 /** Apple's scroll-projection: where a flick would coast to. */
