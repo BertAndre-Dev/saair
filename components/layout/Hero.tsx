@@ -1,16 +1,35 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  type AnimationPlaybackControls,
+  type MotionValue,
+} from "framer-motion";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type RefObject,
+} from "react";
 
-import { cardWhileHover, easeNatural, scaleIn } from "@/lib/animations";
+import {
+  buttonWhileTap,
+  cardWhileHover,
+  easeNatural,
+  scaleIn,
+} from "@/lib/animations";
 
 const SLIDER_IMAGES = [
   "/sliders/view-male.jpg",
-  "/sliders/electric-vehicle.jpg",
-  "/sliders/oil-platform.jpg",
   "/sliders/turbine.jpg",
+  "/sliders/electric-vehicle.svg",
+  "/sliders/industrial.png",
 ] as const;
 
 export type HeroCardTone = "light" | "medium" | "dark";
@@ -58,9 +77,12 @@ const EnergyIntelIcon = () => (
 );
 
 const toneClass: Record<HeroCardTone, string> = {
-  light: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
-  medium: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
-  dark: "border border-[#00814E24] bg-[#00814E24] backdrop-blur-md",
+  light:
+    "border border-white/15 bg-black/25 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.7)] backdrop-blur-xl",
+  medium:
+    "border border-white/15 bg-black/25 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.7)] backdrop-blur-xl",
+  dark:
+    "border border-white/15 bg-black/25 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.7)] backdrop-blur-xl",
 };
 
 const HeroSlides = ({
@@ -103,38 +125,292 @@ const HeroSlides = ({
 };
 
 const heroHeight = "h-[38rem]";
+const SLIDE_MS = 6500;
+
+/** Apple's scroll-projection: where a flick would coast to. */
+function project(initialVelocity: number, decelerationRate = 0.998) {
+  return ((initialVelocity / 1000) * decelerationRate) / (1 - decelerationRate);
+}
+
+function rubberband(overshoot: number, dimension: number, constant = 0.55) {
+  return (
+    (overshoot * dimension * constant) /
+    (dimension + constant * Math.abs(overshoot))
+  );
+}
+
+type DragState = {
+  pointerId: number;
+  startX: number;
+  startY: number;
+  originX: number;
+  lastX: number;
+  lastT: number;
+  velocity: number;
+  dragging: boolean;
+};
+
+function useHeroSlider({
+  count,
+  reduced,
+  activeIndex,
+  onIndexChange,
+}: {
+  count: number;
+  reduced: boolean;
+  activeIndex: number;
+  onIndexChange: (index: number) => void;
+}) {
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const dragRef = useRef<DragState | null>(null);
+  const controlsRef = useRef<AnimationPlaybackControls | null>(null);
+  const skipSyncRef = useRef(false);
+  const indexRef = useRef(activeIndex);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    indexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  const widthOf = () => viewportRef.current?.clientWidth ?? 0;
+
+  const clampIndex = (index: number) =>
+    Math.max(0, Math.min(count - 1, index));
+
+  const animateTo = (index: number, velocity = 0) => {
+    const width = widthOf();
+    if (!width) return;
+    const next = clampIndex(index);
+    controlsRef.current?.stop();
+    const flicked = Math.abs(velocity) > 400;
+    controlsRef.current = animate(x, -next * width, {
+      type: "spring",
+      bounce: flicked ? 0.18 : 0,
+      duration: flicked ? 0.45 : 0.5,
+      velocity,
+    });
+    return next;
+  };
+
+  useEffect(() => {
+    if (reduced) return;
+    const el = viewportRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      if (dragRef.current?.dragging) return;
+      const width = el.clientWidth;
+      if (!width) return;
+      controlsRef.current?.stop();
+      x.set(-indexRef.current * width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [reduced, x]);
+
+  useEffect(() => {
+    if (reduced) return;
+    if (skipSyncRef.current) {
+      skipSyncRef.current = false;
+      return;
+    }
+    const width = widthOf();
+    if (!width) return;
+    const target = -activeIndex * width;
+    if (Math.abs(x.get() - target) < 0.5) {
+      x.set(target);
+      return;
+    }
+    animateTo(activeIndex);
+  }, [activeIndex, reduced, count]);
+
+  const onPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
+    if (reduced || count < 2 || event.button !== 0) return;
+    if ((event.target as HTMLElement).closest("button, a")) return;
+    controlsRef.current?.stop();
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: x.get(),
+      lastX: event.clientX,
+      lastT: performance.now(),
+      velocity: 0,
+      dragging: false,
+    };
+  };
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    if (!drag.dragging) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (Math.abs(dy) > Math.abs(dx)) {
+        dragRef.current = null;
+        return;
+      }
+      drag.dragging = true;
+      setIsDragging(true);
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    const width = widthOf() || 1;
+    const min = -(count - 1) * width;
+    let next = drag.originX + dx;
+    if (next > 0) next = rubberband(next, width);
+    else if (next < min) next = min - rubberband(min - next, width);
+    x.set(next);
+    const now = performance.now();
+    const dt = now - drag.lastT;
+    if (dt > 0) drag.velocity = ((event.clientX - drag.lastX) / dt) * 1000;
+    drag.lastX = event.clientX;
+    drag.lastT = now;
+  };
+
+  const endDrag = (event: ReactPointerEvent<HTMLElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    if (!drag.dragging) return;
+    setIsDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    const width = widthOf() || 1;
+    const projectedX = x.get() + project(drag.velocity);
+    const next = clampIndex(Math.round(-projectedX / width));
+    if (next !== indexRef.current) skipSyncRef.current = true;
+    animateTo(next, drag.velocity);
+    if (next !== indexRef.current) onIndexChange(next);
+  };
+
+  return {
+    viewportRef,
+    x,
+    isDragging,
+    onPointerDown,
+    onPointerMove,
+    onPointerUp: endDrag,
+    onPointerCancel: endDrag,
+  };
+}
+
+const HeroScrim = () => (
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-black/25" />
+);
+
+const HeroBackdrop = ({
+  slides,
+  activeIndex,
+  reduced,
+  alt,
+  imageClassName,
+  viewportRef,
+  x,
+}: {
+  slides: readonly string[];
+  activeIndex: number;
+  reduced: boolean;
+  alt: string;
+  imageClassName: string;
+  viewportRef: RefObject<HTMLDivElement | null>;
+  x: MotionValue<number>;
+}) => {
+  if (reduced) {
+    return (
+      <div className="absolute inset-0">
+        <HeroSlides
+          slides={slides}
+          activeIndex={activeIndex}
+          reduced
+          alt={alt}
+          imageClassName={imageClassName}
+        />
+        <HeroScrim />
+      </div>
+    );
+  }
+
+  return (
+    <div ref={viewportRef} className="absolute inset-0 overflow-hidden">
+      <motion.div
+        className="flex h-full will-change-transform"
+        style={{ x, width: `${slides.length * 100}%` }}
+      >
+        {slides.map((src, idx) => (
+          <div
+            key={src}
+            className="relative h-full overflow-hidden"
+            style={{ width: `${100 / slides.length}%` }}
+            aria-hidden={idx !== activeIndex}
+          >
+            <Image
+              src={src}
+              alt={idx === activeIndex ? alt : ""}
+              fill
+              sizes="100vw"
+              draggable={false}
+              className={`pointer-events-none ${imageClassName}`}
+              {...(idx === 0
+                ? { priority: true }
+                : { loading: "eager" as const })}
+            />
+          </div>
+        ))}
+      </motion.div>
+      <HeroScrim />
+    </div>
+  );
+};
 
 const HeroDots = ({
   slides,
   activeIndex,
-  canAnimate,
   onSelect,
 }: {
   slides: readonly string[];
   activeIndex: number;
-  canAnimate: boolean;
   onSelect: (index: number) => void;
 }) => {
   if (slides.length < 2) return null;
 
   return (
-    <div className="flex items-center justify-center gap-1">
+    <div
+      className="flex items-center justify-center"
+      role="tablist"
+      aria-label="Hero slides"
+      onKeyDown={(event) => {
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        event.preventDefault();
+        const direction = event.key === "ArrowRight" ? 1 : -1;
+        onSelect((activeIndex + direction + slides.length) % slides.length);
+      }}
+    >
       {slides.map((slideSrc, idx) => {
         const isActive = idx === activeIndex;
         return (
           <button
             key={slideSrc}
             type="button"
-            onClick={() => canAnimate && onSelect(idx)}
-            disabled={!canAnimate}
+            role="tab"
             aria-label={`Slide ${idx + 1}`}
-            aria-current={isActive ? "true" : undefined}
-            className="inline-flex size-8 items-center justify-center"
+            aria-selected={isActive}
+            onPointerDown={(event) => {
+              if (event.button !== 0) return;
+              onSelect(idx);
+            }}
+            onClick={() => onSelect(idx)}
+            className="inline-flex h-11 w-9 cursor-pointer items-center justify-center active:scale-95"
           >
-            <span
-              className={`h-2.5 w-2.5 rounded-full transition-transform duration-100 ease-out active:scale-90 ${
-                isActive ? "bg-white" : "bg-white/40"
+            <motion.span
+              aria-hidden="true"
+              className={`pointer-events-none block h-2 rounded-full ${
+                isActive ? "bg-white" : "bg-white/45"
               }`}
+              initial={false}
+              animate={{ width: isActive ? 22 : 8 }}
+              transition={{ type: "spring", bounce: 0, duration: 0.32 }}
             />
           </button>
         );
@@ -161,42 +437,71 @@ const Hero = ({
 
   const canAnimate = !reduced && slides.length > 1;
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const progress = useMotionValue(0);
+  const slider = useHeroSlider({
+    count: slides.length,
+    reduced: !!reduced,
+    activeIndex,
+    onIndexChange: setActiveIndex,
+  });
+  const isPaused = hovered || slider.isDragging || hidden;
 
   useEffect(() => {
-    if (!canAnimate) return;
+    const onVisibility = () => setHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  useEffect(() => {
+    progress.set(0);
+  }, [activeIndex, progress]);
+
+  useEffect(() => {
+    if (!canAnimate) {
+      progress.set(1);
+      return;
+    }
     if (isPaused) return;
-
-    const id = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % slides.length);
-    }, 3000);
-
-    return () => window.clearInterval(id);
-  }, [canAnimate, isPaused, slides.length]);
+    const remaining = Math.max(0.05, (1 - progress.get()) * (SLIDE_MS / 1000));
+    const controls = animate(progress, 1, {
+      duration: remaining,
+      ease: "linear",
+      onComplete: () => {
+        setActiveIndex((prev) => (prev + 1) % slides.length);
+      },
+    });
+    return () => controls.stop();
+  }, [activeIndex, canAnimate, isPaused, progress, slides.length]);
 
   if (variant === "pageTitle") {
     const words = title.split(/\s+/).filter(Boolean);
     return (
       <section
-        className={`relative isolate flex ${heroHeight} items-center justify-center overflow-hidden px-4 ${className}`}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
+        className={`relative isolate flex ${heroHeight} items-center justify-center overflow-hidden px-4 touch-pan-y ${slider.isDragging ? "cursor-grabbing select-none" : ""} ${className}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onPointerDown={slider.onPointerDown}
+        onPointerMove={slider.onPointerMove}
+        onPointerUp={slider.onPointerUp}
+        onPointerCancel={slider.onPointerCancel}
       >
         <motion.div
           className="absolute inset-0"
-          initial={reduced ? false : { opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.55, ease: easeNatural }}
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.45, ease: easeNatural }}
         >
-          <HeroSlides
+          <HeroBackdrop
             slides={slides}
             activeIndex={activeIndex}
             reduced={!!reduced}
             alt={backgroundImageAlt}
             imageClassName="object-cover"
+            viewportRef={slider.viewportRef}
+            x={slider.x}
           />
-
-          <div className="absolute inset-0" />
         </motion.div>
 
         <div className="relative z-10 w-full max-w-6xl px-2 py-24 text-center sm:py-28">
@@ -229,7 +534,6 @@ const Hero = ({
           <HeroDots
             slides={slides}
             activeIndex={activeIndex}
-            canAnimate={canAnimate}
             onSelect={setActiveIndex}
           />
         </div>
@@ -241,25 +545,29 @@ const Hero = ({
 
   return (
     <section
-      className={`relative isolate flex ${heroHeight} flex-col overflow-hidden ${className}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      className={`relative isolate flex ${heroHeight} flex-col overflow-hidden touch-pan-y ${slider.isDragging ? "cursor-grabbing select-none" : ""} ${className}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onPointerDown={slider.onPointerDown}
+      onPointerMove={slider.onPointerMove}
+      onPointerUp={slider.onPointerUp}
+      onPointerCancel={slider.onPointerCancel}
     >
       <motion.div
         className="absolute inset-0 overflow-hidden"
-        initial={reduced ? false : { opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, ease: easeNatural }}
+        initial={reduced ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.45, ease: easeNatural }}
       >
-        <HeroSlides
+        <HeroBackdrop
           slides={slides}
           activeIndex={activeIndex}
           reduced={!!reduced}
           alt={backgroundImageAlt}
-          imageClassName="scale-105 object-cover"
+          imageClassName="object-cover"
+          viewportRef={slider.viewportRef}
+          x={slider.x}
         />
-
-        <div className="absolute inset-0" />
       </motion.div>
 
       <div className="relative z-10 mx-auto mt-auto flex w-full min-w-0 max-w-6xl flex-col px-4 pt-8 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pt-10 lg:px-8 xl:px-0">
@@ -370,7 +678,8 @@ const Hero = ({
                 key={card.label}
                 variants={reduced ? {} : scaleIn}
                 whileHover={reduced ? undefined : cardWhileHover}
-                className={`flex items-center gap-4 rounded-2xl border border-[#00814E24] bg-[#00814E24] px-5 py-4 ${toneClass[card.tone]}`}
+                whileTap={reduced ? undefined : buttonWhileTap}
+                className={`flex items-center gap-4 rounded-2xl px-5 py-4 ${toneClass[card.tone]}`}
               >
                 <CardIcon kind={card.icon} />
                 <span className="min-w-0 text-[clamp(0.875rem,1.5vw,1.25rem)] font-light leading-snug text-white">
@@ -385,7 +694,6 @@ const Hero = ({
           <HeroDots
             slides={slides}
             activeIndex={activeIndex}
-            canAnimate={canAnimate}
             onSelect={setActiveIndex}
           />
         </div>

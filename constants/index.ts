@@ -85,7 +85,7 @@ export const productsPageHero: HeroProps = {
 
 /** Products page — smart meters overview (Figma). */
 export const productsPageOverview = {
-  badgeLabel: "SMART METERS",
+  badgeLabel: "SMART ELECTRICITY METERS",
   title: "PRODUCT OVERVIEW",
   paragraphs: [
     "SAAIR Energy delivers advanced smart metering solutions across electricity, gas, and water networks. Engineered for utilities, regulators, and large-scale energy and resource operators, our smart meters provide real-time data, two-way communication, and actionable insights to optimize resource management, reduce losses, and enhance customer engagement.",
@@ -112,12 +112,12 @@ export const productsTechnicalCopy = {
     {
       term: "Cost-Effectiveness",
       description:
-        "Our PLC metering architecture pairs intelligent meters with 4G-enabled Data Concentrator Units (DCUs), reducing communication endpoints and lowering total cost of ownership for large utility rollouts.",
+        "The PLC meters with 4G-enabled DCUs offer superior cost efficiency compared to other NMMP-compliant meter specifications.",
     },
     {
       term: "Enhanced Connectivity",
       description:
-        "End-to-end communication uses 4G where available, with automatic 3G/2G fallback so meters and DCUs stay reachable across varying network conditions in the field.",
+        "The 4G communication capability provides robust connectivity, with the added flexibility of supporting 3G/2G in areas lacking 4G coverage",
     },
     {
       term: "Efficient Communication Infrastructure",
@@ -127,7 +127,7 @@ export const productsTechnicalCopy = {
     {
       term: "Improved Accessibility and Maintenance",
       description:
-        "DCUs are deployed at transformer and strategic distribution points, giving DisCo staff local access for commissioning, troubleshooting, and updates without visiting every endpoint.",
+        "DCUs are installed at transformer locations, allowing DisCo staff easier access for maintenance compared to individual meters installed within customer premises.",
     },
   ],
 } as const;
@@ -250,7 +250,7 @@ export const serviceCards: ServiceCard[] = [
     slug: "energy-audit",
     number: "03",
     title: "Energy Audit and Energy Intelligence",
-    imageSrc: "/service/energ.png",
+    imageSrc: "/service/man.png",
     imageAlt: "Glowing light bulb representing energy use",
     iconSrc: "/service/message-text.svg",
     points: [
@@ -442,6 +442,12 @@ export const ctaCopy = {
       "Residential Energy",
       "Industrial Energy",
       "Technical Solutions",
+      "Smart Metering",
+      "Energy Audit",
+      "Energy Management",
+      "Site Infrastructure",
+      "Gas Supply",
+      "Smart Gas Meters",
     ],
     submitLabel: "Submit Request",
   },
