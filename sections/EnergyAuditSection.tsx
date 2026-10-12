@@ -3,7 +3,7 @@ import Image from "next/image";
 import { energyAuditPage } from "@/constants/energyAudit";
 
 const cardClass =
-  "flex-1 rounded-[24px] bg-white px-6 py-7 sm:px-8 sm:py-8 md:px-9 md:py-9";
+  "h-full rounded-[24px] bg-white px-6 py-7 sm:px-8 sm:py-8 md:px-9 md:py-9";
 
 const headingClass =
   "text-[1.45rem] font-bold leading-tight text-[#3A3A3A] md:text-[1.7rem]";
@@ -20,12 +20,12 @@ const BulletList = ({ items }: { items: readonly string[] }) => (
 );
 
 const FramedImage = ({ src, alt }: { src: string; alt: string }) => (
-  <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-[22px] bg-[#E4E8E3]">
+  <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-[22px] bg-[#E4E8E3]">
     <Image
       src={src}
       alt={alt}
       fill
-      className="object-contain object-center"
+      className="object-cover object-center"
       sizes="(max-width: 1024px) 100vw, 50vw"
     />
   </div>
@@ -60,9 +60,12 @@ const EnergyAuditSection = () => {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-8 md:mt-16 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-10">
+        <div className="mt-12 grid items-stretch gap-8 md:mt-16 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-10">
           {offerings.map((offering) => (
-            <article key={offering.title} className="flex h-full flex-col gap-4">
+            <article
+              key={offering.title}
+              className="grid h-full grid-rows-[auto_1fr] gap-4"
+            >
               <FramedImage src={offering.imageSrc} alt={offering.imageAlt} />
               <div className={cardClass}>
                 <h2 className={headingClass}>{offering.title}</h2>
